@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "451288762534",
+    "project_id": "recruitme-2760e",
+    "storage_bucket": "recruitme-2760e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:451288762534:android:c3f9d56e55e2e631e88c67",
+        "android_client_info": {
+          "package_name": "ma.emsi.recruitme"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "451288762534-k1l7a5bju8ngla55nbpvm7h18q4pftns.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "ma.emsi.recruitme",
+            "certificate_hash": "95a565dfb359ed66e753fb7b166da2aea009e2f5"
+          }
+        },
+        {
+          "client_id": "451288762534-ju6tb0c0nvj2tekteuudr5fq523m9mb5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC6TKfn9KMFfgahsBH0YZher50T_VZRtzU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "451288762534-ju6tb0c0nvj2tekteuudr5fq523m9mb5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

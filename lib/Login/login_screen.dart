@@ -108,7 +108,6 @@ class _loginState extends State<login> {
         minWidth: MediaQuery.of(context).size.width,
       ),
     );
-
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.transparent,
@@ -134,13 +133,11 @@ class _loginState extends State<login> {
               child: Column(
                 children: [
                   SizedBox(
-                    height: 300,
+                    height: 250,
                     width: 400,
                     child: SvgPicture.asset(
                       "images/Login.svg",
                       fit: BoxFit.contain,
-                      height: 600,
-                      width: 400,
                     ),
                   ),
                   SizedBox(

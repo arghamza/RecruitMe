@@ -6,9 +6,8 @@ import 'package:recruitme/Login/login_screen.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
-    options: FirebaseOptions(
-      apiKey:
-          "AAAAaRLoCKY:APA91bFumvQZMxJx_fX7okZH3Az4YHvnSLMc0TK-Jv0WDrEzJDGT1839IsycGoZKRFW9xdWz8p4z8M7Qx1DnH-Zymn_1uPJQPWGa9OTyDoa3OxMuyQFH9Xw9LTwR3P4gFCknwqD0g92L",
+    options: const FirebaseOptions(
+      apiKey: "AIzaSyC6TKfn9KMFfgahsBH0YZher50T_VZRtzU",
       appId: "1:451288762534:android:c3f9d56e55e2e631e88c67",
       messagingSenderId: "451288762534",
       projectId: "recruitme-2760e",
@@ -29,7 +28,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blueGrey,
       ),
-      home: HomeScreen(),
+      home: const HomeScreen(),
     );
   }
 }

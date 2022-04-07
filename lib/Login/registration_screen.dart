@@ -4,6 +4,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:recruitme/Login/home.dart';
 import 'package:recruitme/Login/home_screen.dart';
 
 import '../model/user_model.dart';
@@ -25,7 +27,7 @@ class _RegistrationState extends State<Registration> {
       new TextEditingController();
   final TextEditingController ConfirmpasswordController =
       new TextEditingController();
-  @override
+
   Widget build(BuildContext context) {
     final firstnameField = TextFormField(
       autofocus: false,
@@ -44,7 +46,15 @@ class _RegistrationState extends State<Registration> {
         return null;
       },
       decoration: InputDecoration(
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+        fillColor: Color.fromARGB(255, 190, 244, 227),
+        filled: true,
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10.0),
+          borderSide: BorderSide(
+            color: Colors.white,
+            width: 2.0,
+          ),
+        ),
         hintText: "First Name",
         prefixIcon: Icon(Icons.person),
         contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
@@ -68,12 +78,21 @@ class _RegistrationState extends State<Registration> {
         return null;
       },
       decoration: InputDecoration(
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+        fillColor: Color.fromARGB(255, 190, 244, 227),
+        filled: true,
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10.0),
+          borderSide: BorderSide(
+            color: Colors.white,
+            width: 2.0,
+          ),
+        ),
         hintText: "Second Name",
         prefixIcon: Icon(Icons.person),
         contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
       ),
     );
+
     final emailField = TextFormField(
       autofocus: false,
       controller: emailController,
@@ -93,12 +112,21 @@ class _RegistrationState extends State<Registration> {
         return null;
       },
       decoration: InputDecoration(
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+        fillColor: Color.fromARGB(255, 190, 244, 227),
+        filled: true,
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10.0),
+          borderSide: BorderSide(
+            color: Colors.white,
+            width: 2.0,
+          ),
+        ),
         hintText: "Email",
         prefixIcon: Icon(Icons.email),
         contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
       ),
     );
+
     final passwordField = TextFormField(
       autofocus: false,
       validator: (value) {
@@ -116,12 +144,21 @@ class _RegistrationState extends State<Registration> {
         passwordController.text = value!;
       },
       decoration: InputDecoration(
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+        fillColor: Color.fromARGB(255, 190, 244, 227),
+        filled: true,
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10.0),
+          borderSide: BorderSide(
+            color: Colors.white,
+            width: 2.0,
+          ),
+        ),
         hintText: "Password",
         prefixIcon: Icon(Icons.person),
         contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
       ),
     );
+
     final confirmpasswordField = TextFormField(
       autofocus: false,
       validator: (value) {
@@ -136,16 +173,25 @@ class _RegistrationState extends State<Registration> {
         ConfirmpasswordController.text = value!;
       },
       decoration: InputDecoration(
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+        fillColor: Color.fromARGB(255, 190, 244, 227),
+        filled: true,
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10.0),
+          borderSide: BorderSide(
+            color: Colors.white,
+            width: 2.0,
+          ),
+        ),
         hintText: "Confirm Password",
         prefixIcon: Icon(Icons.person),
         contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
       ),
     );
+
     final ConfirmButton = Material(
       elevation: 5,
       borderRadius: BorderRadius.circular(30),
-      color: Colors.indigo,
+      color: const Color(0xff35ddaa),
       child: MaterialButton(
         onPressed: () {
           signUp(emailController.text, passwordController.text);
@@ -160,15 +206,17 @@ class _RegistrationState extends State<Registration> {
         minWidth: MediaQuery.of(context).size.width,
       ),
     );
+
     return Scaffold(
-        backgroundColor: const Color(0xff35ddaa),
+        backgroundColor: Colors.white,
+        resizeToAvoidBottomInset: false,
         appBar: AppBar(
           backgroundColor: Colors.transparent,
           elevation: 0,
           leading: IconButton(
             icon: Icon(
               Icons.arrow_back,
-              color: Colors.indigo,
+              color: const Color(0xff35ddaa),
             ),
             onPressed: () {
               Navigator.of(context).pop();
@@ -177,53 +225,132 @@ class _RegistrationState extends State<Registration> {
         ),
         body: Form(
           key: _formKey,
-          child: Center(
-            child: SingleChildScrollView(
-              child: Container(
-                color: Colors.white,
-                child: Padding(
-                  padding: const EdgeInsets.all(36.0),
+          child: Column(
+            children: [
+              SizedBox(
+                height: 20,
+              ),
+              SizedBox(
+                  width: 300,
+                  height: 100,
+                  child: Text("Creer un compte avec email",
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.montserrat(
+                        textStyle: TextStyle(
+                            fontSize: 35, fontWeight: FontWeight.bold),
+                      ))),
+              Container(
+                height: MediaQuery.of(context).size.height - 280,
+                child: SingleChildScrollView(
                   child: Container(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        SizedBox(
-                            height: 130,
-                            child: Text("Creer un compte avec email")),
-                        SizedBox(
-                          height: 45,
+                    color: Colors.white,
+                    child: Padding(
+                      padding: const EdgeInsets.all(36.0),
+                      child: Container(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            SizedBox(
+                              height: 20,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Email:',
+                                  style: GoogleFonts.montserrat(
+                                      textStyle: TextStyle(
+                                          color: Colors.black,
+                                          letterSpacing: .5),
+                                      fontWeight: FontWeight.w600),
+                                ),
+                              ],
+                            ),
+                            firstnameField,
+                            SizedBox(
+                              height: 20,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Email:',
+                                  style: GoogleFonts.montserrat(
+                                      textStyle: TextStyle(
+                                          color: Colors.black,
+                                          letterSpacing: .5),
+                                      fontWeight: FontWeight.w600),
+                                ),
+                              ],
+                            ),
+                            SecondnameField,
+                            SizedBox(
+                              height: 20,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Email:',
+                                  style: GoogleFonts.montserrat(
+                                      textStyle: TextStyle(
+                                          color: Colors.black,
+                                          letterSpacing: .5),
+                                      fontWeight: FontWeight.w600),
+                                ),
+                              ],
+                            ),
+                            emailField,
+                            SizedBox(
+                              height: 20,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Email:',
+                                  style: GoogleFonts.montserrat(
+                                      textStyle: TextStyle(
+                                          color: Colors.black,
+                                          letterSpacing: .5),
+                                      fontWeight: FontWeight.w600),
+                                ),
+                              ],
+                            ),
+                            passwordField,
+                            SizedBox(
+                              height: 20,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Email:',
+                                  style: GoogleFonts.montserrat(
+                                      textStyle: TextStyle(
+                                          color: Colors.black,
+                                          letterSpacing: .5),
+                                      fontWeight: FontWeight.w600),
+                                ),
+                              ],
+                            ),
+                            confirmpasswordField,
+                            SizedBox(
+                              height: 20,
+                            ),
+                          ],
                         ),
-                        firstnameField,
-                        SizedBox(
-                          height: 20,
-                        ),
-                        SecondnameField,
-                        SizedBox(
-                          height: 20,
-                        ),
-                        emailField,
-                        SizedBox(
-                          height: 20,
-                        ),
-                        passwordField,
-                        SizedBox(
-                          height: 20,
-                        ),
-                        confirmpasswordField,
-                        SizedBox(
-                          height: 20,
-                        ),
-                        ConfirmButton,
-                        SizedBox(
-                          height: 15,
-                        ),
-                      ],
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
+              ConfirmButton,
+              SizedBox(
+                height: 15,
+              ),
+            ],
           ),
         ));
     ;
@@ -260,7 +387,9 @@ class _RegistrationState extends State<Registration> {
         .doc(user.uid)
         .set(userModel.toMap());
     Fluttertoast.showToast(msg: "Account created successfully");
-    Navigator.pushAndRemoveUntil(context,
-        MaterialPageRoute(builder: (context) => Home()), (route) => false);
+    Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (context) => HomeScreen()),
+        (route) => false);
   }
 }
