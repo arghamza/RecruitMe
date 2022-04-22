@@ -1,12 +1,22 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:recruitme/Login/choice_screen.dart';
+import 'package:recruitme/Login/home_screen.dart';
+import 'package:recruitme/Login/linkedin.dart';
 import 'package:recruitme/Login/login_screen.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -82,23 +92,48 @@ class HomeScreen extends StatelessWidget {
                           "images/logogoogle.png",
                           fit: BoxFit.contain,
                         )),
-                    Container(
-                      margin: const EdgeInsets.only(left: 25),
-                      child: Text("Connexion avec Google",
-                          textAlign: TextAlign.center,
-                          style: GoogleFonts.montserrat(
-                            textStyle: const TextStyle(
-                                color: Color(0xff35ddaa),
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold),
-                          )),
+                    GestureDetector(
+                      onTap: () {
+                        signInWithGoogle();
+                      },
+                      child: Container(
+                        margin: const EdgeInsets.only(left: 25),
+                        child: Text("Connexion avec Google",
+                            textAlign: TextAlign.center,
+                            style: GoogleFonts.montserrat(
+                              textStyle: const TextStyle(
+                                  color: Color(0xff35ddaa),
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold),
+                            )),
+                      ),
                     )
                   ],
                 ),
                 padding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
               ),
+              LinkedInProfileExamplePage(),
             ],
           )),
     );
+  }
+
+  Future<UserCredential> signInWithGoogle() async {
+    // Trigger the authentication flow
+    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+
+    // Obtain the auth details from the request
+    final GoogleSignInAuthentication? googleAuth =
+        await googleUser?.authentication;
+
+    // Create a new credential
+    final credential = GoogleAuthProvider.credential(
+      accessToken: googleAuth?.accessToken,
+      idToken: googleAuth?.idToken,
+    );
+    Navigator.of(context).push(MaterialPageRoute(
+        builder: (context) =>
+            ChoiceScreen())); // Once signed in, return the UserCredentialNavigator.push(context,
+    return await FirebaseAuth.instance.signInWithCredential(credential);
   }
 }

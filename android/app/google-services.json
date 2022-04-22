@@ -1,41 +1,41 @@
 {
   "project_info": {
-    "project_number": "451288762534",
-    "project_id": "recruitme-2760e",
-    "storage_bucket": "recruitme-2760e.appspot.com"
+    "project_number": "775736873350",
+    "project_id": "recruitme-aeb0f",
+    "storage_bucket": "recruitme-aeb0f.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:451288762534:android:c3f9d56e55e2e631e88c67",
+        "mobilesdk_app_id": "1:775736873350:android:85c76bee3d9d0c72895c07",
         "android_client_info": {
-          "package_name": "ma.emsi.recruitme"
+          "package_name": "com.example.recruitme"
         }
       },
       "oauth_client": [
         {
-          "client_id": "451288762534-k1l7a5bju8ngla55nbpvm7h18q4pftns.apps.googleusercontent.com",
+          "client_id": "775736873350-232nln01m45c12hillb93i96uo0lns4m.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "ma.emsi.recruitme",
+            "package_name": "com.example.recruitme",
             "certificate_hash": "95a565dfb359ed66e753fb7b166da2aea009e2f5"
           }
         },
         {
-          "client_id": "451288762534-ju6tb0c0nvj2tekteuudr5fq523m9mb5.apps.googleusercontent.com",
+          "client_id": "775736873350-vs9g9vgudf7qmqohocc7a0dqj28ninng.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyC6TKfn9KMFfgahsBH0YZher50T_VZRtzU"
+          "current_key": "AIzaSyAnYYkiSwWaaZvTNRm9gkzchcp3FmmGg70"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "451288762534-ju6tb0c0nvj2tekteuudr5fq523m9mb5.apps.googleusercontent.com",
+              "client_id": "775736873350-vs9g9vgudf7qmqohocc7a0dqj28ninng.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

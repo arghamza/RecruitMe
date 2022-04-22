@@ -7,6 +7,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:recruitme/Login/home.dart';
 import 'package:recruitme/Login/home_screen.dart';
+import 'package:recruitme/Login/login_screen.dart';
 
 import '../model/user_model.dart';
 
@@ -258,7 +259,7 @@ class _RegistrationState extends State<Registration> {
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 Text(
-                                  'Email:',
+                                  'Prénom:',
                                   style: GoogleFonts.montserrat(
                                       textStyle: TextStyle(
                                           color: Colors.black,
@@ -275,7 +276,7 @@ class _RegistrationState extends State<Registration> {
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 Text(
-                                  'Email:',
+                                  'Nom:',
                                   style: GoogleFonts.montserrat(
                                       textStyle: TextStyle(
                                           color: Colors.black,
@@ -309,7 +310,7 @@ class _RegistrationState extends State<Registration> {
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 Text(
-                                  'Email:',
+                                  'Mot de passe:',
                                   style: GoogleFonts.montserrat(
                                       textStyle: TextStyle(
                                           color: Colors.black,
@@ -326,7 +327,7 @@ class _RegistrationState extends State<Registration> {
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 Text(
-                                  'Email:',
+                                  'Confirmer mot de passe:',
                                   style: GoogleFonts.montserrat(
                                       textStyle: TextStyle(
                                           color: Colors.black,
@@ -387,9 +388,7 @@ class _RegistrationState extends State<Registration> {
         .doc(user.uid)
         .set(userModel.toMap());
     Fluttertoast.showToast(msg: "Account created successfully");
-    Navigator.pushAndRemoveUntil(
-        context,
-        MaterialPageRoute(builder: (context) => HomeScreen()),
-        (route) => false);
+    Navigator.pushAndRemoveUntil(context,
+        MaterialPageRoute(builder: (context) => login()), (route) => false);
   }
 }

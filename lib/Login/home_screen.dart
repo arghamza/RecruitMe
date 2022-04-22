@@ -43,13 +43,6 @@ class _HomeState extends State<Home> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              SizedBox(
-                height: 180,
-                child: Image.asset(
-                  "images/Front.png",
-                  fit: BoxFit.contain,
-                ),
-              ),
               Text("Welcome",
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
               SizedBox(
