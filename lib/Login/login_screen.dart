@@ -5,9 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:recruitme/Login/choice_screen.dart';
-import 'package:recruitme/Login/home_screen.dart';
-import 'package:recruitme/Login/registration_screen.dart';
+import 'package:user_type_screen/Login/registration_screen.dart';
+
+import 'choice_screen.dart';
+
 
 class login extends StatefulWidget {
   const login({Key? key}) : super(key: key);

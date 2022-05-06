@@ -1,7 +1,10 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:recruitme/Login/home.dart';
-import 'package:recruitme/Login/login_screen.dart';
+import 'package:user_type_screen/Demandeur/add_info_screen.dart';
+import 'package:user_type_screen/Demandeur/test.dart';
+import 'package:user_type_screen/Recruiter/creationoffre_screen.dart';
+
+import 'Login/home.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -28,7 +31,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blueGrey,
       ),
-      home: const HomeScreen(),
+      home: MainPage(),
     );
   }
 }

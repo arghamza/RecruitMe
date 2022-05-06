@@ -239,7 +239,7 @@ class _Info_screenState extends State<Info_screen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Poste:',
+                        'LinkedIn:',
                         style: GoogleFonts.montserrat(
                           textStyle:
                               TextStyle(color: Colors.black, letterSpacing: .5),

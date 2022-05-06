@@ -1,32 +1,11 @@
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart' show rootBundle;
+// ignore_for_file: prefer_const_constructors
 
+import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:textfield_tags/textfield_tags.dart';
 
-Future<String> loadAsset() async {
-  return await rootBundle.loadString('assets/config.json');
-}
-
-void main() {
-  runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
-
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      title: 'dev ',
-      home: MyHomePage(title: 'dev '),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
+class CreationOffre extends StatefulWidget {
+  const CreationOffre({Key? key}) : super(key: key);
 
   // This widget is the home page of your application. It is stateful, meaning
   // that it has a State object (defined below) that contains fields that affect
@@ -37,13 +16,12 @@ class MyHomePage extends StatefulWidget {
   // used by the build method of the State. Fields in a Widget subclass are
   // always marked "final".
 
-  final String title;
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<CreationOffre> createState() => _CreationOffreState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _CreationOffreState extends State<CreationOffre> {
   final _formKey = GlobalKey<FormState>();
 
   final TextEditingController TitreController = new TextEditingController();
@@ -310,7 +288,6 @@ class _MyHomePageState extends State<MyHomePage> {
  //---------------------------------------------------------------------RETURN----------------------------------
     return Scaffold(
         backgroundColor: Colors.white,
-        resizeToAvoidBottomInset: false,
         appBar: AppBar(
           elevation: 0,
           leading: IconButton(
@@ -327,139 +304,136 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
         body: Form(
             key: _formKey,
-            child: Column(children: [
-              SizedBox(
-                  width: 300,
-                  height: 50,
-                  child: Text("Création d'offre  ",
-                      textAlign: TextAlign.center,
-                      style: GoogleFonts.montserrat(
-                        textStyle: TextStyle(
-                            fontSize: 35, fontWeight: FontWeight.bold),
-                      ))),
-              Container(
-                  height: MediaQuery.of(context).size.height - 190,
-                  child: SingleChildScrollView(
-                      child: Container(
-                          color: Colors.white,
-                          child: Padding(
-                              padding: const EdgeInsets.all(30.0),
-                              child: Container(
-                                  child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          'Titre de l\'offre:',
-                                          style: GoogleFonts.montserrat(
-                                              textStyle: TextStyle(
-                                                  color: Colors.black,
-                                                  letterSpacing: .5),
-                                              fontWeight: FontWeight.w600),
-                                        ),
-                                      ],
-                                    ),
-                                    titreField,
-                                    const SizedBox(
-                                      height: 10,
-                                    ),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          'Entreprise:',
-                                          style: GoogleFonts.montserrat(
-                                              textStyle: TextStyle(
-                                                  color: Colors.black,
-                                                  letterSpacing: .5),
-                                              fontWeight: FontWeight.w600),
-                                        ),
-                                      ],
-                                    ),
-                                    entrepriseField,
-                                    const SizedBox(
-                                      height: 10,
-                                    ),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          'Poste:',
-                                          style: GoogleFonts.montserrat(
-                                              textStyle: TextStyle(
-                                                  color: Colors.black,
-                                                  letterSpacing: .5),
-                                              fontWeight: FontWeight.w600),
-                                        ),
-                                      ],
-                                    ),
-                                    posteField,
-                                    const SizedBox(
-                                      height: 10,
-                                    ),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          'Domaine :',
-                                          style: GoogleFonts.montserrat(
-                                              textStyle: TextStyle(
-                                                  color: Colors.black,
-                                                  letterSpacing: .5),
-                                              fontWeight: FontWeight.w600),
-                                        ),
-                                      ],
-                                    ),
-                                    domaineField,
-                                    const SizedBox(
-                                      height: 10,
-                                    ),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          'A propos du poste :',
-                                          style: GoogleFonts.montserrat(
-                                              textStyle: TextStyle(
-                                                  color: Colors.black,
-                                                  letterSpacing: .5),
-                                              fontWeight: FontWeight.w600),
-                                        ),
-                                      ],
-                                    ),
-                                    detailsField,
-                                    const SizedBox(
-                                      height: 10,
-                                    ),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          'Compétences :',
-                                          style: GoogleFonts.montserrat(
-                                              textStyle: TextStyle(
-                                                  color: Colors.black,
-                                                  letterSpacing: .5),
-                                              fontWeight: FontWeight.w600),
-                                        ),
-                                      ],
-                                    ),competencesField,
-                                     const SizedBox(
-                                      height: 20,
-                                    ),
-                                    ConfirmButton
-                                  ]))))))
-            ])));
+            child: SingleChildScrollView(
+              child: Column(children: [
+                SizedBox(
+                    width: 300,
+                    height: 50,
+                    child: Text("Création d'offre  ",
+                        textAlign: TextAlign.center,
+                        style: GoogleFonts.montserrat(
+                          textStyle: TextStyle(
+                              fontSize: 35, fontWeight: FontWeight.bold),
+                        ))),
+                Padding(
+                    padding: const EdgeInsets.all(30.0),
+                    child: Container(
+                        child: Column(
+                            mainAxisAlignment:
+                                MainAxisAlignment.center,
+                            crossAxisAlignment:
+                                CrossAxisAlignment.center,
+                            children: [
+                          Row(
+                            mainAxisAlignment:
+                                MainAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Titre de l\'offre:',
+                                style: GoogleFonts.montserrat(
+                                    textStyle: TextStyle(
+                                        color: Colors.black,
+                                        letterSpacing: .5),
+                                    fontWeight: FontWeight.w600),
+                              ),
+                            ],
+                          ),
+                          titreField,
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Row(
+                            mainAxisAlignment:
+                                MainAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Entreprise:',
+                                style: GoogleFonts.montserrat(
+                                    textStyle: TextStyle(
+                                        color: Colors.black,
+                                        letterSpacing: .5),
+                                    fontWeight: FontWeight.w600),
+                              ),
+                            ],
+                          ),
+                          entrepriseField,
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Row(
+                            mainAxisAlignment:
+                                MainAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Poste:',
+                                style: GoogleFonts.montserrat(
+                                    textStyle: TextStyle(
+                                        color: Colors.black,
+                                        letterSpacing: .5),
+                                    fontWeight: FontWeight.w600),
+                              ),
+                            ],
+                          ),
+                          posteField,
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Row(
+                            mainAxisAlignment:
+                                MainAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Domaine :',
+                                style: GoogleFonts.montserrat(
+                                    textStyle: TextStyle(
+                                        color: Colors.black,
+                                        letterSpacing: .5),
+                                    fontWeight: FontWeight.w600),
+                              ),
+                            ],
+                          ),
+                          domaineField,
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Row(
+                            mainAxisAlignment:
+                                MainAxisAlignment.start,
+                            children: [
+                              Text(
+                                'A propos du poste :',
+                                style: GoogleFonts.montserrat(
+                                    textStyle: TextStyle(
+                                        color: Colors.black,
+                                        letterSpacing: .5),
+                                    fontWeight: FontWeight.w600),
+                              ),
+                            ],
+                          ),
+                          detailsField,
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Row(
+                            mainAxisAlignment:
+                                MainAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Compétences :',
+                                style: GoogleFonts.montserrat(
+                                    textStyle: TextStyle(
+                                        color: Colors.black,
+                                        letterSpacing: .5),
+                                    fontWeight: FontWeight.w600),
+                              ),
+                            ],
+                          ),competencesField,
+                           const SizedBox(
+                            height: 20,
+                          ),
+                          ConfirmButton
+                        ])))
+              ]),
+            )));
   }
 }

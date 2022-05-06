@@ -4,10 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:recruitme/Login/choice_screen.dart';
-import 'package:recruitme/Login/home_screen.dart';
-import 'package:recruitme/Login/linkedin.dart';
-import 'package:recruitme/Login/login_screen.dart';
+
+import 'choice_screen.dart';
+import 'linkedin.dart';
+import 'login_screen.dart';
+
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);

@@ -5,11 +5,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:recruitme/Login/home.dart';
-import 'package:recruitme/Login/home_screen.dart';
-import 'package:recruitme/Login/login_screen.dart';
+
 
 import '../model/user_model.dart';
+import 'login_screen.dart';
 
 class Registration extends StatefulWidget {
   const Registration({Key? key}) : super(key: key);
@@ -210,7 +209,6 @@ class _RegistrationState extends State<Registration> {
 
     return Scaffold(
         backgroundColor: Colors.white,
-        resizeToAvoidBottomInset: false,
         appBar: AppBar(
           backgroundColor: Colors.transparent,
           elevation: 0,
@@ -226,132 +224,130 @@ class _RegistrationState extends State<Registration> {
         ),
         body: Form(
           key: _formKey,
-          child: Column(
-            children: [
-              SizedBox(
-                height: 20,
-              ),
-              SizedBox(
-                  width: 300,
-                  height: 100,
-                  child: Text("Creer un compte avec email",
-                      textAlign: TextAlign.center,
-                      style: GoogleFonts.montserrat(
-                        textStyle: TextStyle(
-                            fontSize: 35, fontWeight: FontWeight.bold),
-                      ))),
-              Container(
-                height: MediaQuery.of(context).size.height - 280,
-                child: SingleChildScrollView(
-                  child: Container(
-                    color: Colors.white,
-                    child: Padding(
-                      padding: const EdgeInsets.all(36.0),
-                      child: Container(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            SizedBox(
-                              height: 20,
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'Prénom:',
-                                  style: GoogleFonts.montserrat(
-                                      textStyle: TextStyle(
-                                          color: Colors.black,
-                                          letterSpacing: .5),
-                                      fontWeight: FontWeight.w600),
-                                ),
-                              ],
-                            ),
-                            firstnameField,
-                            SizedBox(
-                              height: 20,
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'Nom:',
-                                  style: GoogleFonts.montserrat(
-                                      textStyle: TextStyle(
-                                          color: Colors.black,
-                                          letterSpacing: .5),
-                                      fontWeight: FontWeight.w600),
-                                ),
-                              ],
-                            ),
-                            SecondnameField,
-                            SizedBox(
-                              height: 20,
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'Email:',
-                                  style: GoogleFonts.montserrat(
-                                      textStyle: TextStyle(
-                                          color: Colors.black,
-                                          letterSpacing: .5),
-                                      fontWeight: FontWeight.w600),
-                                ),
-                              ],
-                            ),
-                            emailField,
-                            SizedBox(
-                              height: 20,
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'Mot de passe:',
-                                  style: GoogleFonts.montserrat(
-                                      textStyle: TextStyle(
-                                          color: Colors.black,
-                                          letterSpacing: .5),
-                                      fontWeight: FontWeight.w600),
-                                ),
-                              ],
-                            ),
-                            passwordField,
-                            SizedBox(
-                              height: 20,
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'Confirmer mot de passe:',
-                                  style: GoogleFonts.montserrat(
-                                      textStyle: TextStyle(
-                                          color: Colors.black,
-                                          letterSpacing: .5),
-                                      fontWeight: FontWeight.w600),
-                                ),
-                              ],
-                            ),
-                            confirmpasswordField,
-                            SizedBox(
-                              height: 20,
-                            ),
-                          ],
-                        ),
+          child: Container(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height,
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Container(
+                      width: 300,
+                      height: 100,
+                      child: Text("Creer un compte avec email",
+                          textAlign: TextAlign.center,
+                          style: GoogleFonts.montserrat(
+                            textStyle: TextStyle(
+                                fontSize: 35, fontWeight: FontWeight.bold),
+                          ))),
+                  Padding(
+                    padding: const EdgeInsets.all(36.0),
+                    child: Container(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Prénom:',
+                                style: GoogleFonts.montserrat(
+                                    textStyle: TextStyle(
+                                        color: Colors.black,
+                                        letterSpacing: .5),
+                                    fontWeight: FontWeight.w600),
+                              ),
+                            ],
+                          ),
+                          firstnameField,
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Nom:',
+                                style: GoogleFonts.montserrat(
+                                    textStyle: TextStyle(
+                                        color: Colors.black,
+                                        letterSpacing: .5),
+                                    fontWeight: FontWeight.w600),
+                              ),
+                            ],
+                          ),
+                          SecondnameField,
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Email:',
+                                style: GoogleFonts.montserrat(
+                                    textStyle: TextStyle(
+                                        color: Colors.black,
+                                        letterSpacing: .5),
+                                    fontWeight: FontWeight.w600),
+                              ),
+                            ],
+                          ),
+                          emailField,
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Mot de passe:',
+                                style: GoogleFonts.montserrat(
+                                    textStyle: TextStyle(
+                                        color: Colors.black,
+                                        letterSpacing: .5),
+                                    fontWeight: FontWeight.w600),
+                              ),
+                            ],
+                          ),
+                          passwordField,
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Confirmer mot de passe:',
+                                style: GoogleFonts.montserrat(
+                                    textStyle: TextStyle(
+                                        color: Colors.black,
+                                        letterSpacing: .5),
+                                    fontWeight: FontWeight.w600),
+                              ),
+                            ],
+                          ),
+                          confirmpasswordField,
+                          SizedBox(
+                            height: 20,
+                          ),
+                        ],
                       ),
                     ),
                   ),
-                ),
+                  ConfirmButton,
+                  SizedBox(
+                    height: 15,
+                  ),
+                ],
               ),
-              ConfirmButton,
-              SizedBox(
-                height: 15,
-              ),
-            ],
+            ),
           ),
         ));
     ;
