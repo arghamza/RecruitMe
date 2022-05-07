@@ -7,10 +7,10 @@ import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_uploader/flutter_uploader.dart' as upload;
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:user_type_screen/API/FireabaseApi.dart';
+import 'package:user_type_screen/Demandeur/buttom_navbar.dart';
 
 import '../model/user_model.dart';
 
@@ -167,6 +167,8 @@ class _ApplicantScreenState extends State<ApplicantScreen> {
       child: MaterialButton(
         onPressed: () {
           uploadFile();
+          Navigator.of(context)
+              .push(MaterialPageRoute(builder: (context) => BottomNavBar()));
         },
         child: Text("Confirmer",
             textAlign: TextAlign.center,
@@ -210,9 +212,9 @@ class _ApplicantScreenState extends State<ApplicantScreen> {
         ),
         body: Container(
           color: Colors.white,
-          height: MediaQuery.of(context).size.height - 100,
+          height: MediaQuery.of(context).size.height - 0,
           child: Padding(
-            padding: const EdgeInsets.all(36.0),
+            padding: const EdgeInsets.all(26.0),
             child: Form(
               key: _formKey,
               child: SingleChildScrollView(
@@ -387,11 +389,6 @@ class _ApplicantScreenState extends State<ApplicantScreen> {
                       height: 15,
                     ),
                     loginButton,
-                    GestureDetector(
-                      onTap: uploadFile,
-                      child: Container(
-                          width: 100, height: 100, child: Text("CONfirmer")),
-                    ),
                     SizedBox(
                       height: 15,
                     ),

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:linkedin_login/linkedin_login.dart';
 
-import 'choice_screen.dart';
+import '../Login/choice_screen.dart';
 
 const String redirectUrl = 'https://www.youtube.com/callback';
 const String clientId = '776rnw4e4izlvg';

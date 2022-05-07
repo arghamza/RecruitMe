@@ -1,8 +1,14 @@
 // ignore_for_file: prefer_const_constructors
-
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart' show rootBundle;
+import 'package:fluttertoast/fluttertoast.dart';
+
 import 'package:google_fonts/google_fonts.dart';
+
 import 'package:textfield_tags/textfield_tags.dart';
+import 'package:user_type_screen/model/offre_model.dart';
 
 class CreationOffre extends StatefulWidget {
   const CreationOffre({Key? key}) : super(key: key);
@@ -16,14 +22,13 @@ class CreationOffre extends StatefulWidget {
   // used by the build method of the State. Fields in a Widget subclass are
   // always marked "final".
 
-
   @override
   State<CreationOffre> createState() => _CreationOffreState();
 }
 
 class _CreationOffreState extends State<CreationOffre> {
   final _formKey = GlobalKey<FormState>();
-
+  final _auth = FirebaseAuth.instance;
   final TextEditingController TitreController = new TextEditingController();
   final TextEditingController entrepriseController =
       new TextEditingController();
@@ -180,16 +185,11 @@ class _CreationOffreState extends State<CreationOffre> {
     //tags
     final competencesField = TextFieldTags(
       textfieldTagsController: competencesController,
-      initialTags: const [
-      
-        'Leadership',
-        'Flutter'
-      
-      ],
+      initialTags: const ['Leadership', 'Flutter'],
       textSeparators: const [' ', ','],
       letterCase: LetterCase.normal,
       validator: (String tag) {
-      if ( competencesController.getTags!.contains(tag)) {
+        if (competencesController.getTags!.contains(tag)) {
           return 'you already entered that';
         }
         return null;
@@ -202,8 +202,6 @@ class _CreationOffreState extends State<CreationOffre> {
               controller: tec,
               focusNode: fn,
               decoration: InputDecoration(
-               
-               
                 helperText: 'ajoutez une compétence ...',
                 helperStyle: const TextStyle(
                   color: Colors.black,
@@ -211,7 +209,7 @@ class _CreationOffreState extends State<CreationOffre> {
                 hintText: competencesController.hasTags ? '' : "...",
                 errorText: error,
                 prefixIconConstraints:
-                    BoxConstraints(maxWidth:MediaQuery.of(context).size.width ),
+                    BoxConstraints(maxWidth: MediaQuery.of(context).size.width),
                 prefixIcon: tags.isNotEmpty
                     ? SingleChildScrollView(
                         controller: sc,
@@ -219,8 +217,8 @@ class _CreationOffreState extends State<CreationOffre> {
                         child: Row(
                             children: tags.map((String tag) {
                           return Container(
-                            decoration:  BoxDecoration(
-                            // border: Border.all(color:Color.fromARGB(255, 24, 165, 123)),
+                            decoration: BoxDecoration(
+                              // border: Border.all(color:Color.fromARGB(255, 24, 165, 123)),
 
                               borderRadius: BorderRadius.all(
                                 Radius.circular(15.0),
@@ -266,14 +264,14 @@ class _CreationOffreState extends State<CreationOffre> {
           );
         });
       },
-    ); 
+    );
     final ConfirmButton = Material(
       elevation: 5,
       borderRadius: BorderRadius.circular(30),
       color: const Color(0xff35ddaa),
       child: MaterialButton(
         onPressed: () {
-          // wa9afa 7imaro chaikhi fil3a9aba
+          postOfferToFirestore();
         },
         child: Text(
           "Confirmer",
@@ -285,7 +283,7 @@ class _CreationOffreState extends State<CreationOffre> {
         minWidth: MediaQuery.of(context).size.width - 200,
       ),
     );
- //---------------------------------------------------------------------RETURN----------------------------------
+    //---------------------------------------------------------------------RETURN----------------------------------
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
@@ -319,21 +317,17 @@ class _CreationOffreState extends State<CreationOffre> {
                     padding: const EdgeInsets.all(30.0),
                     child: Container(
                         child: Column(
-                            mainAxisAlignment:
-                                MainAxisAlignment.center,
-                            crossAxisAlignment:
-                                CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                           Row(
-                            mainAxisAlignment:
-                                MainAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               Text(
                                 'Titre de l\'offre:',
                                 style: GoogleFonts.montserrat(
                                     textStyle: TextStyle(
-                                        color: Colors.black,
-                                        letterSpacing: .5),
+                                        color: Colors.black, letterSpacing: .5),
                                     fontWeight: FontWeight.w600),
                               ),
                             ],
@@ -343,15 +337,13 @@ class _CreationOffreState extends State<CreationOffre> {
                             height: 10,
                           ),
                           Row(
-                            mainAxisAlignment:
-                                MainAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               Text(
                                 'Entreprise:',
                                 style: GoogleFonts.montserrat(
                                     textStyle: TextStyle(
-                                        color: Colors.black,
-                                        letterSpacing: .5),
+                                        color: Colors.black, letterSpacing: .5),
                                     fontWeight: FontWeight.w600),
                               ),
                             ],
@@ -361,15 +353,13 @@ class _CreationOffreState extends State<CreationOffre> {
                             height: 10,
                           ),
                           Row(
-                            mainAxisAlignment:
-                                MainAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               Text(
                                 'Poste:',
                                 style: GoogleFonts.montserrat(
                                     textStyle: TextStyle(
-                                        color: Colors.black,
-                                        letterSpacing: .5),
+                                        color: Colors.black, letterSpacing: .5),
                                     fontWeight: FontWeight.w600),
                               ),
                             ],
@@ -379,15 +369,13 @@ class _CreationOffreState extends State<CreationOffre> {
                             height: 10,
                           ),
                           Row(
-                            mainAxisAlignment:
-                                MainAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               Text(
                                 'Domaine :',
                                 style: GoogleFonts.montserrat(
                                     textStyle: TextStyle(
-                                        color: Colors.black,
-                                        letterSpacing: .5),
+                                        color: Colors.black, letterSpacing: .5),
                                     fontWeight: FontWeight.w600),
                               ),
                             ],
@@ -397,15 +385,13 @@ class _CreationOffreState extends State<CreationOffre> {
                             height: 10,
                           ),
                           Row(
-                            mainAxisAlignment:
-                                MainAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               Text(
                                 'A propos du poste :',
                                 style: GoogleFonts.montserrat(
                                     textStyle: TextStyle(
-                                        color: Colors.black,
-                                        letterSpacing: .5),
+                                        color: Colors.black, letterSpacing: .5),
                                     fontWeight: FontWeight.w600),
                               ),
                             ],
@@ -415,25 +401,52 @@ class _CreationOffreState extends State<CreationOffre> {
                             height: 10,
                           ),
                           Row(
-                            mainAxisAlignment:
-                                MainAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               Text(
                                 'Compétences :',
                                 style: GoogleFonts.montserrat(
                                     textStyle: TextStyle(
-                                        color: Colors.black,
-                                        letterSpacing: .5),
+                                        color: Colors.black, letterSpacing: .5),
                                     fontWeight: FontWeight.w600),
                               ),
                             ],
-                          ),competencesField,
-                           const SizedBox(
+                          ),
+                          competencesField,
+                          const SizedBox(
                             height: 20,
                           ),
                           ConfirmButton
                         ])))
               ]),
             )));
+  }
+
+  postOfferToFirestore() async {
+    //calling our firestore
+    //calling our user model
+    //sending these values
+
+    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+    User? user = _auth.currentUser;
+    if (_formKey.currentState!.validate()) {
+      OffreModel offre = OffreModel();
+      //writing all the values
+      offre.titre = TitreController.text;
+      offre.poste = posteController.text;
+      if (user != null) {
+        offre.recruiteruid = user.uid;
+      } else {
+        offre.recruiteruid = "user uid not found ";
+      }
+      offre.entreprise = entrepriseController.text;
+      offre.domaine = domaineController.text;
+      offre.details = detailsController.text;
+      offre.competences = competencesController.getTags;
+
+      await firebaseFirestore.collection("offres").doc().set(offre.toMap());
+      Fluttertoast.showToast(msg: "Offre created successfully");
+    } // Navigator.pushAndRemoveUntil(context,
+    //     MaterialPageRoute(builder: (context) => login()), (route) => false);
   }
 }

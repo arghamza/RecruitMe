@@ -5,10 +5,10 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
+import '../API/linkedin.dart';
 import 'choice_screen.dart';
-import 'linkedin.dart';
+import '../API/linkedin.dart';
 import 'login_screen.dart';
-
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);

@@ -1,10 +1,9 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:user_type_screen/Demandeur/add_info_screen.dart';
-import 'package:user_type_screen/Demandeur/test.dart';
-import 'package:user_type_screen/Recruiter/creationoffre_screen.dart';
-
-import 'Login/home.dart';
+import 'package:user_type_screen/Login/home.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -31,7 +30,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blueGrey,
       ),
-      home: MainPage(),
+      home: HomeScreen(),
     );
   }
 }

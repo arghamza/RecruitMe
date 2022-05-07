@@ -5,6 +5,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:user_type_screen/Recruiter/creationoffre_screen.dart';
+import 'package:user_type_screen/Recruiter/recruiter_screen.dart';
 
 import '../model/user_model.dart';
 
@@ -110,7 +112,10 @@ class _Info_screenState extends State<Info_screen> {
       borderRadius: BorderRadius.circular(30),
       color: const Color(0xff35ddaa),
       child: MaterialButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.of(context)
+              .push(MaterialPageRoute(builder: (context) => Recruiter()));
+        },
         child: Text("Confirmer",
             textAlign: TextAlign.center,
             style: GoogleFonts.montserrat(
@@ -168,7 +173,7 @@ class _Info_screenState extends State<Info_screen> {
                         radius: 60,
                       ),
                       SizedBox(
-                        width: 15,
+                        width: 10,
                       ),
                       Column(
                         children: [
