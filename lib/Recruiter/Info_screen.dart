@@ -3,11 +3,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:user_type_screen/Recruiter/creationoffre_screen.dart';
+
 import 'package:user_type_screen/Recruiter/recruiter_screen.dart';
 
+import '../model/recruiter_model.dart';
 import '../model/user_model.dart';
 
 class Info_screen extends StatefulWidget {
@@ -20,10 +22,11 @@ class Info_screen extends StatefulWidget {
 class _Info_screenState extends State<Info_screen> {
   @override
   final _formKey = GlobalKey<FormState>();
+  final _auth = FirebaseAuth.instance;
   final TextEditingController entrepriseController =
       new TextEditingController();
   final TextEditingController posteController = new TextEditingController();
-
+  final TextEditingController linkedinController = new TextEditingController();
   User? user = FirebaseAuth.instance.currentUser;
   UserModel loggedInUser = UserModel();
   @override
@@ -87,7 +90,7 @@ class _Info_screenState extends State<Info_screen> {
 
     final LinkedInField = TextFormField(
         autofocus: false,
-        controller: posteController,
+        controller: linkedinController,
         keyboardType: TextInputType.url,
         onSaved: (value) {
           posteController.text = value!;
@@ -113,6 +116,7 @@ class _Info_screenState extends State<Info_screen> {
       color: const Color(0xff35ddaa),
       child: MaterialButton(
         onPressed: () {
+          addUserTorecruiters();
           Navigator.of(context)
               .push(MaterialPageRoute(builder: (context) => Recruiter()));
         },
@@ -268,5 +272,33 @@ class _Info_screenState extends State<Info_screen> {
             ),
           ),
         ));
+  }
+
+  addUserTorecruiters() async {
+    //calling our firestore
+    //calling our user model
+    //sending these values
+
+    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+    User? user = _auth.currentUser;
+    if (_formKey.currentState!.validate()) {
+      RecruiterModel recruiter = RecruiterModel();
+      //writing all the values
+      recruiter.linkedin = linkedinController.text;
+      recruiter.poste = posteController.text;
+      recruiter.offres = []; 
+      if (user != null) {
+        recruiter.useruid = user.uid;
+      } else {
+        recruiter.useruid = "user uid not found ";
+      }
+      recruiter.entreprise = entrepriseController.text;
+
+      await firebaseFirestore
+          .collection("recruteurs")
+          .doc()
+          .set(recruiter.toMap());
+    } // Navigator.pushAndRemoveUntil(context,
+    //     MaterialPageRoute(builder: (context) => login()), (route) => false);
   }
 }
