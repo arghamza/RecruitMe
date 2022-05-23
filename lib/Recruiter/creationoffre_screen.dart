@@ -29,13 +29,12 @@ class CreationOffre extends StatefulWidget {
 class _CreationOffreState extends State<CreationOffre> {
   final _formKey = GlobalKey<FormState>();
   final _auth = FirebaseAuth.instance;
-  final TextEditingController TitreController = new TextEditingController();
-  final TextEditingController entrepriseController =
-      new TextEditingController();
-  final TextEditingController posteController = new TextEditingController();
-  final TextEditingController domaineController = new TextEditingController();
-  final TextEditingController detailsController = new TextEditingController();
-  TextfieldTagsController competencesController = new TextfieldTagsController();
+  final TextEditingController TitreController = TextEditingController();
+  final TextEditingController entrepriseController = TextEditingController();
+  final TextEditingController posteController = TextEditingController();
+  final TextEditingController domaineController = TextEditingController();
+  final TextEditingController detailsController = TextEditingController();
+  TextfieldTagsController competencesController = TextfieldTagsController();
   @override
   Widget build(BuildContext context) {
     final titreField = TextFormField(
@@ -45,7 +44,7 @@ class _CreationOffreState extends State<CreationOffre> {
         TitreController.text = value!;
       },
       validator: (value) {
-        RegExp regex = new RegExp(r'^.{3,}$');
+        RegExp regex = RegExp(r'^.{3,}$');
         if (value!.isEmpty) {
           return ("Please Enter a title ");
         }
@@ -75,7 +74,7 @@ class _CreationOffreState extends State<CreationOffre> {
         entrepriseController.text = value!;
       },
       validator: (value) {
-        RegExp regex = new RegExp(r'^.{3,}$');
+        RegExp regex = RegExp(r'^.{3,}$');
         if (value!.isEmpty) {
           return ("Please Enter a name ");
         }
@@ -103,7 +102,7 @@ class _CreationOffreState extends State<CreationOffre> {
         posteController.text = value!;
       },
       validator: (value) {
-        RegExp regex = new RegExp(r'^.{3,}$');
+        RegExp regex = RegExp(r'^.{3,}$');
         if (value!.isEmpty) {
           return ("Please Enter a name ");
         }
