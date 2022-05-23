@@ -8,6 +8,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'package:textfield_tags/textfield_tags.dart';
+import 'package:user_type_screen/Recruiter/recruiter_screen.dart';
 import 'package:user_type_screen/model/offre_model.dart';
 
 class CreationOffre extends StatefulWidget {
@@ -442,9 +443,33 @@ class _CreationOffreState extends State<CreationOffre> {
       offre.domaine = domaineController.text;
       offre.details = detailsController.text;
       offre.competences = competencesController.getTags;
+      var id;
+      await firebaseFirestore
+          .collection("offres")
+          .add(offre.toMap())
+          .then((value) {
+        id = value.id;
+      });
 
-      await firebaseFirestore.collection("offres").doc().set(offre.toMap());
+      var liste_offre = [];
+      liste_offre.add(id);
       Fluttertoast.showToast(msg: "Offre created successfully");
+      var doc;
+      firebaseFirestore
+          .collection("recruteurs")
+          .where("useruid", isEqualTo: user?.uid)
+          .get()
+          .then((query) => {
+                if (query != null)
+                  {
+                    doc = firebaseFirestore
+                        .collection("recruteurs")
+                        .doc(query.docs[0].id)
+                        .update({"offres": FieldValue.arrayUnion(liste_offre)})
+                  }
+                else
+                  {print("shit not working bruh !!!!!!!!!!!!!!!!!!!!!!!!!!!!")}
+              });
     } // Navigator.pushAndRemoveUntil(context,
     //     MaterialPageRoute(builder: (context) => login()), (route) => false);
   }
