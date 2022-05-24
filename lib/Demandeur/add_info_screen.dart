@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, unnecessary_this
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, unnecessary_this, non_constant_identifier_names, override_on_non_overriding_member, avoid_print, prefer_adjacent_string_concatenation, unused_local_variable, prefer_typing_uninitialized_variables
 
 import 'dart:io';
 
@@ -9,9 +9,11 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:textfield_tags/textfield_tags.dart';
 import 'package:user_type_screen/API/FireabaseApi.dart';
 import 'package:user_type_screen/Demandeur/buttom_navbar.dart';
 
+import '../model/applicant_model.dart';
 import '../model/user_model.dart';
 
 class ApplicantScreen extends StatefulWidget {
@@ -24,9 +26,12 @@ class ApplicantScreen extends StatefulWidget {
 class _ApplicantScreenState extends State<ApplicantScreen> {
   @override
   final _formKey = GlobalKey<FormState>();
-  final TextEditingController entrepriseController =
-      new TextEditingController();
-  final TextEditingController posteController = new TextEditingController();
+  final TextEditingController entrepriseController = TextEditingController();
+  final TextEditingController posteController = TextEditingController();
+  final TextEditingController linkedController = TextEditingController();
+  final TextEditingController domaineController = TextEditingController();
+  final TextEditingController expYearController = TextEditingController();
+  TextfieldTagsController competencesController = TextfieldTagsController();
 
   User? user = FirebaseAuth.instance.currentUser;
   UserModel loggedInUser = UserModel();
@@ -96,7 +101,7 @@ class _ApplicantScreenState extends State<ApplicantScreen> {
 
     final LinkedInField = TextFormField(
         autofocus: false,
-        controller: posteController,
+        controller: linkedController,
         keyboardType: TextInputType.url,
         onSaved: (value) {
           posteController.text = value!;
@@ -118,7 +123,7 @@ class _ApplicantScreenState extends State<ApplicantScreen> {
 
     final DomaineField = TextFormField(
         autofocus: false,
-        controller: posteController,
+        controller: domaineController,
         keyboardType: TextInputType.url,
         onSaved: (value) {
           posteController.text = value!;
@@ -140,7 +145,7 @@ class _ApplicantScreenState extends State<ApplicantScreen> {
 
     final YearsField = TextFormField(
         autofocus: false,
-        controller: posteController,
+        controller: expYearController,
         keyboardType: TextInputType.url,
         onSaved: (value) {
           posteController.text = value!;
@@ -166,7 +171,7 @@ class _ApplicantScreenState extends State<ApplicantScreen> {
       color: const Color(0xff35ddaa),
       child: MaterialButton(
         onPressed: () {
-          uploadFile();
+          addUserToapplicants();
           Navigator.of(context)
               .push(MaterialPageRoute(builder: (context) => BottomNavBar()));
         },
@@ -181,6 +186,88 @@ class _ApplicantScreenState extends State<ApplicantScreen> {
         padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
         minWidth: MediaQuery.of(context).size.width,
       ),
+    );
+    final competencesField = TextFieldTags(
+      textfieldTagsController: competencesController,
+      initialTags: const ['Leadership', 'Flutter'],
+      textSeparators: const [' ', ','],
+      letterCase: LetterCase.normal,
+      validator: (String tag) {
+        if (competencesController.getTags!.contains(tag)) {
+          return 'you already entered that';
+        }
+        return null;
+      },
+      inputfieldBuilder: (context, tec, fn, error, onChanged, onSubmitted) {
+        return ((context, sc, tags, onTagDelete) {
+          return Padding(
+            padding: const EdgeInsets.all(7.0),
+            child: TextField(
+              controller: tec,
+              focusNode: fn,
+              decoration: InputDecoration(
+                helperText: 'ajoutez une compétence ...',
+                helperStyle: const TextStyle(
+                  color: Colors.black,
+                ),
+                hintText: competencesController.hasTags ? '' : "...",
+                errorText: error,
+                prefixIconConstraints:
+                    BoxConstraints(maxWidth: MediaQuery.of(context).size.width),
+                prefixIcon: tags.isNotEmpty
+                    ? SingleChildScrollView(
+                        controller: sc,
+                        scrollDirection: Axis.horizontal,
+                        child: Row(
+                            children: tags.map((String tag) {
+                          return Container(
+                            decoration: BoxDecoration(
+                              // border: Border.all(color:Color.fromARGB(255, 24, 165, 123)),
+
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(15.0),
+                              ),
+                              color: const Color.fromARGB(255, 190, 244, 227),
+                            ),
+                            margin: const EdgeInsets.symmetric(horizontal: 5.0),
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 10.0, vertical: 5.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                InkWell(
+                                  child: Text(
+                                    tag,
+                                    style: const TextStyle(color: Colors.black),
+                                  ),
+                                  onTap: () {
+                                    print("$tag selected");
+                                  },
+                                ),
+                                const SizedBox(width: 4.0),
+                                InkWell(
+                                  child: const Icon(
+                                    Icons.cancel,
+                                    size: 14.0,
+                                    color: Colors.black,
+                                  ),
+                                  onTap: () {
+                                    onTagDelete(tag);
+                                  },
+                                )
+                              ],
+                            ),
+                          );
+                        }).toList()),
+                      )
+                    : null,
+              ),
+              onChanged: onChanged,
+              onSubmitted: onSubmitted,
+            ),
+          );
+        });
+      },
     );
 
     return Scaffold(
@@ -386,6 +473,10 @@ class _ApplicantScreenState extends State<ApplicantScreen> {
                           task != null ? buildUploadStatus(task!) : Container(),
                         ]),
                     SizedBox(
+                      width: 10,
+                    ),
+                    competencesField,
+                    SizedBox(
                       height: 15,
                     ),
                     loginButton,
@@ -443,4 +534,32 @@ class _ApplicantScreenState extends State<ApplicantScreen> {
           }
         },
       );
+
+  addUserToapplicants() async {
+    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+    FirebaseAuth _auth = FirebaseAuth.instance;
+    User? user = _auth.currentUser;
+    if (_formKey.currentState!.validate()) {
+      ApplicantModel applicant = ApplicantModel();
+      //writing all the values
+      applicant.linkedin = linkedController.text;
+      applicant.poste = posteController.text;
+      applicant.domaine = domaineController.text;
+      applicant.entreprise = entrepriseController.text;
+      applicant.expYears = int.parse(expYearController.text);
+      applicant.cv = "";
+      if (user != null) {
+        applicant.useruid = user.uid;
+      } else {
+        applicant.useruid = "user uid not found ";
+      }
+      //
+      var doc;
+      doc = firebaseFirestore
+          .collection("users")
+          .doc(user?.uid)
+          .update({"details": applicant.toMap(), "userType": "applicant"});
+    } // Navigator.pushAndRemoveUntil(context,
+    //     MaterialPageRoute(builder: (context) => login()), (route) => false);
+  }
 }

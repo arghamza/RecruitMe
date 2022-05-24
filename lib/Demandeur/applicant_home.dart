@@ -1,10 +1,10 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
-
-import 'dart:ui';
-
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, curly_braces_in_flow_control_structures, annotate_overrides
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:user_type_screen/model/offre_model.dart';
+import 'buttom_navbar.dart';
 
 class ApplicantHome extends StatefulWidget {
   const ApplicantHome({Key? key}) : super(key: key);
@@ -14,7 +14,18 @@ class ApplicantHome extends StatefulWidget {
 }
 
 class _ApplicantHomeState extends State<ApplicantHome> {
+  static int i = 0;
+  int? x;
+  OffreModel? offer;
   @override
+  void initState() {
+    super.initState();
+    FirebaseFirestore.instance.collection("offres").get().then((query) => {
+          offer = OffreModel.fromMap(query.docs[i].data()),
+          setState(() {}),
+        });
+  }
+
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
@@ -34,7 +45,7 @@ class _ApplicantHomeState extends State<ApplicantHome> {
                 Container(
                   margin: EdgeInsets.only(top: 20, bottom: 30),
                   child: Text(
-                    'Titre de l\'offre',
+                    '${offer?.titre}',
                     style: GoogleFonts.montserrat(
                         textStyle: TextStyle(
                             color: Colors.black,
@@ -55,7 +66,7 @@ class _ApplicantHomeState extends State<ApplicantHome> {
                         fontWeight: FontWeight.w600),
                   ),
                   TextSpan(
-                    text: 'Google',
+                    text: '${offer?.entreprise}',
                     style: GoogleFonts.montserrat(
                         textStyle: TextStyle(
                             color: Colors.black,
@@ -79,7 +90,7 @@ class _ApplicantHomeState extends State<ApplicantHome> {
                         fontWeight: FontWeight.w600),
                   ),
                   TextSpan(
-                    text: 'Stagiaire',
+                    text: '${offer?.poste}',
                     style: GoogleFonts.montserrat(
                         textStyle: TextStyle(
                             color: Colors.black,
@@ -103,7 +114,7 @@ class _ApplicantHomeState extends State<ApplicantHome> {
                         fontWeight: FontWeight.w600),
                   ),
                   TextSpan(
-                    text: 'Informatique',
+                    text: '${offer?.domaine}',
                     style: GoogleFonts.montserrat(
                         textStyle: TextStyle(
                             color: Colors.black,
@@ -135,7 +146,7 @@ class _ApplicantHomeState extends State<ApplicantHome> {
                       child: Padding(
                     padding: const EdgeInsets.all(20.0),
                     child: Text(
-                      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a, mattis tellus. Sed dignissim, metus nec fringilla accumsan, risus sem sollicitudin lacus, ut interdum tellus elit sed risus. Maecenas eget condimentum velit, sit amet feugiat lectus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Praesent auctor purus luctus enim egestas, ac scelerisque ante pulvinar. Donec ut rhoncus ex. Suspendisse ac rhoncus nisl, eu tempor urna. Curabitur vel bibendum lorem. Morbi convallis convallis diam sit amet lacinia. Aliquam in elementum tellus.",
+                      "${offer?.details}",
                       style: GoogleFonts.montserrat(
                           textStyle: TextStyle(
                               color: Colors.black,
@@ -173,16 +184,25 @@ class _ApplicantHomeState extends State<ApplicantHome> {
               SizedBox(
                 width: 65,
               ),
-              Container(
-                width: 70,
-                height: 70,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(80),
-                  color: const Color(0xff35ddaa),
-                ),
-                child: Icon(
-                  FontAwesomeIcons.suitcase,
-                  size: 40,
+              GestureDetector(
+                onTap: () async => {
+                  x = await getOffersNumber(),
+                  print(x),
+                  if (i + 1 > x!) i = 0 else i++,
+                  Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => BottomNavBar())),
+                },
+                child: Container(
+                  width: 70,
+                  height: 70,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(80),
+                    color: const Color(0xff35ddaa),
+                  ),
+                  child: Icon(
+                    FontAwesomeIcons.suitcase,
+                    size: 40,
+                  ),
                 ),
               ),
             ],
@@ -190,5 +210,12 @@ class _ApplicantHomeState extends State<ApplicantHome> {
         )
       ],
     );
+  }
+
+  Future<int> getOffersNumber() async {
+    return await FirebaseFirestore.instance
+        .collection('offres')
+        .snapshots()
+        .length;
   }
 }

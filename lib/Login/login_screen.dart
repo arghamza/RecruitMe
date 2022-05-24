@@ -1,14 +1,16 @@
-// ignore_for_file: unnecessary_this, prefer_const_constructors
+// ignore_for_file: unnecessary_this, prefer_const_constructors, camel_case_types, body_might_complete_normally_nullable, unused_local_variable, prefer_typing_uninitialized_variables
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:user_type_screen/Login/registration_screen.dart';
+import 'package:user_type_screen/model/user_model.dart';
 
+import '../Demandeur/buttom_navbar.dart';
+import '../Recruiter/recruiter_screen.dart';
 import 'choice_screen.dart';
-
 
 class login extends StatefulWidget {
   const login({Key? key}) : super(key: key);
@@ -19,8 +21,8 @@ class login extends StatefulWidget {
 
 class _loginState extends State<login> {
   final _formKey = GlobalKey<FormState>();
-  final TextEditingController emailController = new TextEditingController();
-  final TextEditingController passwordController = new TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
 
   final _auth = FirebaseAuth.instance;
 
@@ -63,7 +65,7 @@ class _loginState extends State<login> {
         autofocus: false,
         controller: passwordController,
         validator: (value) {
-          RegExp regex = new RegExp(r'^.{6,}$');
+          RegExp regex = RegExp(r'^.{6,}$');
           if (value!.isEmpty) {
             return ("Please Enter your password");
           }
@@ -211,13 +213,35 @@ class _loginState extends State<login> {
   }
 
   void signIn(String email, String password) async {
+    var doc;
+    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+    UserModel user;
     if (_formKey.currentState!.validate()) {
       await _auth
           .signInWithEmailAndPassword(email: email, password: password)
           .then((uid) => {
-                Fluttertoast.showToast(msg: "Login Sucessful"),
-                Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => ChoiceScreen())),
+                Fluttertoast.showToast(msg: '"login successful'),
+                FirebaseFirestore.instance
+                    .collection("users")
+                    .doc(uid.user!.uid)
+                    .get()
+                    .then((value) {
+                  UserModel loggedInUser = UserModel.fromMap(value.data());
+                  switch (loggedInUser.userType) {
+                    case " ":
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => ChoiceScreen()));
+                      break;
+                    case "applicant":
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => BottomNavBar()));
+                      break;
+                    case "recruiter":
+                      Navigator.of(context).push(
+                          MaterialPageRoute(builder: (context) => Recruiter()));
+                      break;
+                  }
+                })
               })
           .catchError((e) {
         Fluttertoast.showToast(msg: e!.message);

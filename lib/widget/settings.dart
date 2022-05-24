@@ -18,8 +18,7 @@ class _SettingsState extends State<Settings> {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(30.0),
-      child: Container(
-          child: Column(
+      child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           SizedBox(
@@ -104,7 +103,7 @@ class _SettingsState extends State<Settings> {
             color: const Color(0xff35ddaa),
           ),
         ],
-      )),
+      ),
     );
   }
 

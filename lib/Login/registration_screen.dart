@@ -1,11 +1,9 @@
-// ignore_for_file: unnecessary_this, prefer_const_constructors, unnecessary_new, non_constant_identifier_names
+// ignore_for_file: unnecessary_this, prefer_const_constructors, unnecessary_new, non_constant_identifier_names, annotate_overrides, body_might_complete_normally_nullable, sized_box_for_whitespace, avoid_unnecessary_containers
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
-
 
 import '../model/user_model.dart';
 import 'login_screen.dart';
@@ -259,8 +257,7 @@ class _RegistrationState extends State<Registration> {
                                 'Prénom:',
                                 style: GoogleFonts.montserrat(
                                     textStyle: TextStyle(
-                                        color: Colors.black,
-                                        letterSpacing: .5),
+                                        color: Colors.black, letterSpacing: .5),
                                     fontWeight: FontWeight.w600),
                               ),
                             ],
@@ -276,8 +273,7 @@ class _RegistrationState extends State<Registration> {
                                 'Nom:',
                                 style: GoogleFonts.montserrat(
                                     textStyle: TextStyle(
-                                        color: Colors.black,
-                                        letterSpacing: .5),
+                                        color: Colors.black, letterSpacing: .5),
                                     fontWeight: FontWeight.w600),
                               ),
                             ],
@@ -293,8 +289,7 @@ class _RegistrationState extends State<Registration> {
                                 'Email:',
                                 style: GoogleFonts.montserrat(
                                     textStyle: TextStyle(
-                                        color: Colors.black,
-                                        letterSpacing: .5),
+                                        color: Colors.black, letterSpacing: .5),
                                     fontWeight: FontWeight.w600),
                               ),
                             ],
@@ -310,8 +305,7 @@ class _RegistrationState extends State<Registration> {
                                 'Mot de passe:',
                                 style: GoogleFonts.montserrat(
                                     textStyle: TextStyle(
-                                        color: Colors.black,
-                                        letterSpacing: .5),
+                                        color: Colors.black, letterSpacing: .5),
                                     fontWeight: FontWeight.w600),
                               ),
                             ],
@@ -327,8 +321,7 @@ class _RegistrationState extends State<Registration> {
                                 'Confirmer mot de passe:',
                                 style: GoogleFonts.montserrat(
                                     textStyle: TextStyle(
-                                        color: Colors.black,
-                                        letterSpacing: .5),
+                                        color: Colors.black, letterSpacing: .5),
                                     fontWeight: FontWeight.w600),
                               ),
                             ],
@@ -350,7 +343,6 @@ class _RegistrationState extends State<Registration> {
             ),
           ),
         ));
-    ;
   }
 
   void signUp(String email, String password) async {
@@ -378,6 +370,8 @@ class _RegistrationState extends State<Registration> {
     userModel.uid = user.uid;
     userModel.FirstName = FirstNameController.text;
     userModel.SecondName = SecondNameController.text;
+    userModel.userType = " ";
+    userModel.offres = [];
 
     await firebaseFirestore
         .collection("users")

@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:user_type_screen/Demandeur/applicant_home.dart';
 import 'package:user_type_screen/Recruiter/recruiter_home.dart';
 import 'package:user_type_screen/widget/settings.dart';
 

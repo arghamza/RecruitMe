@@ -1,5 +1,6 @@
+// ignore_for_file: prefer_const_constructors, sized_box_for_whitespace
+
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:user_type_screen/Demandeur/add_info_screen.dart';
@@ -19,15 +20,6 @@ class _ChoiceScreenState extends State<ChoiceScreen> {
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
-          leading: IconButton(
-            icon: Icon(
-              Icons.arrow_back,
-              color: const Color(0xff35ddaa),
-            ),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-          ),
           backgroundColor: Colors.white,
           toolbarHeight: 80,
           title: Row(
@@ -169,9 +161,4 @@ class _ChoiceScreenState extends State<ChoiceScreen> {
           ),
         ));
   }
-
-
-
-
-
 }

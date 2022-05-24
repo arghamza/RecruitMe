@@ -2,9 +2,7 @@
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:user_type_screen/Demandeur/add_info_screen.dart';
 import 'package:user_type_screen/Login/home.dart';
-import 'package:user_type_screen/Recruiter/Info_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -34,5 +32,4 @@ class MyApp extends StatelessWidget {
       home: HomeScreen(),
     );
   }
-  
 }

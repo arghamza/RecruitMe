@@ -1,14 +1,12 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, non_constant_identifier_names, unused_local_variable, avoid_print, prefer_typing_uninitialized_variables
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart' show rootBundle;
 import 'package:fluttertoast/fluttertoast.dart';
 
 import 'package:google_fonts/google_fonts.dart';
 
 import 'package:textfield_tags/textfield_tags.dart';
-import 'package:user_type_screen/Recruiter/recruiter_screen.dart';
 import 'package:user_type_screen/model/offre_model.dart';
 
 class CreationOffre extends StatefulWidget {
@@ -131,7 +129,7 @@ class _CreationOffreState extends State<CreationOffre> {
         domaineController.text = value!;
       },
       validator: (value) {
-        RegExp regex = new RegExp(r'^.{3,}$');
+        RegExp regex = RegExp(r'^.{3,}$');
         if (value!.isEmpty) {
           return ("Please Enter a name ");
         }
@@ -159,7 +157,7 @@ class _CreationOffreState extends State<CreationOffre> {
         detailsController.text = value!;
       },
       validator: (value) {
-        RegExp regex = new RegExp(r'^.{3,}$');
+        RegExp regex = RegExp(r'^.{3,}$');
         if (value!.isEmpty) {
           return ("Please Enter a name ");
         }
@@ -233,7 +231,7 @@ class _CreationOffreState extends State<CreationOffre> {
                               children: [
                                 InkWell(
                                   child: Text(
-                                    '$tag',
+                                    tag,
                                     style: const TextStyle(color: Colors.black),
                                   ),
                                   onTap: () {
@@ -315,11 +313,10 @@ class _CreationOffreState extends State<CreationOffre> {
                         ))),
                 Padding(
                     padding: const EdgeInsets.all(30.0),
-                    child: Container(
-                        child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
+                    child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
                           Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
@@ -417,7 +414,7 @@ class _CreationOffreState extends State<CreationOffre> {
                             height: 20,
                           ),
                           ConfirmButton
-                        ])))
+                        ]))
               ]),
             )));
   }
@@ -435,9 +432,9 @@ class _CreationOffreState extends State<CreationOffre> {
       offre.titre = TitreController.text;
       offre.poste = posteController.text;
       if (user != null) {
-        offre.recruiteruid = user.uid;
+        offre.useruid = user.uid;
       } else {
-        offre.recruiteruid = "user uid not found ";
+        offre.useruid = "user uid not found ";
       }
       offre.entreprise = entrepriseController.text;
       offre.domaine = domaineController.text;
@@ -452,24 +449,13 @@ class _CreationOffreState extends State<CreationOffre> {
       });
 
       var liste_offre = [];
-      liste_offre.add(id);
+      liste_offre.add(offre);
       Fluttertoast.showToast(msg: "Offre created successfully");
       var doc;
-      firebaseFirestore
-          .collection("recruteurs")
-          .where("useruid", isEqualTo: user?.uid)
-          .get()
-          .then((query) => {
-                if (query != null)
-                  {
-                    doc = firebaseFirestore
-                        .collection("recruteurs")
-                        .doc(query.docs[0].id)
-                        .update({"offres": FieldValue.arrayUnion(liste_offre)})
-                  }
-                else
-                  {print("shit not working bruh !!!!!!!!!!!!!!!!!!!!!!!!!!!!")}
-              });
+      doc = firebaseFirestore
+          .collection("users")
+          .doc(user?.uid)
+          .update({"offres": FieldValue.arrayUnion(liste_offre)});
     } // Navigator.pushAndRemoveUntil(context,
     //     MaterialPageRoute(builder: (context) => login()), (route) => false);
   }

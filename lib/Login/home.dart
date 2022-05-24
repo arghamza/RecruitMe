@@ -1,5 +1,6 @@
+// ignore_for_file: prefer_const_constructors, sized_box_for_whitespace
+
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -7,7 +8,6 @@ import 'package:google_sign_in/google_sign_in.dart';
 
 import '../API/linkedin.dart';
 import 'choice_screen.dart';
-import '../API/linkedin.dart';
 import 'login_screen.dart';
 
 class HomeScreen extends StatefulWidget {

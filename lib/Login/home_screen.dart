@@ -1,11 +1,9 @@
-// ignore_for_file: unnecessary_this, prefer_const_constructors
+// ignore_for_file: unnecessary_this, prefer_const_constructors, annotate_overrides
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
 
 import '../model/user_model.dart';
 import 'login_screen.dart';

@@ -1,9 +1,8 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, unnecessary_this
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, unnecessary_this, camel_case_types, file_names, override_on_non_overriding_member, non_constant_identifier_names, prefer_adjacent_string_concatenation, unused_local_variable, prefer_typing_uninitialized_variables
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -23,10 +22,9 @@ class _Info_screenState extends State<Info_screen> {
   @override
   final _formKey = GlobalKey<FormState>();
   final _auth = FirebaseAuth.instance;
-  final TextEditingController entrepriseController =
-      new TextEditingController();
-  final TextEditingController posteController = new TextEditingController();
-  final TextEditingController linkedinController = new TextEditingController();
+  final TextEditingController entrepriseController = TextEditingController();
+  final TextEditingController posteController = TextEditingController();
+  final TextEditingController linkedinController = TextEditingController();
   User? user = FirebaseAuth.instance.currentUser;
   UserModel loggedInUser = UserModel();
   @override
@@ -275,10 +273,6 @@ class _Info_screenState extends State<Info_screen> {
   }
 
   addUserTorecruiters() async {
-    //calling our firestore
-    //calling our user model
-    //sending these values
-
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
     User? user = _auth.currentUser;
     if (_formKey.currentState!.validate()) {
@@ -286,7 +280,6 @@ class _Info_screenState extends State<Info_screen> {
       //writing all the values
       recruiter.linkedin = linkedinController.text;
       recruiter.poste = posteController.text;
-      recruiter.offres = []; 
       if (user != null) {
         recruiter.useruid = user.uid;
       } else {
@@ -294,10 +287,11 @@ class _Info_screenState extends State<Info_screen> {
       }
       recruiter.entreprise = entrepriseController.text;
 
-      await firebaseFirestore
-          .collection("recruteurs")
-          .doc()
-          .set(recruiter.toMap());
+      var doc;
+      doc = firebaseFirestore
+          .collection("users")
+          .doc(user?.uid)
+          .update({"details": recruiter.toMap(), "userType": "recruiter"});
     } // Navigator.pushAndRemoveUntil(context,
     //     MaterialPageRoute(builder: (context) => login()), (route) => false);
   }
