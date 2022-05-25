@@ -11,19 +11,22 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:textfield_tags/textfield_tags.dart';
 import 'package:user_type_screen/API/FireabaseApi.dart';
-import 'package:user_type_screen/Demandeur/buttom_navbar.dart';
+import 'package:user_type_screen/Demandeur/applicant.dart';
+import 'package:user_type_screen/constants.dart';
+import 'package:user_type_screen/widget/custom_input_widget.dart';
 
 import '../model/applicant_model.dart';
 import '../model/user_model.dart';
+import '../widget/competences.dart';
 
-class ApplicantScreen extends StatefulWidget {
-  const ApplicantScreen({Key? key}) : super(key: key);
+class ApplicantInfo extends StatefulWidget {
+  const ApplicantInfo({Key? key}) : super(key: key);
 
   @override
-  State<ApplicantScreen> createState() => _ApplicantScreenState();
+  State<ApplicantInfo> createState() => _ApplicantInfoState();
 }
 
-class _ApplicantScreenState extends State<ApplicantScreen> {
+class _ApplicantInfoState extends State<ApplicantInfo> {
   @override
   final _formKey = GlobalKey<FormState>();
   final TextEditingController entrepriseController = TextEditingController();
@@ -55,218 +58,25 @@ class _ApplicantScreenState extends State<ApplicantScreen> {
     final fileName =
         file != null ? file!.path.split('/').last : 'No File Selected';
 
-    final entrepriseField = TextFormField(
-        autofocus: false,
-        controller: entrepriseController,
-        keyboardType: TextInputType.text,
-        onSaved: (value) {
-          entrepriseController.text = value!;
-        },
-        textInputAction: TextInputAction.next,
-        decoration: InputDecoration(
-            fillColor: Color.fromARGB(255, 190, 244, 227),
-            filled: true,
-            prefixIcon: Icon(Icons.apartment),
-            contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-            hintText: "exp:Google...",
-            enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10.0),
-              borderSide: BorderSide(
-                color: Colors.white,
-                width: 2.0,
-              ),
-            )));
+    final entrepriseField = CustomInputWidget(
+        inputController: entrepriseController, hintText: "exp: Google, ...");
+    final posteField = CustomInputWidget(
+        inputController: posteController, hintText: "exp:developpeur...");
+    final linkedInField = CustomInputWidget(
+        inputController: linkedController, hintText: "LinkedIn");
+    final domaineField = CustomInputWidget(
+        inputController: domaineController, hintText: "exp:informatique...");
+    final yearsField = CustomInputWidget(
+        inputController: expYearController, hintText: "exp:0-5...");
+    final competencesField =
+        CompetenceWidget(competencesController: competencesController);
 
-    final posteField = TextFormField(
-        autofocus: false,
-        controller: posteController,
-        keyboardType: TextInputType.text,
-        onSaved: (value) {
-          posteController.text = value!;
-        },
-        textInputAction: TextInputAction.next,
-        decoration: InputDecoration(
-            fillColor: Color.fromARGB(255, 190, 244, 227),
-            filled: true,
-            prefixIcon: Icon(Icons.person),
-            contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-            hintText: "exp:developpeur...",
-            enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10.0),
-              borderSide: BorderSide(
-                color: Colors.white,
-                width: 2.0,
-              ),
-            )));
-
-    final LinkedInField = TextFormField(
-        autofocus: false,
-        controller: linkedController,
-        keyboardType: TextInputType.url,
-        onSaved: (value) {
-          posteController.text = value!;
-        },
-        textInputAction: TextInputAction.next,
-        decoration: InputDecoration(
-            fillColor: Color.fromARGB(255, 190, 244, 227),
-            filled: true,
-            prefixIcon: Icon(FontAwesomeIcons.linkedinIn),
-            contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-            hintText: "LinkedIn",
-            enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10.0),
-              borderSide: BorderSide(
-                color: Colors.white,
-                width: 2.0,
-              ),
-            )));
-
-    final DomaineField = TextFormField(
-        autofocus: false,
-        controller: domaineController,
-        keyboardType: TextInputType.url,
-        onSaved: (value) {
-          posteController.text = value!;
-        },
-        textInputAction: TextInputAction.next,
-        decoration: InputDecoration(
-            fillColor: Color.fromARGB(255, 190, 244, 227),
-            filled: true,
-            prefixIcon: Icon(FontAwesomeIcons.briefcase),
-            contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-            hintText: "exp:informatique...",
-            enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10.0),
-              borderSide: BorderSide(
-                color: Colors.white,
-                width: 2.0,
-              ),
-            )));
-
-    final YearsField = TextFormField(
-        autofocus: false,
-        controller: expYearController,
-        keyboardType: TextInputType.url,
-        onSaved: (value) {
-          posteController.text = value!;
-        },
-        textInputAction: TextInputAction.next,
-        decoration: InputDecoration(
-            fillColor: Color.fromARGB(255, 190, 244, 227),
-            filled: true,
-            prefixIcon: Icon(FontAwesomeIcons.calendar),
-            contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-            hintText: "exp:0-5...",
-            enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10.0),
-              borderSide: BorderSide(
-                color: Colors.white,
-                width: 2.0,
-              ),
-            )));
-
-    final loginButton = Material(
-      elevation: 5,
-      borderRadius: BorderRadius.circular(30),
-      color: const Color(0xff35ddaa),
-      child: MaterialButton(
-        onPressed: () {
-          addUserToapplicants();
-          Navigator.of(context)
-              .push(MaterialPageRoute(builder: (context) => BottomNavBar()));
-        },
-        child: Text("Confirmer",
-            textAlign: TextAlign.center,
-            style: GoogleFonts.montserrat(
-              textStyle: TextStyle(
-                  color: Colors.white,
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold),
-            )),
-        padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-        minWidth: MediaQuery.of(context).size.width,
-      ),
-    );
-    final competencesField = TextFieldTags(
-      textfieldTagsController: competencesController,
-      initialTags: const ['Leadership', 'Flutter'],
-      textSeparators: const [' ', ','],
-      letterCase: LetterCase.normal,
-      validator: (String tag) {
-        if (competencesController.getTags!.contains(tag)) {
-          return 'you already entered that';
-        }
-        return null;
-      },
-      inputfieldBuilder: (context, tec, fn, error, onChanged, onSubmitted) {
-        return ((context, sc, tags, onTagDelete) {
-          return Padding(
-            padding: const EdgeInsets.all(7.0),
-            child: TextField(
-              controller: tec,
-              focusNode: fn,
-              decoration: InputDecoration(
-                helperText: 'ajoutez une compétence ...',
-                helperStyle: const TextStyle(
-                  color: Colors.black,
-                ),
-                hintText: competencesController.hasTags ? '' : "...",
-                errorText: error,
-                prefixIconConstraints:
-                    BoxConstraints(maxWidth: MediaQuery.of(context).size.width),
-                prefixIcon: tags.isNotEmpty
-                    ? SingleChildScrollView(
-                        controller: sc,
-                        scrollDirection: Axis.horizontal,
-                        child: Row(
-                            children: tags.map((String tag) {
-                          return Container(
-                            decoration: BoxDecoration(
-                              // border: Border.all(color:Color.fromARGB(255, 24, 165, 123)),
-
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(15.0),
-                              ),
-                              color: const Color.fromARGB(255, 190, 244, 227),
-                            ),
-                            margin: const EdgeInsets.symmetric(horizontal: 5.0),
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 10.0, vertical: 5.0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                InkWell(
-                                  child: Text(
-                                    tag,
-                                    style: const TextStyle(color: Colors.black),
-                                  ),
-                                  onTap: () {
-                                    print("$tag selected");
-                                  },
-                                ),
-                                const SizedBox(width: 4.0),
-                                InkWell(
-                                  child: const Icon(
-                                    Icons.cancel,
-                                    size: 14.0,
-                                    color: Colors.black,
-                                  ),
-                                  onTap: () {
-                                    onTagDelete(tag);
-                                  },
-                                )
-                              ],
-                            ),
-                          );
-                        }).toList()),
-                      )
-                    : null,
-              ),
-              onChanged: onChanged,
-              onSubmitted: onSubmitted,
-            ),
-          );
-        });
+    final loginButton = confirmButton(
+      context,
+      () {
+        addUserToapplicants();
+        Navigator.of(context)
+            .push(MaterialPageRoute(builder: (context) => Applicant()));
       },
     );
 
@@ -306,6 +116,7 @@ class _ApplicantScreenState extends State<ApplicantScreen> {
               key: _formKey,
               child: SingleChildScrollView(
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Row(
                       children: [
@@ -343,22 +154,14 @@ class _ApplicantScreenState extends State<ApplicantScreen> {
                     SizedBox(
                       height: 40,
                     ),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Domaine:',
-                          style: GoogleFonts.montserrat(
-                            textStyle: TextStyle(
-                                color: Colors.black, letterSpacing: .5),
-                          ),
-                        ),
-                      ],
+                    Text(
+                      'Domaine:',
+                      style: kFormsTextFont,
                     ),
                     SizedBox(
                       height: 10,
                     ),
-                    DomaineField,
+                    domaineField,
                     SizedBox(
                       height: 10,
                     ),
@@ -367,10 +170,7 @@ class _ApplicantScreenState extends State<ApplicantScreen> {
                       children: [
                         Text(
                           'Poste actuel:',
-                          style: GoogleFonts.montserrat(
-                            textStyle: TextStyle(
-                                color: Colors.black, letterSpacing: .5),
-                          ),
+                          style: kFormsTextFont,
                         ),
                       ],
                     ),
@@ -386,10 +186,7 @@ class _ApplicantScreenState extends State<ApplicantScreen> {
                       children: [
                         Text(
                           'Entreprise actuelle:',
-                          style: GoogleFonts.montserrat(
-                            textStyle: TextStyle(
-                                color: Colors.black, letterSpacing: .5),
-                          ),
+                          style: kFormsTextFont,
                         ),
                       ],
                     ),
@@ -405,17 +202,14 @@ class _ApplicantScreenState extends State<ApplicantScreen> {
                       children: [
                         Text(
                           'Années d\'expérience:',
-                          style: GoogleFonts.montserrat(
-                            textStyle: TextStyle(
-                                color: Colors.black, letterSpacing: .5),
-                          ),
+                          style: kFormsTextFont,
                         ),
                       ],
                     ),
                     SizedBox(
                       height: 10,
                     ),
-                    YearsField,
+                    yearsField,
                     SizedBox(
                       height: 18,
                     ),
@@ -424,17 +218,14 @@ class _ApplicantScreenState extends State<ApplicantScreen> {
                       children: [
                         Text(
                           'LinkedIn:',
-                          style: GoogleFonts.montserrat(
-                            textStyle: TextStyle(
-                                color: Colors.black, letterSpacing: .5),
-                          ),
+                          style: kFormsTextFont,
                         ),
                       ],
                     ),
                     SizedBox(
                       height: 10,
                     ),
-                    LinkedInField,
+                    linkedInField,
                     SizedBox(
                       height: 20,
                     ),
@@ -443,10 +234,7 @@ class _ApplicantScreenState extends State<ApplicantScreen> {
                         children: [
                           Text(
                             'Cv:',
-                            style: GoogleFonts.montserrat(
-                              textStyle: TextStyle(
-                                  color: Colors.black, letterSpacing: .5),
-                            ),
+                            style: kFormsTextFont,
                           ),
                           SizedBox(
                             width: 15,
@@ -489,6 +277,27 @@ class _ApplicantScreenState extends State<ApplicantScreen> {
             ),
           ),
         ));
+  }
+
+  Material confirmButton(BuildContext context, VoidCallback onPressed) {
+    return Material(
+      elevation: 5,
+      borderRadius: BorderRadius.circular(30),
+      color: const Color(0xff35ddaa),
+      child: MaterialButton(
+        onPressed: onPressed,
+        child: Text("Confirmer",
+            textAlign: TextAlign.center,
+            style: GoogleFonts.montserrat(
+              textStyle: TextStyle(
+                  color: Colors.white,
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold),
+            )),
+        padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+        minWidth: MediaQuery.of(context).size.width,
+      ),
+    );
   }
 
   Future selectFile() async {

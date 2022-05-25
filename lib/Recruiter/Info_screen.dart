@@ -3,13 +3,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'package:user_type_screen/Recruiter/recruiter_screen.dart';
 
 import '../model/recruiter_model.dart';
 import '../model/user_model.dart';
+import '../widget/custom_input_widget.dart';
 
 class Info_screen extends StatefulWidget {
   const Info_screen({Key? key}) : super(key: key);
@@ -42,71 +42,12 @@ class _Info_screenState extends State<Info_screen> {
 
   @override
   Widget build(BuildContext context) {
-    final entrepriseField = TextFormField(
-        autofocus: false,
-        controller: entrepriseController,
-        keyboardType: TextInputType.text,
-        onSaved: (value) {
-          entrepriseController.text = value!;
-        },
-        textInputAction: TextInputAction.next,
-        decoration: InputDecoration(
-            fillColor: Color.fromARGB(255, 190, 244, 227),
-            filled: true,
-            prefixIcon: Icon(Icons.apartment),
-            contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-            hintText: "Entreprise",
-            enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10.0),
-              borderSide: BorderSide(
-                color: Colors.white,
-                width: 2.0,
-              ),
-            )));
-
-    final posteField = TextFormField(
-        autofocus: false,
-        controller: posteController,
-        keyboardType: TextInputType.text,
-        onSaved: (value) {
-          posteController.text = value!;
-        },
-        textInputAction: TextInputAction.next,
-        decoration: InputDecoration(
-            fillColor: Color.fromARGB(255, 190, 244, 227),
-            filled: true,
-            prefixIcon: Icon(Icons.person),
-            contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-            hintText: "Poste",
-            enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10.0),
-              borderSide: BorderSide(
-                color: Colors.white,
-                width: 2.0,
-              ),
-            )));
-
-    final LinkedInField = TextFormField(
-        autofocus: false,
-        controller: linkedinController,
-        keyboardType: TextInputType.url,
-        onSaved: (value) {
-          posteController.text = value!;
-        },
-        textInputAction: TextInputAction.next,
-        decoration: InputDecoration(
-            fillColor: Color.fromARGB(255, 190, 244, 227),
-            filled: true,
-            prefixIcon: Icon(FontAwesomeIcons.linkedinIn),
-            contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-            hintText: "LinkedIn",
-            enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10.0),
-              borderSide: BorderSide(
-                color: Colors.white,
-                width: 2.0,
-              ),
-            )));
+    final entrepriseField = CustomInputWidget(
+        inputController: entrepriseController, hintText: "exp: Google, ...");
+    final posteField = CustomInputWidget(
+        inputController: posteController, hintText: "exp:developpeur...");
+    final linkedInField = CustomInputWidget(
+        inputController: linkedinController, hintText: "LinkedIn");
 
     final loginButton = Material(
       elevation: 5,
@@ -257,7 +198,7 @@ class _Info_screenState extends State<Info_screen> {
                   SizedBox(
                     height: 10,
                   ),
-                  LinkedInField,
+                  linkedInField,
                   SizedBox(
                     height: 120,
                   ),

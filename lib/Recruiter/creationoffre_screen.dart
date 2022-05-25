@@ -7,7 +7,12 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'package:textfield_tags/textfield_tags.dart';
+import 'package:user_type_screen/constants.dart';
 import 'package:user_type_screen/model/offre_model.dart';
+import 'package:user_type_screen/widget/confirmbutton.dart';
+
+import '../widget/competences.dart';
+import '../widget/custom_input_widget.dart';
 
 class CreationOffre extends StatefulWidget {
   const CreationOffre({Key? key}) : super(key: key);
@@ -28,7 +33,7 @@ class CreationOffre extends StatefulWidget {
 class _CreationOffreState extends State<CreationOffre> {
   final _formKey = GlobalKey<FormState>();
   final _auth = FirebaseAuth.instance;
-  final TextEditingController TitreController = TextEditingController();
+  final TextEditingController titreController = TextEditingController();
   final TextEditingController entrepriseController = TextEditingController();
   final TextEditingController posteController = TextEditingController();
   final TextEditingController domaineController = TextEditingController();
@@ -36,251 +41,24 @@ class _CreationOffreState extends State<CreationOffre> {
   TextfieldTagsController competencesController = TextfieldTagsController();
   @override
   Widget build(BuildContext context) {
-    final titreField = TextFormField(
-      autofocus: false,
-      controller: TitreController,
-      onSaved: (value) {
-        TitreController.text = value!;
-      },
-      validator: (value) {
-        RegExp regex = RegExp(r'^.{3,}$');
-        if (value!.isEmpty) {
-          return ("Please Enter a title ");
-        }
-        if (!regex.hasMatch(value)) {
-          return ("Please Enter a valid title (Min 3 char)");
-        }
-        return null;
-      },
-      decoration: InputDecoration(
-        fillColor: const Color.fromARGB(255, 190, 244, 227),
-        filled: true,
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10.0),
-          borderSide: const BorderSide(
-            color: Colors.white,
-            width: 2.0,
-          ),
-        ),
-        hintText: "exp: senior data engineer...",
-        contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
-      ),
-    );
-    final entrepriseField = TextFormField(
-      autofocus: false,
-      controller: entrepriseController,
-      onSaved: (value) {
-        entrepriseController.text = value!;
-      },
-      validator: (value) {
-        RegExp regex = RegExp(r'^.{3,}$');
-        if (value!.isEmpty) {
-          return ("Please Enter a name ");
-        }
+    final titreField = CustomInputWidget(
+        inputController: titreController,
+        hintText: "exp: senior data engineer...");
+    final entrepriseField = CustomInputWidget(
+        inputController: entrepriseController,
+        hintText: "exp: senior data engineer...");
+    final posteField = CustomInputWidget(
+        inputController: posteController, hintText: "exp: chef de projet ...");
+    final domaineField = CustomInputWidget(
+        inputController: domaineController, hintText: "exp: IT,finance...");
+    final detailsField = CustomInputWidget(
+        inputController: posteController, hintText: "exp: job details ...");
+    final competencesField =
+        CompetenceWidget(competencesController: competencesController);
 
-        return null;
-      },
-      decoration: InputDecoration(
-        fillColor: const Color.fromARGB(255, 190, 244, 227),
-        filled: true,
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10.0),
-          borderSide: const BorderSide(
-            color: Colors.white,
-            width: 2.0,
-          ),
-        ),
-        hintText: "exp: Google,IBM ...",
-        contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
-      ),
-    );
-    final posteField = TextFormField(
-      autofocus: false,
-      controller: posteController,
-      onSaved: (value) {
-        posteController.text = value!;
-      },
-      validator: (value) {
-        RegExp regex = RegExp(r'^.{3,}$');
-        if (value!.isEmpty) {
-          return ("Please Enter a name ");
-        }
-
-        return null;
-      },
-      decoration: InputDecoration(
-        fillColor: const Color.fromARGB(255, 190, 244, 227),
-        filled: true,
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10.0),
-          borderSide: const BorderSide(
-            color: Colors.white,
-            width: 2.0,
-          ),
-        ),
-        hintText: "exp: chef de projet ...",
-        contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
-      ),
-    );
-    final domaineField = TextFormField(
-      autofocus: false,
-      controller: domaineController,
-      onSaved: (value) {
-        domaineController.text = value!;
-      },
-      validator: (value) {
-        RegExp regex = RegExp(r'^.{3,}$');
-        if (value!.isEmpty) {
-          return ("Please Enter a name ");
-        }
-
-        return null;
-      },
-      decoration: InputDecoration(
-        fillColor: const Color.fromARGB(255, 190, 244, 227),
-        filled: true,
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10.0),
-          borderSide: const BorderSide(
-            color: Colors.white,
-            width: 2.0,
-          ),
-        ),
-        hintText: "exp: IT,finance...",
-        contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
-      ),
-    );
-    final detailsField = TextFormField(
-      autofocus: false,
-      controller: detailsController,
-      onSaved: (value) {
-        detailsController.text = value!;
-      },
-      validator: (value) {
-        RegExp regex = RegExp(r'^.{3,}$');
-        if (value!.isEmpty) {
-          return ("Please Enter a name ");
-        }
-
-        return null;
-      },
-      maxLines: 5,
-      decoration: InputDecoration(
-        fillColor: const Color.fromARGB(255, 190, 244, 227),
-        filled: true,
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10.0),
-          borderSide: const BorderSide(
-            color: Colors.white,
-            width: 2.0,
-          ),
-        ),
-        hintText: "exp: job details ...",
-        contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
-      ),
-    );
-
-    //tags
-    final competencesField = TextFieldTags(
-      textfieldTagsController: competencesController,
-      initialTags: const ['Leadership', 'Flutter'],
-      textSeparators: const [' ', ','],
-      letterCase: LetterCase.normal,
-      validator: (String tag) {
-        if (competencesController.getTags!.contains(tag)) {
-          return 'you already entered that';
-        }
-        return null;
-      },
-      inputfieldBuilder: (context, tec, fn, error, onChanged, onSubmitted) {
-        return ((context, sc, tags, onTagDelete) {
-          return Padding(
-            padding: const EdgeInsets.all(7.0),
-            child: TextField(
-              controller: tec,
-              focusNode: fn,
-              decoration: InputDecoration(
-                helperText: 'ajoutez une compétence ...',
-                helperStyle: const TextStyle(
-                  color: Colors.black,
-                ),
-                hintText: competencesController.hasTags ? '' : "...",
-                errorText: error,
-                prefixIconConstraints:
-                    BoxConstraints(maxWidth: MediaQuery.of(context).size.width),
-                prefixIcon: tags.isNotEmpty
-                    ? SingleChildScrollView(
-                        controller: sc,
-                        scrollDirection: Axis.horizontal,
-                        child: Row(
-                            children: tags.map((String tag) {
-                          return Container(
-                            decoration: BoxDecoration(
-                              // border: Border.all(color:Color.fromARGB(255, 24, 165, 123)),
-
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(15.0),
-                              ),
-                              color: const Color.fromARGB(255, 190, 244, 227),
-                            ),
-                            margin: const EdgeInsets.symmetric(horizontal: 5.0),
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 10.0, vertical: 5.0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                InkWell(
-                                  child: Text(
-                                    tag,
-                                    style: const TextStyle(color: Colors.black),
-                                  ),
-                                  onTap: () {
-                                    print("$tag selected");
-                                  },
-                                ),
-                                const SizedBox(width: 4.0),
-                                InkWell(
-                                  child: const Icon(
-                                    Icons.cancel,
-                                    size: 14.0,
-                                    color: Colors.black,
-                                  ),
-                                  onTap: () {
-                                    onTagDelete(tag);
-                                  },
-                                )
-                              ],
-                            ),
-                          );
-                        }).toList()),
-                      )
-                    : null,
-              ),
-              onChanged: onChanged,
-              onSubmitted: onSubmitted,
-            ),
-          );
-        });
-      },
-    );
-    final ConfirmButton = Material(
-      elevation: 5,
-      borderRadius: BorderRadius.circular(30),
-      color: const Color(0xff35ddaa),
-      child: MaterialButton(
-        onPressed: () {
-          postOfferToFirestore();
-        },
-        child: Text(
-          "Confirmer",
-          textAlign: TextAlign.center,
-          style: TextStyle(
-              color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
-        ),
-        padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-        minWidth: MediaQuery.of(context).size.width - 200,
-      ),
-    );
+    final confirmButton = ConfirmButton(onPressed: () {
+      postOfferToFirestore();
+    });
     //---------------------------------------------------------------------RETURN----------------------------------
     return Scaffold(
         backgroundColor: Colors.white,
@@ -314,107 +92,62 @@ class _CreationOffreState extends State<CreationOffre> {
                 Padding(
                     padding: const EdgeInsets.all(30.0),
                     child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
                                 'Titre de l\'offre:',
-                                style: GoogleFonts.montserrat(
-                                    textStyle: TextStyle(
-                                        color: Colors.black, letterSpacing: .5),
-                                    fontWeight: FontWeight.w600),
+                                style: kFormsTextFont,
                               ),
-                            ],
-                          ),
-                          titreField,
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
+                              titreField,
+                              const SizedBox(
+                                height: 10,
+                              ),
                               Text(
                                 'Entreprise:',
-                                style: GoogleFonts.montserrat(
-                                    textStyle: TextStyle(
-                                        color: Colors.black, letterSpacing: .5),
-                                    fontWeight: FontWeight.w600),
+                                style: kFormsTextFont,
                               ),
-                            ],
-                          ),
-                          entrepriseField,
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
+                              entrepriseField,
+                              const SizedBox(
+                                height: 10,
+                              ),
                               Text(
                                 'Poste:',
-                                style: GoogleFonts.montserrat(
-                                    textStyle: TextStyle(
-                                        color: Colors.black, letterSpacing: .5),
-                                    fontWeight: FontWeight.w600),
+                                style: kFormsTextFont,
                               ),
-                            ],
-                          ),
-                          posteField,
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
+                              posteField,
+                              const SizedBox(
+                                height: 10,
+                              ),
                               Text(
                                 'Domaine :',
-                                style: GoogleFonts.montserrat(
-                                    textStyle: TextStyle(
-                                        color: Colors.black, letterSpacing: .5),
-                                    fontWeight: FontWeight.w600),
+                                style: kFormsTextFont,
                               ),
-                            ],
-                          ),
-                          domaineField,
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
+                              domaineField,
+                              const SizedBox(
+                                height: 10,
+                              ),
                               Text(
                                 'A propos du poste :',
-                                style: GoogleFonts.montserrat(
-                                    textStyle: TextStyle(
-                                        color: Colors.black, letterSpacing: .5),
-                                    fontWeight: FontWeight.w600),
+                                style: kFormsTextFont,
                               ),
-                            ],
-                          ),
-                          detailsField,
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
+                              detailsField,
+                              const SizedBox(
+                                height: 10,
+                              ),
                               Text(
                                 'Compétences :',
-                                style: GoogleFonts.montserrat(
-                                    textStyle: TextStyle(
-                                        color: Colors.black, letterSpacing: .5),
-                                    fontWeight: FontWeight.w600),
+                                style: kFormsTextFont,
                               ),
-                            ],
-                          ),
-                          competencesField,
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          ConfirmButton
-                        ]))
+                              competencesField,
+                              const SizedBox(
+                                height: 20,
+                              ),
+                            ]),
+                        confirmButton
+                      ],
+                    ))
               ]),
             )));
   }
@@ -429,7 +162,7 @@ class _CreationOffreState extends State<CreationOffre> {
     if (_formKey.currentState!.validate()) {
       OffreModel offre = OffreModel();
       //writing all the values
-      offre.titre = TitreController.text;
+      offre.titre = titreController.text;
       offre.poste = posteController.text;
       if (user != null) {
         offre.useruid = user.uid;

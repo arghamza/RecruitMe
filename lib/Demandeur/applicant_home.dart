@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:user_type_screen/model/offre_model.dart';
-import 'buttom_navbar.dart';
 
 class ApplicantHome extends StatefulWidget {
   const ApplicantHome({Key? key}) : super(key: key);
@@ -20,6 +19,7 @@ class _ApplicantHomeState extends State<ApplicantHome> {
   @override
   void initState() {
     super.initState();
+    setOffersNumber();
     FirebaseFirestore.instance.collection("offres").get().then((query) => {
           offer = OffreModel.fromMap(query.docs[i].data()),
           setState(() {}),
@@ -184,13 +184,23 @@ class _ApplicantHomeState extends State<ApplicantHome> {
               SizedBox(
                 width: 65,
               ),
-              GestureDetector(
-                onTap: () async => {
-                  x = await getOffersNumber(),
-                  print(x),
-                  if (i + 1 > x!) i = 0 else i++,
-                  Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => BottomNavBar())),
+              TextButton(
+                onPressed: () {
+                  setState(() {
+                    if (i + 1 > x!) {
+                      i = 0;
+                    } else {
+                      i++;
+                      FirebaseFirestore.instance
+                          .collection("offres")
+                          .get()
+                          .then((query) => {
+                                offer =
+                                    OffreModel.fromMap(query.docs[i].data()),
+                                setState(() {}),
+                              });
+                    }
+                  });
                 },
                 child: Container(
                   width: 70,
@@ -212,10 +222,9 @@ class _ApplicantHomeState extends State<ApplicantHome> {
     );
   }
 
-  Future<int> getOffersNumber() async {
-    return await FirebaseFirestore.instance
-        .collection('offres')
-        .snapshots()
-        .length;
+  setOffersNumber() async {
+    return await FirebaseFirestore.instance.collection('offres').get().then(
+          (value) => x = value.size,
+        );
   }
 }

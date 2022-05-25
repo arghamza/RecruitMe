@@ -5,14 +5,14 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:user_type_screen/Demandeur/applicant_home.dart';
 import 'package:user_type_screen/widget/settings.dart';
 
-class BottomNavBar extends StatefulWidget {
-  const BottomNavBar({Key? key}) : super(key: key);
+class Applicant extends StatefulWidget {
+  const Applicant({Key? key}) : super(key: key);
 
   @override
-  State<BottomNavBar> createState() => _BottomNavBarState();
+  State<Applicant> createState() => _ApplicantState();
 }
 
-class _BottomNavBarState extends State<BottomNavBar> {
+class _ApplicantState extends State<Applicant> {
   int currentindextap = 0;
   void onTap(int index) {
     setState(() {

@@ -8,7 +8,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:user_type_screen/Login/registration_screen.dart';
 import 'package:user_type_screen/model/user_model.dart';
 
-import '../Demandeur/buttom_navbar.dart';
+import '../Demandeur/applicant.dart';
 import '../Recruiter/recruiter_screen.dart';
 import 'choice_screen.dart';
 
@@ -233,8 +233,8 @@ class _loginState extends State<login> {
                           builder: (context) => ChoiceScreen()));
                       break;
                     case "applicant":
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => BottomNavBar()));
+                      Navigator.of(context).push(
+                          MaterialPageRoute(builder: (context) => Applicant()));
                       break;
                     case "recruiter":
                       Navigator.of(context).push(

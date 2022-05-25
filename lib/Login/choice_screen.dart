@@ -131,7 +131,7 @@ class _ChoiceScreenState extends State<ChoiceScreen> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => ApplicantScreen()));
+                                  builder: (context) => ApplicantInfo()));
                         },
                         style: ElevatedButton.styleFrom(
                           primary: Color.fromRGBO(53, 221, 170, 1),
