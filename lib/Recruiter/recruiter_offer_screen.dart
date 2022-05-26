@@ -1,59 +1,34 @@
-// ignore_for_file: prefer_const_constructors
-
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:user_type_screen/Recruiter/creationoffre_screen.dart';
+import 'package:user_type_screen/model/offre_model.dart';
 
-import '../model/offre_model.dart';
+import 'creationoffre_screen.dart';
 
-class RecruiterHome extends StatefulWidget {
-  const RecruiterHome({Key? key}) : super(key: key);
+class Recruiteroffers extends StatefulWidget {
+  Recruiteroffers({Key? key}) : super(key: key);
 
   @override
-  State<RecruiterHome> createState() => _RecruiterHomeState();
+  State<Recruiteroffers> createState() => _Recruiteroffers();
 }
 
-class _RecruiterHomeState extends State<RecruiterHome> {
+class _Recruiteroffers extends State<Recruiteroffers> {
   List<OffreModel> offers = [];
   @override
   void initState() {
     // TODO: implement initState
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
-    FirebaseAuth user = FirebaseAuth.instance;
     super.initState();
-    Future.delayed(const Duration(milliseconds: 500), () {
-      firebaseFirestore
-          .collection("users")
-          .doc(user.currentUser?.uid)
-          .get()
-          .then((value) {
-        for (var element in List.from(value.data()!['offres'])) {
-          OffreModel model = OffreModel.fromMap(element);
-          print("heeeeeeeey :    " '${model.entreprise}');
-          setState(() {
-            offers.add(model);
-          });
-          print(" length : " '${offers.length}');
-        }
-        setState(() {});
-      });
-      setState(() {
-        // Here you can write your code for open new view
-      });
-    });
     firebaseFirestore
         .collection("users")
-        .doc(user.currentUser?.uid)
+        .doc("f726FvxgcKXcb3oEGjadBGx2W5r1")
         .get()
         .then((value) {
       for (var element in List.from(value.data()!['offres'])) {
         OffreModel model = OffreModel.fromMap(element);
         print("heeeeeeeey :    " '${model.entreprise}');
-        setState(() {
-          offers.add(model);
-        });
+        offers.add(model);
         print(" length : " '${offers.length}');
       }
       setState(() {});
@@ -220,48 +195,62 @@ class _RecruiterHomeState extends State<RecruiterHome> {
     return Scaffold(
         backgroundColor: Color.fromARGB(255, 255, 255, 255),
         body: Container(
-            height: 700,
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  SizedBox(
-                    height: 40,
-                  ),
-                  Container(
-                    height: 50,
-                    alignment: Alignment.topCenter,
-                    child: Text(" Mes offres   ",
-                        textAlign: TextAlign.center,
-                        style: GoogleFonts.montserrat(
-                          textStyle: TextStyle(
-                              fontSize: 35, fontWeight: FontWeight.bold),
-                        )),
-                  ),
-                  Container(
-                    height: 550,
-                    alignment: Alignment.bottomCenter,
-                    child: OffersList,
-                  ),
-                  GestureDetector(
-                    onTap: (() {
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => CreationOffre()));
-                    }),
-                    child: Container(
-                      margin: EdgeInsets.only(top: 100, left: 340),
-                      child: Icon(
-                        Icons.add_comment_outlined,
-                        color: const Color(0xff35ddaa),
-                        size: 40,
-                      ),
+            height: 750,
+            child: Column(
+              children: [
+                SizedBox(
+                  height: 40,
+                ),
+                Container(
+                  height: 50,
+                  alignment: Alignment.topCenter,
+                  child: Text(" Mes offres   ",
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.montserrat(
+                        textStyle: TextStyle(
+                            fontSize: 35, fontWeight: FontWeight.bold),
+                      )),
+                ),
+                Container(
+                  height: 550,
+                  alignment: Alignment.bottomCenter,
+                  child: OffersList,
+                ),
+                GestureDetector(
+                  onTap: (() {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => CreationOffre()));
+                  }),
+                  child: Container(
+                    margin: EdgeInsets.only(top: 700, left: 340),
+                    child: Icon(
+                      Icons.add_comment_outlined,
+                      color: const Color(0xff35ddaa),
+                      size: 40,
                     ),
-                  )
-                ],
-              ),
+                  ),
+                )
+              ],
             )));
   }
-
-  Future<void> delay() async {
-    await Future.delayed(Duration(seconds: 2));
-  }
 }
+
+// SetOffers(List<OffreModel> ofs) async {
+//   FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+//   List<OffreModel> offers = [];
+
+//   await firebaseFirestore
+//       .collection("users")
+//       .doc("f726FvxgcKXcb3oEGjadBGx2W5r1")
+//       .get()
+//       .then((value) {
+//     for (var element in List.from(value.data()!['offres'])) {
+//       OffreModel model = OffreModel.fromMap(element);
+//       print("heeeeeeeey :    " '${model.details}');
+//       offers.add(model);
+//       print(" length : " '${offers.length}');
+//     }
+//   });
+//   print(" length : " '${offers.length}');
+//   ofs = offers;
+// }

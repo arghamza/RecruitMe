@@ -7,6 +7,8 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'package:textfield_tags/textfield_tags.dart';
+import 'package:user_type_screen/Recruiter/recruiter_home.dart';
+import 'package:user_type_screen/Recruiter/recruiter_screen.dart';
 import 'package:user_type_screen/constants.dart';
 import 'package:user_type_screen/model/offre_model.dart';
 import 'package:user_type_screen/widget/confirmbutton.dart';
@@ -52,12 +54,14 @@ class _CreationOffreState extends State<CreationOffre> {
     final domaineField = CustomInputWidget(
         inputController: domaineController, hintText: "exp: IT,finance...");
     final detailsField = CustomInputWidget(
-        inputController: posteController, hintText: "exp: job details ...");
+        inputController: detailsController, hintText: "exp: job details ...");
     final competencesField =
         CompetenceWidget(competencesController: competencesController);
 
     final confirmButton = ConfirmButton(onPressed: () {
       postOfferToFirestore();
+      Navigator.of(context)
+          .push(MaterialPageRoute(builder: (context) => Recruiter()));
     });
     //---------------------------------------------------------------------RETURN----------------------------------
     return Scaffold(
@@ -181,14 +185,14 @@ class _CreationOffreState extends State<CreationOffre> {
         id = value.id;
       });
 
-      var liste_offre = [];
-      liste_offre.add(offre);
+      List liste_offre = [];
+      liste_offre.add(offre.toMap());
       Fluttertoast.showToast(msg: "Offre created successfully");
-      var doc;
-      doc = firebaseFirestore
+      await firebaseFirestore
           .collection("users")
           .doc(user?.uid)
           .update({"offres": FieldValue.arrayUnion(liste_offre)});
+      print(TimeOfDay.now());
     } // Navigator.pushAndRemoveUntil(context,
     //     MaterialPageRoute(builder: (context) => login()), (route) => false);
   }
