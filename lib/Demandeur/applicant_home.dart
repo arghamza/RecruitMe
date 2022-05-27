@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, curly_braces_in_flow_control_structures, annotate_overrides
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -164,27 +165,9 @@ class _ApplicantHomeState extends State<ApplicantHome> {
           padding: const EdgeInsets.only(top: 660, left: 25),
           child: Row(
             children: [
-              Container(
-                width: 70,
-                height: 70,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(80), color: Colors.red),
-                child: Icon(
-                  FontAwesomeIcons.xmark,
-                  size: 40,
-                ),
-              ),
-              SizedBox(
-                width: 65,
-              ),
-              CircleAvatar(
-                backgroundImage: AssetImage("images/avatar.png"),
-                radius: 50,
-              ),
-              SizedBox(
-                width: 65,
-              ),
               TextButton(
+                style: ButtonStyle(
+                    shadowColor: MaterialStateProperty.all(Colors.transparent)),
                 onPressed: () {
                   setState(() {
                     if (i + 1 > x!) {
@@ -206,12 +189,80 @@ class _ApplicantHomeState extends State<ApplicantHome> {
                   width: 70,
                   height: 70,
                   decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(80),
+                      color: Colors.red),
+                  child: Icon(
+                    FontAwesomeIcons.xmark,
+                    size: 40,
+                    color: Colors.black,
+                  ),
+                ),
+              ),
+              SizedBox(
+                width: 45,
+              ),
+              CircleAvatar(
+                backgroundImage: AssetImage("images/avatar.png"),
+                radius: 50,
+              ),
+              SizedBox(
+                width: 45,
+              ),
+              TextButton(
+                onPressed: () {
+                  setState(() {
+                    if (i + 1 > x!) {
+                      i = 0;
+                    } else {
+                      List liste_offre = [];
+                      List listUser = [];
+                      User? user = FirebaseAuth.instance.currentUser;
+                      FirebaseFirestore.instance
+                          .collection("offres")
+                          .get()
+                          .then((query) async => {
+                                liste_offre.add(offer?.toMap()),
+                                await FirebaseFirestore.instance
+                                    .collection("users")
+                                    .doc(user?.uid)
+                                    .update({
+                                  "offres": FieldValue.arrayUnion(liste_offre)
+                                }),
+                                listUser.add(user!.uid),
+                                if (i - 1 >= 0)
+                                  {
+                                    FirebaseFirestore.instance
+                                        .collection("offres")
+                                        .doc(query.docs[i - 1].id)
+                                        .update({
+                                      "applicants":
+                                          FieldValue.arrayUnion(listUser)
+                                    })
+                                  }
+                              });
+                      i++;
+                      FirebaseFirestore.instance
+                          .collection("offres")
+                          .get()
+                          .then((query) async => {
+                                offer =
+                                    OffreModel.fromMap(query.docs[i].data()),
+                                setState(() {}),
+                              });
+                    }
+                  });
+                },
+                child: Container(
+                  width: 70,
+                  height: 70,
+                  decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(80),
                     color: const Color(0xff35ddaa),
                   ),
                   child: Icon(
                     FontAwesomeIcons.suitcase,
                     size: 40,
+                    color: Colors.black,
                   ),
                 ),
               ),

@@ -6,6 +6,7 @@ class ApplicantModel {
   int? expYears;
   String? linkedin;
   String? cv;
+  List<String>? competences;
 
   ApplicantModel(
       {this.useruid,
@@ -14,7 +15,8 @@ class ApplicantModel {
       this.entreprise,
       this.expYears,
       this.linkedin,
-      this.cv});
+      this.cv,
+      this.competences});
   //data from server
   factory ApplicantModel.fromMap(map) {
     return ApplicantModel(
@@ -25,6 +27,7 @@ class ApplicantModel {
       expYears: map["expYears"],
       linkedin: map["linkedin"],
       cv: map["cv"],
+      competences: map["competences"],
     );
   }
   //sending data to our server
@@ -36,7 +39,8 @@ class ApplicantModel {
       'entreprise': entreprise,
       'expYears': expYears,
       'linkedin': linkedin,
-      'cv': cv
+      'cv': cv,
+      'competences': competences
     };
   }
 }

@@ -45,6 +45,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   width: 350,
                 ),
               ),
+              SizedBox(
+                height: 60,
+              ),
               GestureDetector(
                 onTap: () {
                   Navigator.push(context,

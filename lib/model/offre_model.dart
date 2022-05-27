@@ -6,6 +6,7 @@ class OffreModel {
   String? domaine;
   String? details;
   List<dynamic>? competences;
+  String? offerId;
 
   OffreModel(
       {this.useruid,
@@ -14,7 +15,8 @@ class OffreModel {
       this.domaine,
       this.poste,
       this.details,
-      this.competences});
+      this.competences,
+      this.offerId});
   //data from server
   factory OffreModel.fromMap(map) {
     return OffreModel(
@@ -25,6 +27,7 @@ class OffreModel {
       domaine: map["domaine"],
       details: map["details"],
       competences: map["competences"],
+      offerId: map["offerId"],
     );
   }
   //sending data to our server
@@ -36,7 +39,8 @@ class OffreModel {
       'poste': poste,
       'domaine': domaine,
       'details': details,
-      'competences': competences
+      'competences': competences,
+      'offerId': offerId
     };
   }
 }

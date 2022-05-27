@@ -9,8 +9,7 @@ class UserModel {
   String? FirstName;
   String? SecondName;
   String? userType;
-  RecruiterModel? detailsRecruiter;
-  ApplicantHome? detailsApplicant;
+  Map<String, dynamic>? details;
   List<dynamic>? offres;
 
   UserModel(
@@ -19,8 +18,7 @@ class UserModel {
       this.FirstName,
       this.SecondName,
       this.userType,
-      this.detailsApplicant,
-      this.detailsRecruiter,
+      this.details,
       this.offres});
   //data from server
   factory UserModel.fromMap(map) {
@@ -30,8 +28,7 @@ class UserModel {
         FirstName: map['FirstName'],
         SecondName: map['SecondName'],
         userType: map['userType'],
-        detailsRecruiter: map['detailsRecruiter'],
-        detailsApplicant: map['detailsApplicant'],
+        details: map['details'],
         offres: map['offres']);
   }
   //sending data to our server
@@ -42,8 +39,7 @@ class UserModel {
       'FirstName': FirstName,
       'SecondName': SecondName,
       'userType': userType,
-      'detailsRecruiter': detailsRecruiter,
-      'detailsApplicant': detailsApplicant,
+      'details': details,
       'offres': offres
     };
   }

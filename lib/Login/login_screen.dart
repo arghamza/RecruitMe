@@ -113,7 +113,6 @@ class _loginState extends State<login> {
       ),
     );
     return Scaffold(
-        resizeToAvoidBottomInset: false,
         appBar: AppBar(
           backgroundColor: Colors.transparent,
           elevation: 0,
@@ -128,84 +127,86 @@ class _loginState extends State<login> {
           ),
         ),
         backgroundColor: Colors.white,
-        body: Container(
-          color: Colors.white,
-          height: MediaQuery.of(context).size.height - 100,
-          child: Padding(
-            padding: const EdgeInsets.all(36.0),
-            child: Form(
-              key: _formKey,
-              child: Column(
-                children: [
-                  SizedBox(
-                    height: 250,
-                    width: 400,
-                    child: SvgPicture.asset(
-                      "images/Login.svg",
-                      fit: BoxFit.contain,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 45,
-                  ),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Email:',
-                        style: GoogleFonts.montserrat(
-                          textStyle:
-                              TextStyle(color: Colors.black, letterSpacing: .5),
-                        ),
+        body: Form(
+          key: _formKey,
+          child: Container(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height,
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.all(36.0),
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: 250,
+                      width: 400,
+                      child: SvgPicture.asset(
+                        "images/Login.svg",
+                        fit: BoxFit.contain,
                       ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  emailField,
-                  SizedBox(
-                    height: 25,
-                  ),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Password:',
-                        style: GoogleFonts.montserrat(
-                          textStyle:
-                              TextStyle(color: Colors.black, letterSpacing: .5),
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  passwordField,
-                  SizedBox(
-                    height: 25,
-                  ),
-                  loginButton,
-                  SizedBox(
-                    height: 15,
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => Registration()));
-                    },
-                    child: Text(
-                      "Créer un compte",
-                      style: TextStyle(
-                          fontWeight: FontWeight.w800,
-                          fontSize: 18,
-                          color: const Color(0xff35ddaa)),
                     ),
-                  )
-                ],
+                    SizedBox(
+                      height: 45,
+                    ),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Email:',
+                          style: GoogleFonts.montserrat(
+                            textStyle: TextStyle(
+                                color: Colors.black, letterSpacing: .5),
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    emailField,
+                    SizedBox(
+                      height: 25,
+                    ),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Password:',
+                          style: GoogleFonts.montserrat(
+                            textStyle: TextStyle(
+                                color: Colors.black, letterSpacing: .5),
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    passwordField,
+                    SizedBox(
+                      height: 25,
+                    ),
+                    loginButton,
+                    SizedBox(
+                      height: 15,
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Registration()));
+                      },
+                      child: Text(
+                        "Créer un compte",
+                        style: TextStyle(
+                            fontWeight: FontWeight.w800,
+                            fontSize: 18,
+                            color: const Color(0xff35ddaa)),
+                      ),
+                    )
+                  ],
+                ),
               ),
             ),
           ),

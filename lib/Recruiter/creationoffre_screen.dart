@@ -7,7 +7,6 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'package:textfield_tags/textfield_tags.dart';
-import 'package:user_type_screen/Recruiter/recruiter_home.dart';
 import 'package:user_type_screen/Recruiter/recruiter_screen.dart';
 import 'package:user_type_screen/constants.dart';
 import 'package:user_type_screen/model/offre_model.dart';
@@ -184,7 +183,7 @@ class _CreationOffreState extends State<CreationOffre> {
           .then((value) {
         id = value.id;
       });
-
+      offre.offerId = id;
       List liste_offre = [];
       liste_offre.add(offre.toMap());
       Fluttertoast.showToast(msg: "Offre created successfully");
@@ -192,7 +191,6 @@ class _CreationOffreState extends State<CreationOffre> {
           .collection("users")
           .doc(user?.uid)
           .update({"offres": FieldValue.arrayUnion(liste_offre)});
-      print(TimeOfDay.now());
     } // Navigator.pushAndRemoveUntil(context,
     //     MaterialPageRoute(builder: (context) => login()), (route) => false);
   }

@@ -39,7 +39,10 @@ class _ApplicantInfoState extends State<ApplicantInfo> {
   User? user = FirebaseAuth.instance.currentUser;
   UserModel loggedInUser = UserModel();
   UploadTask? task;
-  File? file;
+  File? file, file2;
+  static String url = "";
+  String cvurl = "";
+
   @override
   void initState() {
     super.initState();
@@ -121,11 +124,26 @@ class _ApplicantInfoState extends State<ApplicantInfo> {
                     Row(
                       children: [
                         CircleAvatar(
-                          backgroundImage: AssetImage("images/avatar.png"),
+                          backgroundImage: url == ""
+                              ? AssetImage("images/avatar.png")
+                              : Image.network(
+                                  url.toString(),
+                                  width: 60,
+                                  height: 60,
+                                ).image,
                           radius: 60,
                         ),
+                        GestureDetector(
+                            onTap: selectImage,
+                            child: Padding(
+                              padding: const EdgeInsets.only(top: 90),
+                              child: Icon(
+                                Icons.add_a_photo,
+                                size: 30,
+                              ),
+                            )),
                         SizedBox(
-                          width: 15,
+                          width: 2,
                         ),
                         Column(
                           children: [
@@ -258,7 +276,6 @@ class _ApplicantInfoState extends State<ApplicantInfo> {
                           SizedBox(
                             width: 10,
                           ),
-                          task != null ? buildUploadStatus(task!) : Container(),
                         ]),
                     SizedBox(
                       width: 10,
@@ -300,49 +317,71 @@ class _ApplicantInfoState extends State<ApplicantInfo> {
     );
   }
 
-  Future selectFile() async {
+  selectFile() async {
     final result = await FilePicker.platform.pickFiles(allowMultiple: false);
 
     if (result == null) return;
     final path = result.files.single.path!;
 
     setState(() => file = File(path));
+
+    uploadFile();
   }
 
   Future uploadFile() async {
-    if (file == null) return;
-
+    if (file == null) {
+      return;
+    }
+    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
     final fileName = file!.path.split('/').last;
     final destination = 'files/$fileName';
 
     task = FirebaseApi.uploadFile(destination, file!);
     setState(() {});
 
-    if (task == null) return;
+    final snapshot = await task!.whenComplete(() {});
+    final urlDownload = await snapshot.ref.getDownloadURL();
+
+    print('Download-Link: $urlDownload');
+
+    cvurl = urlDownload;
+  }
+
+  selectImage() async {
+    final result = await FilePicker.platform.pickFiles(allowMultiple: false);
+
+    if (result == null) return;
+    final path = result.files.single.path!;
+
+    setState(() => file2 = File(path));
+
+    uploadImage();
+  }
+
+  Future uploadImage() async {
+    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+    if (file2 == null) {
+      return;
+    }
+
+    final fileName = file2!.path.split('/').last;
+    final destination = 'images/$fileName';
+
+    task = FirebaseApi.uploadFile(destination, file2!);
+    setState(() {});
 
     final snapshot = await task!.whenComplete(() {});
     final urlDownload = await snapshot.ref.getDownloadURL();
 
     print('Download-Link: $urlDownload');
+    setState(() {
+      url = urlDownload;
+    });
+    await firebaseFirestore
+        .collection("users")
+        .doc(user?.uid)
+        .update({"img": urlDownload});
   }
-
-  Widget buildUploadStatus(UploadTask task) => StreamBuilder<TaskSnapshot>(
-        stream: task.snapshotEvents,
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            final snap = snapshot.data!;
-            final progress = snap.bytesTransferred / snap.totalBytes;
-            final percentage = (progress * 100).toStringAsFixed(2);
-
-            return Text(
-              '$percentage %',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            );
-          } else {
-            return Container();
-          }
-        },
-      );
 
   addUserToapplicants() async {
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
@@ -356,7 +395,8 @@ class _ApplicantInfoState extends State<ApplicantInfo> {
       applicant.domaine = domaineController.text;
       applicant.entreprise = entrepriseController.text;
       applicant.expYears = int.parse(expYearController.text);
-      applicant.cv = "";
+      applicant.cv = cvurl;
+      applicant.competences = competencesController.getTags;
       if (user != null) {
         applicant.useruid = user.uid;
       } else {
