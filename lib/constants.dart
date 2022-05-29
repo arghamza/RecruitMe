@@ -6,3 +6,5 @@ import 'package:google_fonts/google_fonts.dart';
 final kFormsTextFont = GoogleFonts.montserrat(
     textStyle: const TextStyle(color: Colors.black, letterSpacing: .5),
     fontWeight: FontWeight.w600);
+
+final kAppColorTheme = Color(0xff35ddaa);

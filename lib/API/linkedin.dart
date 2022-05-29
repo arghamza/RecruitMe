@@ -43,14 +43,16 @@ class _LinkedInProfileExamplePageState
                         "images/logolinkedin.png",
                         fit: BoxFit.contain,
                       )),
-                  Container(
-                    margin: const EdgeInsets.only(left: 25),
+                  SizedBox(
+                    width: 10.0,
+                  ),
+                  Flexible(
                     child: Text("Connexion avec LinkedIn",
                         textAlign: TextAlign.center,
                         style: GoogleFonts.montserrat(
                           textStyle: const TextStyle(
                               color: Color(0xff35ddaa),
-                              fontSize: 20,
+                              fontSize: 18,
                               fontWeight: FontWeight.bold),
                         )),
                   )

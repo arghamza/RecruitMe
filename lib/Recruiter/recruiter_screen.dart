@@ -5,6 +5,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:user_type_screen/Recruiter/recruiter_home.dart';
 import 'package:user_type_screen/widget/settings.dart';
 
+import '../chat/chat_list.dart';
+
 class Recruiter extends StatefulWidget {
   const Recruiter({Key? key}) : super(key: key);
 
@@ -20,14 +22,7 @@ class _RecruiterState extends State<Recruiter> {
     });
   }
 
-  List pages = [
-    RecruiterHome(),
-    Text(
-      "Chat",
-      style: TextStyle(color: Colors.black, fontSize: 18),
-    ),
-    Settings()
-  ];
+  List pages = [RecruiterHome(), ChatList(), Settings()];
   @override
   Widget build(BuildContext context) {
     return Scaffold(

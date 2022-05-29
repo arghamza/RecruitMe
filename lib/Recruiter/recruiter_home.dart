@@ -193,9 +193,77 @@ class _RecruiterHomeState extends State<RecruiterHome> {
         itemCount: offers.length,
         itemBuilder: (BuildContext context, int index) {
           if (index == 0) {
-            return Column(
-              children: [
-                Row(
+            return GestureDetector(
+              onTap: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => RecruiterMainScreen(
+                          offerId: offers[index].offerId ?? "",
+                        )));
+              },
+              child: Column(
+                children: [
+                  Column(
+                    children: [
+                      Row(
+                        children: [
+                          Container(
+                            height: 50,
+                            margin:
+                                EdgeInsets.only(left: 75, top: 50, bottom: 30),
+                            alignment: Alignment.topCenter,
+                            child: Text(" Mes offres   ",
+                                textAlign: TextAlign.center,
+                                style: GoogleFonts.montserrat(
+                                  textStyle: TextStyle(
+                                      fontSize: 35,
+                                      fontWeight: FontWeight.bold),
+                                )),
+                          ),
+                          GestureDetector(
+                            onTap: (() {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) => CreationOffre()));
+                            }),
+                            child: Container(
+                              margin: EdgeInsets.only(
+                                  left: 50, top: 50, bottom: 30),
+                              child: Icon(
+                                Icons.add_comment_outlined,
+                                color: const Color(0xff35ddaa),
+                                size: 40,
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                      makeCard(offers[index]),
+                    ],
+                  ),
+                ],
+              ),
+            );
+          } else {
+            return GestureDetector(
+                onTap: () {
+                  Future.delayed(const Duration(milliseconds: 500), () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => RecruiterMainScreen(
+                              offerId: offers[index].offerId,
+                            )));
+                  });
+                },
+                child: makeCard(offers[index]));
+          }
+        },
+      ),
+    );
+    return Scaffold(
+        backgroundColor: Color.fromARGB(255, 255, 255, 255),
+        body: Container(
+          height: 900,
+          alignment: Alignment.topCenter,
+          child: offers.isEmpty
+              ? Row(
                   children: [
                     Container(
                       height: 50,
@@ -223,38 +291,8 @@ class _RecruiterHomeState extends State<RecruiterHome> {
                       ),
                     )
                   ],
-                ),
-                GestureDetector(
-                    onTap: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => RecruiterMainScreen(
-                                offerId: offers[index].offerId ?? "",
-                              )));
-                    },
-                    child: makeCard(offers[index])),
-              ],
-            );
-          } else {
-            return GestureDetector(
-                onTap: () {
-                  Future.delayed(const Duration(milliseconds: 500), () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => RecruiterMainScreen(
-                              offerId: offers[index].offerId,
-                            )));
-                  });
-                },
-                child: makeCard(offers[index]));
-          }
-        },
-      ),
-    );
-    return Scaffold(
-        backgroundColor: Color.fromARGB(255, 255, 255, 255),
-        body: Container(
-          height: 900,
-          alignment: Alignment.bottomCenter,
-          child: OffersList,
+                )
+              : OffersList,
         ));
   }
 

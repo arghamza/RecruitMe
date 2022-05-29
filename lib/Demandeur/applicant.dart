@@ -3,6 +3,9 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:user_type_screen/Demandeur/applicant_home.dart';
+import 'package:user_type_screen/chat/chat_list.dart';
+import 'package:user_type_screen/chat/chat_screen.dart';
+import 'package:user_type_screen/chat/text.dart';
 import 'package:user_type_screen/widget/settings.dart';
 
 class Applicant extends StatefulWidget {
@@ -22,10 +25,7 @@ class _ApplicantState extends State<Applicant> {
 
   List pages = [
     ApplicantHome(),
-    Text(
-      "Chat",
-      style: TextStyle(color: Colors.black, fontSize: 18),
-    ),
+    ChatList(),
     Settings(),
   ];
   @override
@@ -33,26 +33,26 @@ class _ApplicantState extends State<Applicant> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
+        actions: [
+          Container(
+            child: Icon(
+              FontAwesomeIcons.bell,
+              color: Color(0xff35ddaa),
+            ),
+            padding: EdgeInsets.only(right: 12.0),
+          )
+        ],
         leading: Icon(
           Icons.person,
           color: const Color(0xff35ddaa),
         ),
-        title: Row(
-          children: [
-            Container(
-              child: Image.asset('images/logofondblanccropped.png',
-                  fit: BoxFit.fill),
-              margin: const EdgeInsets.only(left: 50, top: 10.0),
-              width: 170,
-            ),
-            SizedBox(
-              width: 65,
-            ),
-            Icon(
-              FontAwesomeIcons.bell,
-              color: const Color(0xff35ddaa),
-            )
-          ],
+        title: Center(
+          child: Container(
+            child: Image.asset('images/logofondblanccropped.png',
+                fit: BoxFit.fill),
+            padding: EdgeInsets.only(top: 10.0),
+            width: 170,
+          ),
         ),
       ),
       body: pages[currentindextap],

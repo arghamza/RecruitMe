@@ -1,12 +1,17 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, unnecessary_this, camel_case_types, file_names, override_on_non_overriding_member, non_constant_identifier_names, prefer_adjacent_string_concatenation, unused_local_variable, prefer_typing_uninitialized_variables
 
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'package:user_type_screen/Recruiter/recruiter_screen.dart';
 
+import '../API/FireabaseApi.dart';
 import '../model/recruiter_model.dart';
 import '../model/user_model.dart';
 import '../widget/custom_input_widget.dart';
@@ -27,6 +32,9 @@ class _Info_screenState extends State<Info_screen> {
   final TextEditingController linkedinController = TextEditingController();
   User? user = FirebaseAuth.instance.currentUser;
   UserModel loggedInUser = UserModel();
+  UploadTask? task;
+  File? file2;
+  String url = "";
   @override
   void initState() {
     super.initState();
@@ -112,9 +120,24 @@ class _Info_screenState extends State<Info_screen> {
                   Row(
                     children: [
                       CircleAvatar(
-                        backgroundImage: AssetImage("images/avatar.png"),
+                        backgroundImage: url == ""
+                            ? AssetImage("images/avatar.png")
+                            : Image.network(
+                                url.toString(),
+                                width: 60,
+                                height: 60,
+                              ).image,
                         radius: 60,
                       ),
+                      GestureDetector(
+                          onTap: selectImage,
+                          child: Padding(
+                            padding: const EdgeInsets.only(top: 90),
+                            child: Icon(
+                              Icons.add_a_photo,
+                              size: 30,
+                            ),
+                          )),
                       SizedBox(
                         width: 10,
                       ),
@@ -211,6 +234,42 @@ class _Info_screenState extends State<Info_screen> {
             ),
           ),
         ));
+  }
+
+  selectImage() async {
+    final result = await FilePicker.platform.pickFiles(allowMultiple: false);
+
+    if (result == null) return;
+    final path = result.files.single.path!;
+
+    setState(() => file2 = File(path));
+
+    uploadImage();
+  }
+
+  Future uploadImage() async {
+    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+    if (file2 == null) {
+      return;
+    }
+
+    final fileName = file2!.path.split('/').last;
+    final destination = 'images/$fileName';
+
+    task = FirebaseApi.uploadFile(destination, file2!);
+    setState(() {});
+
+    final snapshot = await task!.whenComplete(() {});
+    final urlDownload = await snapshot.ref.getDownloadURL();
+
+    print('Download-Link: $urlDownload');
+    setState(() {
+      url = urlDownload;
+    });
+    await firebaseFirestore
+        .collection("users")
+        .doc(user?.uid)
+        .update({"img": urlDownload});
   }
 
   addUserTorecruiters() async {

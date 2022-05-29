@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:user_type_screen/chat/chat_screen.dart';
 import 'package:user_type_screen/model/offre_model.dart';
 import 'package:user_type_screen/model/user_model.dart';
 
@@ -21,14 +22,21 @@ class _RecruiterMainScreen extends State<RecruiterMainScreen> {
   List? applicantsIds;
   List<UserModel> applicants = [];
   UserModel? applicant;
+  UserModel? recruiter;
   FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
   User? user = FirebaseAuth.instance.currentUser;
 
   void initState() {
     super.initState();
-    print(widget.offerId);
+    FirebaseFirestore.instance
+        .collection("users")
+        .doc(user!.uid)
+        .get()
+        .then((value) {
+      recruiter = UserModel.fromMap(value.data());
+      setState(() {});
+    });
     Future.delayed(const Duration(milliseconds: 1), () {
-      print("ta meeeeeeeere");
       firebaseFirestore
           .collection("offres")
           .doc(widget.offerId?.trim())
@@ -257,7 +265,7 @@ class _RecruiterMainScreen extends State<RecruiterMainScreen> {
                 TextButton(
                   onPressed: () {
                     setState(() {
-                      createChat(applicant?.email);
+                      createChat(recruiter!, applicant!);
                       if (i + 1 > applicants.length) {
                         i = 0;
                       } else {
@@ -287,17 +295,26 @@ class _RecruiterMainScreen extends State<RecruiterMainScreen> {
     );
   }
 
-  void createChat(String? otherUsersEmail) {
-    final loggedInUserEmail = user?.email;
+  void createChat(UserModel recruiter, UserModel applicant) {
+    final String? recruiterFullName =
+        recruiter.FirstName! + recruiter.SecondName!;
+    final String applicantFullName =
+        applicant.FirstName! + applicant.SecondName!;
+
     firebaseFirestore
         .collection('chats')
-        .doc('$loggedInUserEmail+$otherUsersEmail')
+        .doc('${recruiter.email}+${applicant.email}')
         .collection('conversation')
         .add({});
     firebaseFirestore
         .collection('chats')
-        .doc('$loggedInUserEmail+$otherUsersEmail')
-        .set({'user1': loggedInUserEmail, 'user2': otherUsersEmail});
+        .doc('${recruiter.email}+${applicant.email}')
+        .set({
+      'user1': recruiter.email,
+      'user1FullName': recruiterFullName,
+      'user2': applicant.email,
+      'user2FullName': applicantFullName
+    });
   }
 
 //   String getCompetences() {
