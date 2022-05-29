@@ -108,35 +108,35 @@ class _RecruiterMainScreen extends State<RecruiterMainScreen> {
                     child: Column(
                       children: [
                         RichTextLine(
-                          applicant: applicant,
+                          text: applicant!.email!,
                           title: 'Email :  ',
                         ),
                         SizedBox(
                           height: 20.0,
                         ),
                         RichTextLine(
-                          applicant: applicant,
+                          text: (applicant!.details!["expYears"]).toString(),
                           title: 'Années d\'expérience :  ',
                         ),
                         SizedBox(
                           height: 20.0,
                         ),
                         RichTextLine(
-                          applicant: applicant,
+                          text: applicant!.details!["domaine"],
                           title: 'Domaine :  ',
                         ),
                         SizedBox(
                           height: 20.0,
                         ),
                         RichTextLine(
-                          applicant: applicant,
+                          text: applicant!.details!["poste"],
                           title: 'Poste actuel :  ',
                         ),
                         SizedBox(
                           height: 20.0,
                         ),
                         RichTextLine(
-                          applicant: applicant,
+                          text: getCompetences(),
                           title: 'Compétences :  ',
                         ),
                       ],
@@ -222,11 +222,11 @@ class _RecruiterMainScreen extends State<RecruiterMainScreen> {
     });
   }
 
-//   String getCompetences() {
-//     String cpts = "\n";
-//     for (String word in applicant?.details!["competences"]) {
-//       cpts += word + " \n";
-//     }
-//     return cpts;
-//   }
+  String getCompetences() {
+    String cpts = "\n";
+    for (String word in applicant?.details!["competences"]) {
+      cpts += word + " \n";
+    }
+    return cpts;
+  }
 }

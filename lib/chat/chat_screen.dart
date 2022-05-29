@@ -65,7 +65,7 @@ class _ChatScreenState extends State<ChatScreen> {
               }),
         ],
         title: Text('⚡ ${widget.interlocutorEmail}'),
-        backgroundColor: kAppColorTheme,
+        backgroundColor: Colors.black,
       ),
       body: SafeArea(
         child: Column(
@@ -166,7 +166,7 @@ class MessageBubble extends StatelessWidget {
                     bottomRight: Radius.circular(30.0),
                   ),
             elevation: 5.0,
-            color: isMe ? Colors.lightBlueAccent : Colors.white,
+            color: isMe ? kAppColorTheme : Colors.white,
             child: Padding(
               padding: const EdgeInsets.symmetric(
                 vertical: 10.0,

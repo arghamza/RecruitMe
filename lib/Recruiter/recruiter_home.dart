@@ -87,7 +87,7 @@ class _RecruiterHomeState extends State<RecruiterHome> {
               onTap: () {
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) => RecruiterMainScreen(
-                          offerId: offers[index].offerId ?? "",
+                          offerId: offers[index].offerId,
                         )));
               },
               child: Expanded(

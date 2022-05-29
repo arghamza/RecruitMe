@@ -6,11 +6,11 @@ import '../model/user_model.dart';
 class RichTextLine extends StatelessWidget {
   const RichTextLine({
     Key? key,
-    required this.applicant,
-    required this.title,
+    this.text = '',
+    this.title = '',
   }) : super(key: key);
 
-  final UserModel? applicant;
+  final String text;
   final String title;
 
   @override
@@ -26,7 +26,7 @@ class RichTextLine extends StatelessWidget {
                 fontWeight: FontWeight.w600),
           ),
           TextSpan(
-            text: '${applicant?.email}',
+            text: text,
             style: GoogleFonts.montserrat(
                 textStyle: const TextStyle(
                     color: Colors.black, letterSpacing: .5, fontSize: 18),
