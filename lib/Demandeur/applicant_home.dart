@@ -227,19 +227,19 @@ class _ApplicantHomeState extends State<ApplicantHome> {
                       if (i + 1 > x!) {
                         i = 0;
                       } else {
-                        List liste_offre = [];
+                        List listeOffre = [];
                         List listUser = [];
                         User? user = FirebaseAuth.instance.currentUser;
                         FirebaseFirestore.instance
                             .collection("offres")
                             .get()
                             .then((query) async => {
-                                  liste_offre.add(offer?.toMap()),
+                                  listeOffre.add(offer?.toMap()),
                                   await FirebaseFirestore.instance
                                       .collection("users")
                                       .doc(user?.uid)
                                       .update({
-                                    "offres": FieldValue.arrayUnion(liste_offre)
+                                    "offres": FieldValue.arrayUnion(listeOffre)
                                   }),
                                   listUser.add(user!.uid),
                                   if (i - 1 >= 0)

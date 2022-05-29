@@ -129,7 +129,7 @@ class _loginState extends State<login> {
         backgroundColor: Colors.white,
         body: Form(
           key: _formKey,
-          child: Container(
+          child: SizedBox(
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height,
             child: SingleChildScrollView(

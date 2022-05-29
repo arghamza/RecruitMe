@@ -31,7 +31,7 @@ class _LinkedInProfileExamplePageState
           GestureDetector(
             child: Container(
               margin: const EdgeInsets.only(top: 12),
-              width: MediaQuery.of(context).size.width - 50,
+              width: MediaQuery.of(context).size.width,
               decoration: BoxDecoration(
                   color: Colors.white, borderRadius: BorderRadius.circular(30)),
               child: Row(

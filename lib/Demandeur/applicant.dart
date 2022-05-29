@@ -1,12 +1,11 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:user_type_screen/Demandeur/applicant_home.dart';
 import 'package:user_type_screen/chat/chat_list.dart';
-import 'package:user_type_screen/chat/chat_screen.dart';
-import 'package:user_type_screen/chat/text.dart';
 import 'package:user_type_screen/widget/settings.dart';
+
+import '../widget/project_app_bar.dart';
 
 class Applicant extends StatefulWidget {
   const Applicant({Key? key}) : super(key: key);
@@ -25,36 +24,15 @@ class _ApplicantState extends State<Applicant> {
 
   List pages = [
     ApplicantHome(),
-    ChatList(),
+    ChatList(
+      accountType: 'applicant',
+    ),
     Settings(),
   ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        actions: [
-          Container(
-            child: Icon(
-              FontAwesomeIcons.bell,
-              color: Color(0xff35ddaa),
-            ),
-            padding: EdgeInsets.only(right: 12.0),
-          )
-        ],
-        leading: Icon(
-          Icons.person,
-          color: const Color(0xff35ddaa),
-        ),
-        title: Center(
-          child: Container(
-            child: Image.asset('images/logofondblanccropped.png',
-                fit: BoxFit.fill),
-            padding: EdgeInsets.only(top: 10.0),
-            width: 170,
-          ),
-        ),
-      ),
+      appBar: projectAppBar(),
       body: pages[currentindextap],
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Colors.white,

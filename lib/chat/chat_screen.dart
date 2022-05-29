@@ -1,7 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:user_type_screen/constants.dart';
+import 'package:intl/intl.dart';
 
 import 'chatConstants.dart';
 
@@ -43,7 +45,9 @@ class _ChatScreenState extends State<ChatScreen> {
         loggedInUser = user;
       }
     } catch (e) {
-      print(e);
+      if (kDebugMode) {
+        print(e);
+      }
     }
   }
 
@@ -60,7 +64,7 @@ class _ChatScreenState extends State<ChatScreen> {
                 Navigator.pop(context);
               }),
         ],
-        title: const Text('⚡️Chat'),
+        title: Text('⚡ ${widget.interlocutorEmail}'),
         backgroundColor: kAppColorTheme,
       ),
       body: SafeArea(
@@ -86,18 +90,25 @@ class _ChatScreenState extends State<ChatScreen> {
                       decoration: kMessageTextFieldDecoration,
                     ),
                   ),
-                  FlatButton(
+                  TextButton(
                     onPressed: () {
                       messageTextController.clear();
-                      _fireStore
-                          .collection('chats')
-                          .doc(docId)
-                          .collection('conversation')
-                          .add({
-                        'text': messageText,
-                        'sender': loggedInUser.email,
-                        'date': DateTime.now()
-                      });
+                      if (messageText != '') {
+                        _fireStore
+                            .collection('chats')
+                            .doc(docId)
+                            .collection('conversation')
+                            .add({
+                          'text': messageText,
+                          'sender': loggedInUser.email,
+                          'date': DateTime.now()
+                        });
+                        _fireStore
+                            .collection('chats')
+                            .doc(docId)
+                            .update({'lastText': messageText});
+                      }
+                      messageText = '';
                     },
                     child: const Text(
                       'Send',
@@ -116,23 +127,27 @@ class _ChatScreenState extends State<ChatScreen> {
 
 class MessageBubble extends StatelessWidget {
   const MessageBubble(
-      {Key? key, required this.sender, required this.text, required this.isMe})
+      {Key? key,
+      required this.dateSent,
+      required this.text,
+      required this.isMe})
       : super(key: key);
 
-  final String sender;
+  final Timestamp dateSent;
   final String text;
   final bool isMe;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(10.0),
+      padding: const EdgeInsets.all(5.0),
       child: Column(
         crossAxisAlignment:
             isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
         children: [
           Text(
-            sender,
+            DateFormat('d/M/y').format(DateTime.fromMillisecondsSinceEpoch(
+                dateSent.millisecondsSinceEpoch)),
             style: const TextStyle(
               fontSize: 12.0,
               color: Colors.black54,
@@ -183,8 +198,8 @@ class MessagesStream extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final String docId = isRecruiter
-        ? interlocutor + '+' + loggedInUser.email!
-        : loggedInUser.email! + '+' + interlocutor;
+        ? loggedInUser.email! + '+' + interlocutor
+        : interlocutor + '+' + loggedInUser.email!;
     return StreamBuilder<QuerySnapshot>(
       stream: _fireStore
           .collection('chats')
@@ -204,13 +219,14 @@ class MessagesStream extends StatelessWidget {
         List<MessageBubble> messageBubbles = [];
         for (var message in messages!) {
           final messageText = message.get('text');
-          final messageSender = message.get('sender');
+          final sender = message.get('sender');
+          final dateSent = message.get('date');
           final currentUser = loggedInUser.email;
 
           final messageBubble = MessageBubble(
-            sender: messageSender,
+            dateSent: dateSent,
             text: messageText,
-            isMe: currentUser == messageSender,
+            isMe: currentUser == sender,
           );
 
           messageBubbles.add(messageBubble);

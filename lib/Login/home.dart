@@ -21,7 +21,6 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: kAppColorTheme,
       body: Container(
@@ -33,8 +32,9 @@ class _HomeScreenState extends State<HomeScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Flexible(
-                  child: Container(
-                    margin: const EdgeInsets.only(top: 80),
+                  child: Padding(
+                    padding: const EdgeInsets.only(
+                        top: 50.0, right: 25.0, left: 25.0),
                     child: Image.asset(
                       "images/logofondvert.png",
                       fit: BoxFit.contain,
@@ -43,39 +43,74 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
                 Flexible(
-                  child: Container(
-                    margin: const EdgeInsets.only(top: 80),
+                  child: Padding(
+                    padding: const EdgeInsets.only(right: 30.0, left: 30.0),
                     child: SvgPicture.asset(
                       "images/HomePage.svg",
                       fit: BoxFit.contain,
-                      width: 350,
                     ),
                   ),
                 ),
-                Column(
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) => login()));
-                      },
-                      child: Expanded(
+                Padding(
+                  padding: const EdgeInsets.only(right: 25.0, left: 25.0),
+                  child: Column(
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) => login()));
+                        },
+                        child: Expanded(
+                          child: Container(
+                            padding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(30)),
+                            child: Row(
+                              children: [
+                                const Icon(
+                                  Icons.email,
+                                  color: Color(0xff35ddaa),
+                                ),
+                                SizedBox(
+                                  width: 10.0,
+                                ),
+                                Text("Connexion avec Email",
+                                    textAlign: TextAlign.center,
+                                    style: GoogleFonts.montserrat(
+                                      textStyle: const TextStyle(
+                                          color: Color(0xff35ddaa),
+                                          fontSize: 18.0,
+                                          fontWeight: FontWeight.bold),
+                                    ))
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          signInWithGoogle();
+                        },
                         child: Container(
-                          margin: const EdgeInsets.only(top: 50),
-                          width: width - 50,
+                          margin: const EdgeInsets.only(top: 12),
+                          padding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
                           decoration: BoxDecoration(
                               color: Colors.white,
                               borderRadius: BorderRadius.circular(30)),
                           child: Row(
                             children: [
-                              const Icon(
-                                Icons.email,
-                                color: Color(0xff35ddaa),
-                              ),
+                              Container(
+                                  width: 20,
+                                  height: 20,
+                                  child: Image.asset(
+                                    "images/logogoogle.png",
+                                    fit: BoxFit.contain,
+                                  )),
                               SizedBox(
                                 width: 10.0,
                               ),
-                              Text("Connexion avec Email",
+                              Text("Connexion avec Google",
                                   textAlign: TextAlign.center,
                                   style: GoogleFonts.montserrat(
                                     textStyle: const TextStyle(
@@ -85,47 +120,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                   ))
                             ],
                           ),
-                          padding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
                         ),
                       ),
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        signInWithGoogle();
-                      },
-                      child: Container(
-                        margin: const EdgeInsets.only(top: 12),
-                        width: width - 50,
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(30)),
-                        child: Row(
-                          children: [
-                            Container(
-                                width: 20,
-                                height: 20,
-                                child: Image.asset(
-                                  "images/logogoogle.png",
-                                  fit: BoxFit.contain,
-                                )),
-                            SizedBox(
-                              width: 10.0,
-                            ),
-                            Text("Connexion avec Google",
-                                textAlign: TextAlign.center,
-                                style: GoogleFonts.montserrat(
-                                  textStyle: const TextStyle(
-                                      color: Color(0xff35ddaa),
-                                      fontSize: 18.0,
-                                      fontWeight: FontWeight.bold),
-                                ))
-                          ],
-                        ),
-                        padding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
-                      ),
-                    ),
-                    LinkedInProfileExamplePage(),
-                  ],
+                      LinkedInProfileExamplePage(),
+                    ],
+                  ),
                 ),
               ],
             ),

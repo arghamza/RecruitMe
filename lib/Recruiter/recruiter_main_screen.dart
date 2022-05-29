@@ -4,9 +4,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:user_type_screen/chat/chat_screen.dart';
-import 'package:user_type_screen/model/offre_model.dart';
 import 'package:user_type_screen/model/user_model.dart';
+
+import '../widget/project_app_bar.dart';
+import '../widget/rich_text_line.dart';
 
 class RecruiterMainScreen extends StatefulWidget {
   const RecruiterMainScreen({Key? key, required this.offerId})
@@ -42,7 +43,6 @@ class _RecruiterMainScreen extends State<RecruiterMainScreen> {
           .doc(widget.offerId?.trim())
           .get()
           .then((value) async {
-        print(value.data()!['applicants'][0]);
         applicantsIds = value.data()!['applicants'];
         for (var id in applicantsIds!) {
           await firebaseFirestore
@@ -51,7 +51,6 @@ class _RecruiterMainScreen extends State<RecruiterMainScreen> {
               .get()
               .then((v) => {applicants.add(UserModel.fromMap(v.data()))});
         }
-        print(applicants[0].email);
         setState(() {
           applicant = applicants[0];
         });
@@ -60,60 +59,39 @@ class _RecruiterMainScreen extends State<RecruiterMainScreen> {
   }
 
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        leading: Icon(
-          Icons.person,
-          color: const Color(0xff35ddaa),
-        ),
-        title: Row(
-          children: [
-            Container(
-              child: Image.asset('images/logofondblanccropped.png',
-                  fit: BoxFit.fill),
-              margin: const EdgeInsets.only(left: 50, top: 10.0),
-              width: 170,
-            ),
-            SizedBox(
-              width: 65,
-            ),
-            Icon(
-              FontAwesomeIcons.bell,
-              color: const Color(0xff35ddaa),
-            )
-          ],
-        ),
-      ),
+      appBar: projectAppBar(),
       body: Stack(
+        alignment: Alignment.bottomCenter,
         children: [
           Padding(
             padding: const EdgeInsets.all(20.0),
             child: Container(
-              margin: EdgeInsets.only(top: 40),
-              width: width - 40,
-              height: height - 240,
+              margin: EdgeInsets.only(bottom: 30.0),
               decoration: BoxDecoration(
                   color: Color.fromARGB(255, 190, 244, 227),
                   borderRadius: BorderRadius.circular(60)),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
+                  Padding(
+                    padding: const EdgeInsets.only(top: 20.0, bottom: 20.0),
+                    child: Expanded(
+                      flex: 0,
+                      child: CircleAvatar(
+                        backgroundImage: AssetImage("images/avatar.png"),
+                        radius: 50,
+                      ),
+                    ),
+                  ),
                   SizedBox(
-                    height: 40,
+                    height: 20.0,
                   ),
-                  CircleAvatar(
-                    backgroundImage: AssetImage("images/avatar.png"),
-                    radius: 50,
-                  ),
-                  SizedBox(
-                    height: 30,
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(top: 20, bottom: 30),
+                  Expanded(
+                    flex: 0,
                     child: Text(
-                      '${applicant?.FirstName}' + '${applicant?.SecondName}',
+                      '${applicant?.FirstName} ${applicant?.SecondName}',
                       style: GoogleFonts.montserrat(
                           textStyle: TextStyle(
                               color: Colors.black,
@@ -122,133 +100,59 @@ class _RecruiterMainScreen extends State<RecruiterMainScreen> {
                           fontWeight: FontWeight.w600),
                     ),
                   ),
-                  RichText(
-                      text: TextSpan(children: [
-                    TextSpan(
-                      text: 'Email :   ',
-                      style: GoogleFonts.montserrat(
-                          textStyle: TextStyle(
-                              color: Colors.black,
-                              letterSpacing: .5,
-                              fontSize: 20),
-                          fontWeight: FontWeight.w600),
-                    ),
-                    TextSpan(
-                      text: '${applicant?.email}',
-                      style: GoogleFonts.montserrat(
-                          textStyle: TextStyle(
-                              color: Colors.black,
-                              letterSpacing: .5,
-                              fontSize: 18),
-                          fontWeight: FontWeight.w300),
-                    ),
-                  ])),
                   SizedBox(
-                    height: 20,
+                    height: 20.0,
                   ),
-                  RichText(
-                      text: TextSpan(children: [
-                    TextSpan(
-                      text: 'Années d\'experience:   ',
-                      style: GoogleFonts.montserrat(
-                          textStyle: TextStyle(
-                              color: Colors.black,
-                              letterSpacing: .5,
-                              fontSize: 20),
-                          fontWeight: FontWeight.w600),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 20.0),
+                    child: Column(
+                      children: [
+                        RichTextLine(
+                          applicant: applicant,
+                          title: 'Email :  ',
+                        ),
+                        SizedBox(
+                          height: 20.0,
+                        ),
+                        RichTextLine(
+                          applicant: applicant,
+                          title: 'Années d\'expérience :  ',
+                        ),
+                        SizedBox(
+                          height: 20.0,
+                        ),
+                        RichTextLine(
+                          applicant: applicant,
+                          title: 'Domaine :  ',
+                        ),
+                        SizedBox(
+                          height: 20.0,
+                        ),
+                        RichTextLine(
+                          applicant: applicant,
+                          title: 'Poste actuel :  ',
+                        ),
+                        SizedBox(
+                          height: 20.0,
+                        ),
+                        RichTextLine(
+                          applicant: applicant,
+                          title: 'Compétences :  ',
+                        ),
+                      ],
                     ),
-                    TextSpan(
-                      text: '${applicant?.details!["expYears"]}',
-                      style: GoogleFonts.montserrat(
-                          textStyle: TextStyle(
-                              color: Colors.black,
-                              letterSpacing: .5,
-                              fontSize: 18),
-                          fontWeight: FontWeight.w300),
-                    ),
-                  ])),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  RichText(
-                      text: TextSpan(children: [
-                    TextSpan(
-                      text: 'Domaine:   ',
-                      style: GoogleFonts.montserrat(
-                          textStyle: TextStyle(
-                              color: Colors.black,
-                              letterSpacing: .5,
-                              fontSize: 20),
-                          fontWeight: FontWeight.w600),
-                    ),
-                    TextSpan(
-                      text: '${applicant?.details!["domaine"]}',
-                      style: GoogleFonts.montserrat(
-                          textStyle: TextStyle(
-                              color: Colors.black,
-                              letterSpacing: .5,
-                              fontSize: 18),
-                          fontWeight: FontWeight.w300),
-                    ),
-                  ])),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  RichText(
-                      text: TextSpan(children: [
-                    TextSpan(
-                      text: 'Poste actual :   ',
-                      style: GoogleFonts.montserrat(
-                          textStyle: TextStyle(
-                              color: Colors.black,
-                              letterSpacing: .5,
-                              fontSize: 20),
-                          fontWeight: FontWeight.w600),
-                    ),
-                    TextSpan(
-                      text: '${applicant?.details!["poste"]}',
-                      style: GoogleFonts.montserrat(
-                          textStyle: TextStyle(
-                              color: Colors.black,
-                              letterSpacing: .5,
-                              fontSize: 18),
-                          fontWeight: FontWeight.w300),
-                    ),
-                  ])),
-                  RichText(
-                      text: TextSpan(children: [
-                    TextSpan(
-                      text: 'Compétences :   ',
-                      style: GoogleFonts.montserrat(
-                          textStyle: TextStyle(
-                              color: Colors.black,
-                              letterSpacing: .5,
-                              fontSize: 20),
-                          fontWeight: FontWeight.w600),
-                    ),
-                    TextSpan(
-                      text: "getCompetences()",
-                      style: GoogleFonts.montserrat(
-                          textStyle: TextStyle(
-                              color: Colors.black,
-                              letterSpacing: .5,
-                              fontSize: 18),
-                          fontWeight: FontWeight.w300),
-                    ),
-                  ])),
-                  SizedBox(
-                    height: 20,
                   ),
                 ],
               ),
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(top: 600, left: 25),
+            padding: const EdgeInsets.only(bottom: 15.0),
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
-                  margin: const EdgeInsets.only(left: 25),
+                  //margin: const EdgeInsets.only(left: 25),
                   width: 70,
                   height: 70,
                   decoration: BoxDecoration(
@@ -297,9 +201,9 @@ class _RecruiterMainScreen extends State<RecruiterMainScreen> {
 
   void createChat(UserModel recruiter, UserModel applicant) {
     final String? recruiterFullName =
-        recruiter.FirstName! + recruiter.SecondName!;
+        recruiter.FirstName! + ' ' + recruiter.SecondName!;
     final String applicantFullName =
-        applicant.FirstName! + applicant.SecondName!;
+        applicant.FirstName! + ' ' + applicant.SecondName!;
 
     firebaseFirestore
         .collection('chats')
@@ -310,6 +214,7 @@ class _RecruiterMainScreen extends State<RecruiterMainScreen> {
         .collection('chats')
         .doc('${recruiter.email}+${applicant.email}')
         .set({
+      'lastText': '',
       'user1': recruiter.email,
       'user1FullName': recruiterFullName,
       'user2': applicant.email,

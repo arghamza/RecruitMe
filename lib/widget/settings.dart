@@ -16,93 +16,104 @@ class Settings extends StatefulWidget {
 class _SettingsState extends State<Settings> {
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(30.0),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          SizedBox(
-            height: 20,
-          ),
-          Row(
-            children: [
-              Icon(FontAwesomeIcons.user),
-              Text(
-                '  Compte et confidentialité',
-                style: GoogleFonts.montserrat(
-                    textStyle: TextStyle(
-                        color: Colors.black, letterSpacing: .5, fontSize: 20),
-                    fontWeight: FontWeight.w500),
-              ),
-            ],
-          ),
-          Divider(
-            thickness: 1.5,
-            color: const Color(0xff35ddaa),
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Row(
-            children: [
-              Icon(FontAwesomeIcons.lock),
-              Text(
-                '  Sécurité',
-                style: GoogleFonts.montserrat(
-                    textStyle: TextStyle(
-                        color: Colors.black, letterSpacing: .5, fontSize: 20),
-                    fontWeight: FontWeight.w500),
-              ),
-            ],
-          ),
-          Divider(
-            thickness: 1.5,
-            color: const Color(0xff35ddaa),
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Row(
-            children: [
-              Icon(FontAwesomeIcons.bell),
-              Text(
-                '  Notifications',
-                style: GoogleFonts.montserrat(
-                    textStyle: TextStyle(
-                        color: Colors.black, letterSpacing: .5, fontSize: 20),
-                    fontWeight: FontWeight.w500),
-              ),
-            ],
-          ),
-          Divider(
-            thickness: 1.5,
-            color: const Color(0xff35ddaa),
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          GestureDetector(
-            onTap: () {
-              logout(context);
-            },
-            child: Row(
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.all(30.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            SizedBox(
+              height: 20,
+            ),
+            Row(
               children: [
-                Icon(FontAwesomeIcons.rightFromBracket),
+                Container(
+                  child: Icon(FontAwesomeIcons.user),
+                  margin: EdgeInsets.only(right: 8.0),
+                ),
+                Flexible(
+                  child: Text(
+                    'Compte et confidentialité',
+                    style: GoogleFonts.montserrat(
+                        textStyle: TextStyle(
+                            color: Colors.black,
+                            letterSpacing: .5,
+                            fontSize: 18),
+                        fontWeight: FontWeight.w500),
+                  ),
+                ),
+              ],
+            ),
+            Divider(
+              thickness: 1.5,
+              color: const Color(0xff35ddaa),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Row(
+              children: [
+                Icon(FontAwesomeIcons.lock),
                 Text(
-                  '  Logout',
+                  '  Sécurité',
                   style: GoogleFonts.montserrat(
                       textStyle: TextStyle(
-                          color: Colors.black, letterSpacing: .5, fontSize: 20),
+                          color: Colors.black, letterSpacing: .5, fontSize: 18),
                       fontWeight: FontWeight.w500),
                 ),
               ],
             ),
-          ),
-          Divider(
-            thickness: 1.5,
-            color: const Color(0xff35ddaa),
-          ),
-        ],
+            Divider(
+              thickness: 1.5,
+              color: const Color(0xff35ddaa),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Row(
+              children: [
+                Icon(FontAwesomeIcons.bell),
+                Text(
+                  '  Notifications',
+                  style: GoogleFonts.montserrat(
+                      textStyle: TextStyle(
+                          color: Colors.black, letterSpacing: .5, fontSize: 18),
+                      fontWeight: FontWeight.w500),
+                ),
+              ],
+            ),
+            Divider(
+              thickness: 1.5,
+              color: const Color(0xff35ddaa),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            GestureDetector(
+              onTap: () {
+                logout(context);
+              },
+              child: Row(
+                children: [
+                  Icon(FontAwesomeIcons.rightFromBracket),
+                  Text(
+                    '  Logout',
+                    style: GoogleFonts.montserrat(
+                        textStyle: TextStyle(
+                            color: Colors.black,
+                            letterSpacing: .5,
+                            fontSize: 18),
+                        fontWeight: FontWeight.w500),
+                  ),
+                ],
+              ),
+            ),
+            Divider(
+              thickness: 1.5,
+              color: const Color(0xff35ddaa),
+            ),
+          ],
+        ),
       ),
     );
   }

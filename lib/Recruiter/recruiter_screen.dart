@@ -1,11 +1,11 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:user_type_screen/Recruiter/recruiter_home.dart';
 import 'package:user_type_screen/widget/settings.dart';
 
 import '../chat/chat_list.dart';
+import '../widget/project_app_bar.dart';
 
 class Recruiter extends StatefulWidget {
   const Recruiter({Key? key}) : super(key: key);
@@ -22,34 +22,18 @@ class _RecruiterState extends State<Recruiter> {
     });
   }
 
-  List pages = [RecruiterHome(), ChatList(), Settings()];
+  //List Bottom Navigator Pages
+  List pages = [
+    RecruiterHome(),
+    ChatList(
+      accountType: 'recruiter',
+    ),
+    Settings()
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        leading: Icon(
-          Icons.person,
-          color: const Color(0xff35ddaa),
-        ),
-        title: Row(
-          children: [
-            Container(
-              child: Image.asset('images/logofondblanccropped.png',
-                  fit: BoxFit.fill),
-              margin: const EdgeInsets.only(left: 50, top: 10.0),
-              width: 170,
-            ),
-            SizedBox(
-              width: 65,
-            ),
-            Icon(
-              FontAwesomeIcons.bell,
-              color: const Color(0xff35ddaa),
-            )
-          ],
-        ),
-      ),
+      appBar: projectAppBar(),
       body: pages[currentindextap],
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Colors.white,

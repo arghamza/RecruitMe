@@ -6,6 +6,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -101,7 +102,7 @@ class _Info_screenState extends State<Info_screen> {
                 child: Image.asset('images/logofondblanccropped.png',
                     fit: BoxFit.fill),
                 margin: const EdgeInsets.only(left: 65, top: 10.0),
-                width: 170,
+                width: 500,
               )
             ],
           ),
@@ -262,7 +263,9 @@ class _Info_screenState extends State<Info_screen> {
     final snapshot = await task!.whenComplete(() {});
     final urlDownload = await snapshot.ref.getDownloadURL();
 
-    print('Download-Link: $urlDownload');
+    if (kDebugMode) {
+      print('Download-Link: $urlDownload');
+    }
     setState(() {
       url = urlDownload;
     });
