@@ -8,8 +8,10 @@ import 'package:google_fonts/google_fonts.dart';
 
 import 'package:textfield_tags/textfield_tags.dart';
 import 'package:user_type_screen/Recruiter/recruiter_screen.dart';
+import 'package:user_type_screen/admin/admin_screen.dart';
 import 'package:user_type_screen/constants.dart';
 import 'package:user_type_screen/model/offre_model.dart';
+import 'package:user_type_screen/model/user_model.dart';
 import 'package:user_type_screen/widget/confirmbutton.dart';
 
 import '../widget/competences.dart';
@@ -59,8 +61,18 @@ class _CreationOffreState extends State<CreationOffre> {
 
     final confirmButton = ConfirmButton(onPressed: () {
       postOfferToFirestore();
-      Navigator.of(context)
-          .push(MaterialPageRoute(builder: (context) => Recruiter()));
+      User? curruser = _auth.currentUser;
+      UserModel user = UserModel();
+      FirebaseFirestore.instance
+          .collection("users")
+          .doc(curruser!.uid)
+          .get()
+          .then((value) => user = UserModel.fromMap(value));
+      user.userType == "recruiter"
+          ? Navigator.of(context)
+              .push(MaterialPageRoute(builder: (context) => Recruiter()))
+          : Navigator.of(context)
+              .push(MaterialPageRoute(builder: (context) => AdminScreen()));
     });
     //---------------------------------------------------------------------RETURN----------------------------------
     return Scaffold(
