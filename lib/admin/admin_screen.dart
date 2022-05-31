@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:user_type_screen/admin/admin_offers.dart';
+import 'package:user_type_screen/admin/admin_users.dart';
 
 import '../widget/project_app_bar.dart';
 
@@ -21,7 +22,7 @@ class _AdminScreenState extends State<AdminScreen> {
 
   List pages = [
     AdminOffers(),
-    Container(),
+    AdminUsers(),
   ];
   @override
   Widget build(BuildContext context) {

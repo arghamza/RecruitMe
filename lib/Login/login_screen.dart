@@ -231,6 +231,9 @@ class _loginState extends State<login> {
                     .then((value) {
                   UserModel loggedInUser = UserModel.fromMap(value.data());
                   switch (loggedInUser.userType) {
+                    case "admin":
+                      widget = AdminScreen();
+                      break;
                     case " ":
                       widget = ChoiceScreen();
                       break;
@@ -239,9 +242,6 @@ class _loginState extends State<login> {
                       break;
                     case "recruiter":
                       widget = Recruiter();
-                      break;
-                    case "admin":
-                      widget = AdminScreen();
                       break;
                   }
                   Navigator.of(context)

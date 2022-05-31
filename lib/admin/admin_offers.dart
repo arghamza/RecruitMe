@@ -9,11 +9,11 @@ import 'package:user_type_screen/model/offre_model.dart';
 import 'package:user_type_screen/widget/my_offers_banner.dart';
 import 'package:user_type_screen/widget/project_app_bar.dart';
 
+import '../widget/delete_dialog.dart';
 import '../widget/offer_details.dart';
 
 class AdminOffers extends StatefulWidget {
-  AdminOffers({Key? key}) : super(key: key);
-  List<OffreModel> offers = [];
+  const AdminOffers({Key? key}) : super(key: key);
 
   @override
   State<AdminOffers> createState() => _AdminOffersState();
@@ -28,6 +28,7 @@ class _AdminOffersState extends State<AdminOffers> {
     });
   }
 
+  List<OffreModel> offers = [];
   bool _isShown = true;
 
   void _delete(BuildContext context, String offerId) {
@@ -35,8 +36,8 @@ class _AdminOffersState extends State<AdminOffers> {
         context: context,
         builder: (BuildContext ctx) {
           return AlertDialog(
-            title: const Text('Please Confirm'),
-            content: const Text('Are you sure to remove the box?'),
+            title: const Text('Confirmer'),
+            content: const Text('Vous êtes sûr de vouloir effacer ce USER?'),
             actions: [
               // The "Yes" button
               TextButton(
@@ -80,7 +81,7 @@ class _AdminOffersState extends State<AdminOffers> {
               Expanded(
                 child: ListView.builder(
                     shrinkWrap: true,
-                    itemCount: widget.offers.length,
+                    itemCount: offers.length,
                     itemBuilder: (BuildContext context, int index) {
                       return Expanded(
                         child: Column(
@@ -98,7 +99,7 @@ class _AdminOffersState extends State<AdminOffers> {
                                       fontWeight: FontWeight.w500),
                                 ),
                                 TextSpan(
-                                  text: widget.offers[index].titre!,
+                                  text: offers[index].titre!,
                                   style: GoogleFonts.montserrat(
                                       textStyle: const TextStyle(
                                           color: Colors.black,
@@ -115,14 +116,24 @@ class _AdminOffersState extends State<AdminOffers> {
                                       height: 330,
                                       child: Center(
                                         child: OfferDetails(
-                                          offer: widget.offers[index],
+                                          offer: offers[index],
                                         ),
                                       ),
                                     ),
                                     TextButton(
                                         onPressed: _isShown == true
-                                            ? () => _delete(context,
-                                                widget.offers[index].offerId!)
+                                            ? () => {
+                                                  setState(() {
+                                                    _isShown = false;
+                                                  }),
+                                                  deleteWidget(
+                                                      context,
+                                                      offers[index].offerId!,
+                                                      "offres",
+                                                      const AdminScreen(),
+                                                      'Vous êtes sûr de vouloir effacer cette offre?',
+                                                      _isShown)
+                                                }
                                             : null,
                                         child: const Icon(
                                           FontAwesomeIcons.trashCan,
@@ -154,7 +165,7 @@ class _AdminOffersState extends State<AdminOffers> {
       for (var element in List.from(value.docs)) {
         OffreModel model = OffreModel.fromMap(element);
         setState(() {
-          widget.offers.add(model);
+          offers.add(model);
         });
       }
     });
