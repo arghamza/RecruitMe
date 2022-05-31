@@ -6,6 +6,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:user_type_screen/Login/registration_screen.dart';
+import 'package:user_type_screen/admin/admin_screen.dart';
 import 'package:user_type_screen/model/user_model.dart';
 
 import '../Demandeur/applicant.dart';
@@ -215,6 +216,7 @@ class _loginState extends State<login> {
 
   void signIn(String email, String password) async {
     var doc;
+    Widget widget = ChoiceScreen();
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
     UserModel user;
     if (_formKey.currentState!.validate()) {
@@ -230,18 +232,20 @@ class _loginState extends State<login> {
                   UserModel loggedInUser = UserModel.fromMap(value.data());
                   switch (loggedInUser.userType) {
                     case " ":
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => ChoiceScreen()));
+                      widget = ChoiceScreen();
                       break;
                     case "applicant":
-                      Navigator.of(context).push(
-                          MaterialPageRoute(builder: (context) => Applicant()));
+                      widget = Applicant();
                       break;
                     case "recruiter":
-                      Navigator.of(context).push(
-                          MaterialPageRoute(builder: (context) => Recruiter()));
+                      widget = Recruiter();
+                      break;
+                    case "admin":
+                      widget = AdminScreen();
                       break;
                   }
+                  Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (context) => widget));
                 })
               })
           .catchError((e) {
