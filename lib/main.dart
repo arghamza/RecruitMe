@@ -3,7 +3,9 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:user_type_screen/Login/home.dart';
-import 'package:user_type_screen/admin/admin_screen.dart';
+import 'package:user_type_screen/admin/admin_offers.dart';
+
+import 'admin/admin_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -30,7 +32,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blueGrey,
       ),
-      home: AdminScreen(),
+      home: HomeScreen(),
     );
   }
 }

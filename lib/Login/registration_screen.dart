@@ -201,7 +201,7 @@ class _RegistrationState extends State<Registration> {
               color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
         ),
         padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-        minWidth: MediaQuery.of(context).size.width,
+        minWidth: MediaQuery.of(context).size.width - 100,
       ),
     );
 
