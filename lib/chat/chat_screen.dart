@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:ntp/ntp.dart';
 import 'package:user_type_screen/chat/MessagesWidgets/messages_stream.dart';
 import 'package:user_type_screen/chat/Controllers/messages_controller.dart';
 import 'package:user_type_screen/chat/Models/conversation_model.dart';
@@ -79,7 +80,10 @@ class _ChatScreenState extends State<ChatScreen> {
                     ),
                   ),
                   TextButton(
-                    onPressed: () {
+                    onPressed: () async {
+                      DateTime _myTime = await NTP.now();
+                      final int offset =
+                          await NTP.getNtpOffset(localTime: DateTime.now());
                       messageTextController.clear();
                       if (messageText != '') {
                         _fireStore
@@ -89,7 +93,7 @@ class _ChatScreenState extends State<ChatScreen> {
                             .add({
                           'text': messageText,
                           'sender': loggedInUser.email,
-                          'date': Timestamp.now()
+                          'date': _myTime.add(Duration(milliseconds: offset))
                         });
                         _fireStore
                             .collection('chats')

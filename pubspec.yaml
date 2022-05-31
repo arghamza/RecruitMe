@@ -29,6 +29,7 @@ dependencies:
   path: ^1.8.0
   image_picker: ^0.8.5+3
   delayed_display: ^2.0.0
+  ntp: ^2.0.0
 
 dev_dependencies:
   flutter_test:
