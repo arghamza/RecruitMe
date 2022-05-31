@@ -219,6 +219,7 @@ class _RecruiterMainScreen extends State<RecruiterMainScreen> {
         .doc('${recruiter.email}+${applicant.email}')
         .set({
       'lastText': '',
+      'lastTextDate': Timestamp.now(),
       'user1': recruiter.email,
       'user1FullName': recruiterFullName,
       'user2': applicant.email,
