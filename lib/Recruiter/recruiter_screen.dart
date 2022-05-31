@@ -25,7 +25,7 @@ class _RecruiterState extends State<Recruiter> {
   //List Bottom Navigator Pages
   List pages = [
     RecruiterHome(),
-    ChatList(
+    ConversationsList(
       accountType: 'recruiter',
     ),
     Settings()

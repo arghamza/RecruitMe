@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../model/user_model.dart';
-
 class RichTextLine extends StatelessWidget {
   const RichTextLine({
     Key? key,

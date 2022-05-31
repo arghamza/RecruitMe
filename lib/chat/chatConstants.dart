@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:user_type_screen/constants.dart';
 
 const kSendButtonTextStyle = TextStyle(
   color: Color(0xff35ddaa),

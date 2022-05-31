@@ -50,7 +50,7 @@ class _RecruiterHomeState extends State<RecruiterHome> {
 
   List pages = [
     RecruiterHome(),
-    ChatList(
+    ConversationsList(
       accountType: 'recruiter',
     ),
     Settings()

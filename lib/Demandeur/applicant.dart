@@ -24,7 +24,7 @@ class _ApplicantState extends State<Applicant> {
 
   List pages = [
     ApplicantHome(),
-    ChatList(
+    ConversationsList(
       accountType: 'applicant',
     ),
     Settings(),
