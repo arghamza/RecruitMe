@@ -10,12 +10,14 @@ class MessagesStream extends StatelessWidget {
       required this.isRecruiter,
       required this.firestore,
       required this.conversationModel,
-      required this.loggedInUserEmail})
+      required this.loggedInUserEmail,
+      required this.interlocutorAvatar})
       : super(key: key);
 
   final FirebaseFirestore firestore;
   final ConversationModel conversationModel;
   final String loggedInUserEmail;
+  final CircleAvatar interlocutorAvatar;
   final bool isRecruiter;
 
   @override
@@ -25,7 +27,7 @@ class MessagesStream extends StatelessWidget {
           .collection('chats')
           .doc(conversationModel.id)
           .collection('conversation')
-          .orderBy('date')
+          .orderBy('dateServer')
           .snapshots(),
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
@@ -42,10 +44,11 @@ class MessagesStream extends StatelessWidget {
             senderId: message.get('sender'),
             text: message.get('text'),
             dateServer: message.get('dateServer'),
-            dateUser: message.get('dateServer'),
+            dateUser: message.get('dateUser'),
           );
 
           final messageBubble = MessageBubble(
+              interlocutorAvatar: interlocutorAvatar,
               messageModel: messageModel,
               isMe: loggedInUserEmail == messageModel.senderId);
 

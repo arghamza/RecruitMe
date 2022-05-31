@@ -29,15 +29,15 @@ class ConversationsController {
         List<ConversationBox> messageBubbles = [];
         for (var conversation in conversations!) {
           final conversationModel = ConversationModel(
-            id: conversation.id,
-            applicantId: conversation.get('user2'),
-            applicantFullName: conversation.get('user2FullName'),
-            applicantImg: conversation.get('user2Img'),
-            recruiterId: conversation.get('user1'),
-            recruiterFullName: conversation.get('user1FullName'),
-            recruiterImg: conversation.get('user1Img'),
-            lastText: conversation.get('lastText'),
-          );
+              id: conversation.id,
+              applicantId: conversation.get('user2'),
+              applicantFullName: conversation.get('user2FullName'),
+              applicantImg: conversation.get('user2Img'),
+              recruiterId: conversation.get('user1'),
+              recruiterFullName: conversation.get('user1FullName'),
+              recruiterImg: conversation.get('user1Img'),
+              lastText: conversation.get('lastText'),
+              lastTextDate: conversation.get('lastTextDate'));
           final messageBubble = ConversationBox(
             loggedInUserEmail: loggedInUserEmail,
             conversationModel: conversationModel,

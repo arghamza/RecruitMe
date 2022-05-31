@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 const kSendButtonTextStyle = TextStyle(
   color: Color(0xff35ddaa),
@@ -35,9 +36,5 @@ const kTextFieldDecoration = InputDecoration(
   ),
 );
 
-//await _fireStore
-//       .collection('chats')
-//       .doc('fatima@gmail.com+hamza@gmail.com')
-//       .get()
-//       .then((value) => chats.add(value.data()));
-// }
+final kChatListTextFont = GoogleFonts.montserrat(
+    textStyle: const TextStyle(color: Colors.red, fontWeight: FontWeight.w800));

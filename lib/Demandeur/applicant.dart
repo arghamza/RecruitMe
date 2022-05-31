@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:user_type_screen/Demandeur/applicant_home.dart';
+import 'package:user_type_screen/chat/MessagesWidgets/messages_app_bar.dart';
 import 'package:user_type_screen/chat/chat_list.dart';
 import 'package:user_type_screen/widget/settings.dart';
 
@@ -32,6 +33,7 @@ class _ApplicantState extends State<Applicant> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: projectAppBar(),
       body: pages[currentindextap],
       bottomNavigationBar: BottomNavigationBar(

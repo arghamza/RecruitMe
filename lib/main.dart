@@ -2,10 +2,8 @@
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:user_type_screen/Login/home.dart';
-import 'package:user_type_screen/admin/admin_offers.dart';
-
-import 'admin/admin_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -30,7 +28,10 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.blueGrey,
+        //primarySwatch: Colors.blueGrey,
+        appBarTheme: AppBarTheme(
+          backgroundColor: Colors.transparent,
+        ),
       ),
       home: HomeScreen(),
     );

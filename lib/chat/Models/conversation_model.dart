@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class ConversationModel {
   String id;
   String applicantId;
@@ -7,6 +9,7 @@ class ConversationModel {
   String recruiterFullName;
   String recruiterImg;
   String lastText;
+  Timestamp lastTextDate;
 
   ConversationModel(
       {required this.id,
@@ -16,7 +19,8 @@ class ConversationModel {
       required this.recruiterId,
       required this.recruiterFullName,
       this.recruiterImg = '',
-      required this.lastText});
+      required this.lastText,
+      required this.lastTextDate});
 
   Map<String, dynamic> toMap() {
     return {
