@@ -39,9 +39,11 @@ class MessagesStream extends StatelessWidget {
         List<MessageBubble> messageBubbles = [];
         for (var message in messages!) {
           final MessageModel messageModel = MessageModel(
-              senderId: message.get('sender'),
-              text: message.get('text'),
-              date: message.get('date'));
+            senderId: message.get('sender'),
+            text: message.get('text'),
+            dateServer: message.get('dateServer'),
+            dateUser: message.get('dateServer'),
+          );
 
           final messageBubble = MessageBubble(
               messageModel: messageModel,

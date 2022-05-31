@@ -23,7 +23,7 @@ class MessageBubble extends StatelessWidget {
           Text(
             DateFormat('d/M/y hh:mm').format(
                 DateTime.fromMillisecondsSinceEpoch(
-                    messageModel.date.millisecondsSinceEpoch)),
+                    messageModel.dateServer.millisecondsSinceEpoch)),
             style: const TextStyle(
               fontSize: 12.0,
               color: Colors.black54,

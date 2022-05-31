@@ -92,7 +92,9 @@ class _ChatScreenState extends State<ChatScreen> {
                             .add({
                           'text': messageText,
                           'sender': loggedInUser.email,
-                          'date': startDate.add(Duration(milliseconds: offset))
+                          'dateServer':
+                              startDate.add(Duration(milliseconds: offset)),
+                          'dateUser': Timestamp.now()
                         });
                         _fireStore
                             .collection('chats')
