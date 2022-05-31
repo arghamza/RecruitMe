@@ -26,7 +26,7 @@ dependencies:
   textfield_tags: ^2.0.0+1
   file_picker: ^4.5.1
   firebase_storage: ^10.2.15
-  path: ^1.8.1
+  path: ^1.8.0
   image_picker: ^0.8.5+3
   delayed_display: ^2.0.0
 

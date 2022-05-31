@@ -13,13 +13,13 @@ class UserModel {
   List<dynamic>? offres;
 
   UserModel(
-      {this.uid,
-      this.email,
-      this.FirstName,
-      this.SecondName,
-      this.userType,
-      this.details,
-      this.offres});
+      {this.uid = '',
+      this.email = '',
+      this.FirstName = '',
+      this.SecondName = '',
+      this.userType = '',
+      this.details = const {'': ''},
+      this.offres = const []});
   //data from server
   factory UserModel.fromMap(map) {
     return UserModel(

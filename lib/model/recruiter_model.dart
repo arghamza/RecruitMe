@@ -4,7 +4,11 @@ class RecruiterModel {
   String? entreprise;
   String? poste;
 
-  RecruiterModel({this.useruid, this.entreprise, this.poste, this.linkedin});
+  RecruiterModel(
+      {this.useruid = '',
+      this.entreprise = '',
+      this.poste = '',
+      this.linkedin = ''});
   //data from server
   factory RecruiterModel.fromMap(map) {
     return RecruiterModel(

@@ -151,16 +151,29 @@ class _RecruiterMainScreen extends State<RecruiterMainScreen> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Container(
-                  //margin: const EdgeInsets.only(left: 25),
-                  width: 70,
-                  height: 70,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(80),
-                      color: Colors.red),
-                  child: Icon(
-                    FontAwesomeIcons.xmark,
-                    size: 40,
+                TextButton(
+                  onPressed: () {
+                    setState(() {
+                      if (i + 1 > applicants.length) {
+                        i = 0;
+                      } else {
+                        i++;
+                        applicant = applicants[i];
+                      }
+                    });
+                  },
+                  child: Container(
+                    //margin: const EdgeInsets.only(left: 25),
+                    width: 70,
+                    height: 70,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(80),
+                        color: Colors.red),
+                    child: Icon(
+                      FontAwesomeIcons.xmark,
+                      size: 40,
+                      color: Colors.black,
+                    ),
                   ),
                 ),
                 SizedBox(
@@ -188,6 +201,7 @@ class _RecruiterMainScreen extends State<RecruiterMainScreen> {
                     child: Icon(
                       FontAwesomeIcons.suitcase,
                       size: 40,
+                      color: Colors.black,
                     ),
                   ),
                 ),
