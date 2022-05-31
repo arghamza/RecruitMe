@@ -81,9 +81,6 @@ class _ChatScreenState extends State<ChatScreen> {
                   ),
                   TextButton(
                     onPressed: () async {
-                      DateTime _myTime = await NTP.now();
-                      final int offset =
-                          await NTP.getNtpOffset(localTime: DateTime.now());
                       messageTextController.clear();
                       if (messageText != '') {
                         _fireStore
@@ -93,7 +90,7 @@ class _ChatScreenState extends State<ChatScreen> {
                             .add({
                           'text': messageText,
                           'sender': loggedInUser.email,
-                          'date': _myTime.add(Duration(milliseconds: offset))
+                          'date': Timestamp.now().millisecondsSinceEpoch
                         });
                         _fireStore
                             .collection('chats')
