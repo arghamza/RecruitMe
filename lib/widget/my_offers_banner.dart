@@ -16,7 +16,7 @@ class MyOffersBanner extends StatelessWidget {
       children: [
         Container(
           margin: const EdgeInsets.only(top: 12.0, left: 5.0),
-          child: Text("Mes offres",
+          child: Text("Offres",
               textAlign: TextAlign.center,
               style: GoogleFonts.montserrat(
                 textStyle:

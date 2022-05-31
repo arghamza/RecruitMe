@@ -6,11 +6,11 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:user_type_screen/Login/registration_screen.dart';
-import 'package:user_type_screen/admin/admin_screen.dart';
 import 'package:user_type_screen/model/user_model.dart';
 
 import '../Demandeur/applicant.dart';
 import '../Recruiter/recruiter_screen.dart';
+import '../admin/admin_screen.dart';
 import 'choice_screen.dart';
 
 class login extends StatefulWidget {

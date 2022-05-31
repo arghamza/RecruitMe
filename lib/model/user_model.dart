@@ -18,7 +18,7 @@ class UserModel {
       this.FirstName = '',
       this.SecondName = '',
       this.userType = '',
-      this.details = const {'': ''},
+      this.details,
       this.offres = const []});
   //data from server
   factory UserModel.fromMap(map) {

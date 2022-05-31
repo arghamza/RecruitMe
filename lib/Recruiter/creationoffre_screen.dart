@@ -176,6 +176,7 @@ class _CreationOffreState extends State<CreationOffre> {
       offre.domaine = domaineController.text;
       offre.details = detailsController.text;
       offre.competences = competencesController.getTags;
+
       var id;
       await firebaseFirestore
           .collection("offres")
@@ -183,6 +184,10 @@ class _CreationOffreState extends State<CreationOffre> {
           .then((value) {
         id = value.id;
       });
+      await firebaseFirestore
+          .collection("offres")
+          .doc(id)
+          .update({"offerId": id});
       offre.offerId = id;
       List liste_offre = [];
       liste_offre.add(offre.toMap());

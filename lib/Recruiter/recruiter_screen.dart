@@ -49,7 +49,7 @@ class _RecruiterState extends State<Recruiter> {
               icon: Image.asset("images/me.png"),
               activeIcon: Image.asset("images/minilogofondblanc.png")),
           BottomNavigationBarItem(
-              label: "Search",
+              label: "Message",
               icon: Icon(Icons.message),
               activeIcon: Icon(
                 Icons.message,

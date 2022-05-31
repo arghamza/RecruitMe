@@ -78,12 +78,16 @@ class _RecruiterMainScreen extends State<RecruiterMainScreen> {
                   Padding(
                     padding: const EdgeInsets.only(top: 20.0, bottom: 20.0),
                     child: Expanded(
-                      flex: 0,
-                      child: CircleAvatar(
-                        backgroundImage: AssetImage("images/avatar.png"),
-                        radius: 50,
-                      ),
-                    ),
+                        flex: 0,
+                        child: CircleAvatar(
+                          backgroundImage: applicant!.details!["img"] == ""
+                              ? AssetImage("images/avatar.png")
+                              : Image.network(
+                                  applicant!.details!["img"],
+                                  width: 60,
+                                  height: 60,
+                                ).image,
+                        )),
                   ),
                   SizedBox(
                     height: 20.0,
@@ -151,29 +155,16 @@ class _RecruiterMainScreen extends State<RecruiterMainScreen> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                TextButton(
-                  onPressed: () {
-                    setState(() {
-                      if (i + 1 > applicants.length) {
-                        i = 0;
-                      } else {
-                        i++;
-                        applicant = applicants[i];
-                      }
-                    });
-                  },
-                  child: Container(
-                    //margin: const EdgeInsets.only(left: 25),
-                    width: 70,
-                    height: 70,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(80),
-                        color: Colors.red),
-                    child: Icon(
-                      FontAwesomeIcons.xmark,
-                      size: 40,
-                      color: Colors.black,
-                    ),
+                Container(
+                  //margin: const EdgeInsets.only(left: 25),
+                  width: 70,
+                  height: 70,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(80),
+                      color: Colors.red),
+                  child: Icon(
+                    FontAwesomeIcons.xmark,
+                    size: 40,
                   ),
                 ),
                 SizedBox(
@@ -201,7 +192,6 @@ class _RecruiterMainScreen extends State<RecruiterMainScreen> {
                     child: Icon(
                       FontAwesomeIcons.suitcase,
                       size: 40,
-                      color: Colors.black,
                     ),
                   ),
                 ),
@@ -231,10 +221,8 @@ class _RecruiterMainScreen extends State<RecruiterMainScreen> {
       'lastText': '',
       'user1': recruiter.email,
       'user1FullName': recruiterFullName,
-      //'user1Img' : recruiter.imgURL,
       'user2': applicant.email,
       'user2FullName': applicantFullName
-      //'user2Img' : applicant.imgURL,
     });
   }
 
