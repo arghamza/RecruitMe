@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
       title: 'Recruit Me',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        //primarySwatch: Colors.blueGrey,
+        primarySwatch: Colors.blueGrey,
         appBarTheme: AppBarTheme(
           backgroundColor: Colors.transparent,
         ),
