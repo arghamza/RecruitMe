@@ -217,8 +217,10 @@ class _RecruiterMainScreen extends State<RecruiterMainScreen> {
       'lastText': '',
       'user1': recruiter.email,
       'user1FullName': recruiterFullName,
+      //'user1Img' : recruiter.imgURL,
       'user2': applicant.email,
       'user2FullName': applicantFullName
+      //'user2Img' : applicant.imgURL,
     });
   }
 
