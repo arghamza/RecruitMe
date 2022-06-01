@@ -54,7 +54,7 @@ class _ApplicantInfoState extends State<ApplicantInfo> {
   TextfieldTagsController competencesController = TextfieldTagsController();
 
   User? user = FirebaseAuth.instance.currentUser;
-  UserModel loggedInUser = UserModel();
+  UserModel? loggedInUser;
   UploadTask? task;
   File? file, file2;
   static String url = "";
@@ -110,192 +110,194 @@ class _ApplicantInfoState extends State<ApplicantInfo> {
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: projectAppBarBasic(context),
-        body: Flexible(
-          child: Container(
-            color: Colors.white,
-            height: MediaQuery.of(context).size.height - 0,
-            child: Padding(
-              padding: const EdgeInsets.all(26.0),
-              child: Form(
-                key: _formKey,
-                child: SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          CircleAvatar(
-                            backgroundImage: url == ""
-                                ? AssetImage("images/avatar.png")
-                                : Image.network(
-                                    url.toString(),
-                                    width: 40,
-                                    height: 40,
-                                  ).image,
-                            radius: 60,
-                          ),
-                          GestureDetector(
-                              onTap: selectImage,
-                              child: Padding(
-                                padding: const EdgeInsets.only(top: 90),
-                                child: Icon(
-                                  Icons.add_a_photo,
-                                  size: 30,
-                                ),
-                              )),
-                          SizedBox(
-                            width: 2,
-                          ),
-                          Column(
-                            children: [
-                              Text(
-                                  "${loggedInUser.FirstName}" +
-                                      "  ${loggedInUser.SecondName}",
-                                  style: GoogleFonts.montserrat(
-                                    textStyle: TextStyle(
-                                        color: Colors.black,
-                                        letterSpacing: .5,
-                                        fontWeight: FontWeight.w800,
-                                        fontSize: 20),
+        body: loggedInUser == null
+            ? const Center(
+                child: CircularProgressIndicator(
+                  backgroundColor: Colors.lightBlueAccent,
+                ),
+              )
+            : Container(
+                padding: EdgeInsets.all(20.0),
+                color: Colors.white,
+                child: Form(
+                  key: _formKey,
+                  child: SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            CircleAvatar(
+                              minRadius: 15.0,
+                              maxRadius: 22.0,
+                              backgroundImage: NetworkImage(
+                                url,
+                              ),
+                            ),
+                            Container(
+                              margin: EdgeInsets.only(right: 12.0),
+                              child: GestureDetector(
+                                  onTap: selectImage,
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(top: 10),
+                                    child: Icon(
+                                      Icons.add_a_photo,
+                                      size: 30,
+                                    ),
                                   )),
-                              Text("${loggedInUser.email}",
-                                  style: GoogleFonts.montserrat(
-                                    textStyle: TextStyle(
-                                        color: Colors.black,
-                                        letterSpacing: .5,
-                                        fontWeight: FontWeight.w300,
-                                        fontSize: 20),
-                                  )),
-                            ],
-                          )
-                        ],
-                      ),
-                      SizedBox(
-                        height: 40,
-                      ),
-                      Text(
-                        'Domaine:',
-                        style: kFormsTextFont,
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      domaineField,
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Poste actuel:',
-                            style: kFormsTextFont,
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      posteField,
-                      SizedBox(
-                        height: 18,
-                      ),
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Entreprise actuelle:',
-                            style: kFormsTextFont,
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      entrepriseField,
-                      SizedBox(
-                        height: 18,
-                      ),
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Années d\'expérience:',
-                            style: kFormsTextFont,
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      yearsField,
-                      SizedBox(
-                        height: 18,
-                      ),
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'LinkedIn:',
-                            style: kFormsTextFont,
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      linkedInField,
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Row(
+                            ),
+                            SizedBox(
+                              width: 2,
+                            ),
+                            Column(
+                              children: [
+                                Text(
+                                    "${loggedInUser?.FirstName}" +
+                                        "  ${loggedInUser?.SecondName}",
+                                    style: GoogleFonts.montserrat(
+                                      textStyle: TextStyle(
+                                          color: Colors.black,
+                                          letterSpacing: .5,
+                                          fontWeight: FontWeight.w800,
+                                          fontSize: 20),
+                                    )),
+                                Text("${loggedInUser?.email}",
+                                    style: GoogleFonts.montserrat(
+                                      textStyle: TextStyle(
+                                          color: Colors.black,
+                                          letterSpacing: .5,
+                                          fontWeight: FontWeight.w300,
+                                          fontSize: 20),
+                                    )),
+                              ],
+                            )
+                          ],
+                        ),
+                        SizedBox(
+                          height: 40,
+                        ),
+                        Text(
+                          'Domaine:',
+                          style: kFormsTextFont,
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        domaineField,
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Cv:',
+                              'Poste actuel:',
                               style: kFormsTextFont,
                             ),
-                            SizedBox(
-                              width: 15,
-                            ),
-                            GestureDetector(
-                                onTap: selectFile,
-                                child: Icon(
-                                  FontAwesomeIcons.fileCirclePlus,
-                                  color: const Color(0xff35ddaa),
-                                )),
-                            SizedBox(
-                              width: 15,
-                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        posteField,
+                        SizedBox(
+                          height: 18,
+                        ),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
                             Text(
-                              fileName,
-                              style: GoogleFonts.montserrat(
-                                textStyle: TextStyle(
-                                    color: Colors.black, letterSpacing: .5),
+                              'Entreprise actuelle:',
+                              style: kFormsTextFont,
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        entrepriseField,
+                        SizedBox(
+                          height: 18,
+                        ),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Années d\'expérience:',
+                              style: kFormsTextFont,
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        yearsField,
+                        SizedBox(
+                          height: 18,
+                        ),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'LinkedIn:',
+                              style: kFormsTextFont,
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        linkedInField,
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Cv:',
+                                style: kFormsTextFont,
                               ),
-                            ),
-                            SizedBox(
-                              width: 10,
-                            ),
-                          ]),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      competencesField,
-                      SizedBox(
-                        height: 15,
-                      ),
-                      loginButton,
-                      SizedBox(
-                        height: 15,
-                      ),
-                    ],
+                              SizedBox(
+                                width: 15,
+                              ),
+                              GestureDetector(
+                                  onTap: selectFile,
+                                  child: Icon(
+                                    FontAwesomeIcons.fileCirclePlus,
+                                    color: const Color(0xff35ddaa),
+                                  )),
+                              SizedBox(
+                                width: 15,
+                              ),
+                              Text(
+                                fileName,
+                                style: GoogleFonts.montserrat(
+                                  textStyle: TextStyle(
+                                      color: Colors.black, letterSpacing: .5),
+                                ),
+                              ),
+                              SizedBox(
+                                width: 10,
+                              ),
+                            ]),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        competencesField,
+                        SizedBox(
+                          height: 15,
+                        ),
+                        loginButton,
+                        SizedBox(
+                          height: 15,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-            ),
-          ),
-        ));
+              ));
   }
 
   Material confirmButton(BuildContext context, VoidCallback onPressed) {

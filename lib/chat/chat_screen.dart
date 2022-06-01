@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ntp/ntp.dart';
+import 'package:user_type_screen/chat/MessagesWidgets/chat_app_bar.dart';
 import 'package:user_type_screen/chat/MessagesWidgets/messages_stream.dart';
 import 'package:user_type_screen/chat/Controllers/messages_controller.dart';
 import 'package:user_type_screen/chat/Models/conversation_model.dart';
@@ -54,45 +55,8 @@ class _ChatScreenState extends State<ChatScreen> {
       ),
     );
     return Scaffold(
-      appBar: AppBar(
-        toolbarHeight: MediaQuery.of(context).size.height * 0.12,
-        centerTitle: true,
-        iconTheme: const IconThemeData(
-          color: Color(0xff35ddaa), //change your color here
-        ),
-        backgroundColor: Colors.white,
-        actions: <Widget>[
-          IconButton(
-              icon: const Icon(FontAwesomeIcons.phone), onPressed: () {}),
-          Container(
-            margin: const EdgeInsets.only(right: 5.0),
-            child: IconButton(
-                icon: const Icon(FontAwesomeIcons.video), onPressed: () {}),
-          ),
-        ],
-        title: Column(
-          children: [
-            CircleAvatar(
-              minRadius: 12.0,
-              maxRadius: 22.0,
-              backgroundImage: NetworkImage(
-                widget.interlocutorImgURL,
-              ),
-            ),
-            Container(
-              margin: const EdgeInsets.only(top: 3.0),
-              child: Text(
-                interlocutorFullName,
-                style: GoogleFonts.montserrat(
-                    textStyle: const TextStyle(
-                        fontSize: 13.0,
-                        color: Colors.black,
-                        fontWeight: FontWeight.w300)),
-              ),
-            ),
-          ],
-        ),
-      ),
+      appBar:
+          chatAppBar(context, widget.interlocutorImgURL, interlocutorFullName),
       body: SafeArea(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,

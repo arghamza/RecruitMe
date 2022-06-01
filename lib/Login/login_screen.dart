@@ -7,6 +7,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:user_type_screen/Login/registration_screen.dart';
 import 'package:user_type_screen/model/user_model.dart';
+import 'package:user_type_screen/widget/project_app_bar_basic.dart';
 
 import '../Demandeur/applicant.dart';
 import '../Recruiter/recruiter_screen.dart';
@@ -114,19 +115,7 @@ class _loginState extends State<login> {
       ),
     );
     return Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-          leading: IconButton(
-            icon: Icon(
-              Icons.arrow_back,
-              color: const Color(0xff35ddaa),
-            ),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-          ),
-        ),
+        appBar: projectAppBarBasic(context),
         backgroundColor: Colors.white,
         body: Form(
           key: _formKey,
@@ -135,19 +124,19 @@ class _loginState extends State<login> {
             height: MediaQuery.of(context).size.height,
             child: SingleChildScrollView(
               child: Padding(
-                padding: const EdgeInsets.all(36.0),
+                padding: const EdgeInsets.only(right: 36.0, left: 36.0),
                 child: Column(
                   children: [
                     SizedBox(
-                      height: 250,
-                      width: 400,
+                      height: 200,
+                      width: 300,
                       child: SvgPicture.asset(
                         "images/Login.svg",
                         fit: BoxFit.contain,
                       ),
                     ),
                     SizedBox(
-                      height: 45,
+                      height: 30,
                     ),
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -166,7 +155,7 @@ class _loginState extends State<login> {
                     ),
                     emailField,
                     SizedBox(
-                      height: 25,
+                      height: 20,
                     ),
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.start,

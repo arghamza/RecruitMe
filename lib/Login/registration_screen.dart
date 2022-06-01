@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:user_type_screen/widget/project_app_bar_basic.dart';
 
 import '../model/user_model.dart';
 import 'login_screen.dart';
@@ -207,19 +208,7 @@ class _RegistrationState extends State<Registration> {
 
     return Scaffold(
         backgroundColor: Colors.white,
-        appBar: AppBar(
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-          leading: IconButton(
-            icon: Icon(
-              Icons.arrow_back,
-              color: const Color(0xff35ddaa),
-            ),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-          ),
-        ),
+        appBar: projectAppBarBasic(context),
         body: Form(
           key: _formKey,
           child: Container(
@@ -227,13 +216,12 @@ class _RegistrationState extends State<Registration> {
             height: MediaQuery.of(context).size.height,
             child: SingleChildScrollView(
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  SizedBox(
-                    height: 20,
-                  ),
                   Container(
-                      width: 300,
-                      height: 100,
+                      margin: EdgeInsets.only(
+                          right: MediaQuery.of(context).size.width * 0.10,
+                          left: MediaQuery.of(context).size.width * 0.10),
                       child: Text("Creer un compte avec email",
                           textAlign: TextAlign.center,
                           style: GoogleFonts.montserrat(
@@ -241,7 +229,10 @@ class _RegistrationState extends State<Registration> {
                                 fontSize: 35, fontWeight: FontWeight.bold),
                           ))),
                   Padding(
-                    padding: const EdgeInsets.all(36.0),
+                    padding: EdgeInsets.only(
+                        top: 20.0,
+                        right: MediaQuery.of(context).size.width * 0.10,
+                        left: MediaQuery.of(context).size.width * 0.10),
                     child: Container(
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -334,10 +325,9 @@ class _RegistrationState extends State<Registration> {
                       ),
                     ),
                   ),
-                  ConfirmButton,
-                  SizedBox(
-                    height: 15,
-                  ),
+                  Container(
+                      margin: EdgeInsets.only(bottom: 20.0),
+                      child: ConfirmButton),
                 ],
               ),
             ),

@@ -8,7 +8,7 @@ AppBar projectAppBarBasic(BuildContext context) {
   return AppBar(
     elevation: 0,
     leading: Container(
-      margin: const EdgeInsets.only(top: 8.0),
+      margin: const EdgeInsets.only(top: 5.0),
       child: IconButton(
         icon: const Icon(
           Icons.arrow_back,
@@ -20,12 +20,6 @@ AppBar projectAppBarBasic(BuildContext context) {
       ),
     ),
     backgroundColor: Colors.white,
-    toolbarHeight: MediaQuery.of(context).size.height * 0.10,
+    toolbarHeight: MediaQuery.of(context).size.height * 0.08,
   );
-}
-
-Future<void> logout(BuildContext context) async {
-  await FirebaseAuth.instance.signOut();
-  Navigator.of(context)
-      .pushReplacement(MaterialPageRoute(builder: (context) => const login()));
 }

@@ -11,7 +11,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'package:user_type_screen/Recruiter/recruiter_screen.dart';
-import 'package:user_type_screen/widget/project_app_bar.dart';
 import 'package:user_type_screen/widget/project_app_bar_basic.dart';
 
 import '../API/FireabaseApi.dart';
@@ -76,12 +75,12 @@ class _Info_screenState extends State<Info_screen> {
         inputController: linkedinController, hintText: "LinkedIn");
 
     final loginButton = Material(
+      color: const Color(0xff35ddaa),
       elevation: 5,
       borderRadius: BorderRadius.circular(30),
-      color: const Color(0xff35ddaa),
       child: MaterialButton(
         onPressed: () {
-          addUserTorecruiters();
+          addUserToRecruiters();
           Navigator.of(context)
               .push(MaterialPageRoute(builder: (context) => Recruiter()));
         },
@@ -101,7 +100,6 @@ class _Info_screenState extends State<Info_screen> {
     return Scaffold(
         appBar: projectAppBarBasic(context),
         backgroundColor: Colors.white,
-        resizeToAvoidBottomInset: false,
         body: SafeArea(
           child: Container(
             color: Colors.white,
@@ -276,7 +274,7 @@ class _Info_screenState extends State<Info_screen> {
         .update({"img": urlDownload});
   }
 
-  addUserTorecruiters() async {
+  addUserToRecruiters() async {
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
     User? user = _auth.currentUser;
     if (_formKey.currentState!.validate()) {

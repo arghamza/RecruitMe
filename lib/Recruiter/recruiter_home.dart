@@ -4,8 +4,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:user_type_screen/Recruiter/recruiter_main_screen.dart';
-
-import '../chat/chat_list.dart';
 import '../model/offre_model.dart';
 import '../widget/my_offers_banner.dart';
 import '../widget/offers_card.dart';
@@ -57,7 +55,6 @@ class _RecruiterHomeState extends State<RecruiterHome> {
           child: makeListTile(offer),
         );
     final OffersList = SizedBox(
-      height: 900,
       child: ListView.builder(
         scrollDirection: Axis.vertical,
         shrinkWrap: true,
@@ -87,7 +84,7 @@ class _RecruiterHomeState extends State<RecruiterHome> {
           } else {
             return GestureDetector(
                 onTap: () {
-                  Future.delayed(const Duration(milliseconds: 500), () {
+                  Future.delayed(const Duration(milliseconds: 5), () {
                     Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => RecruiterMainScreen(
                               offerId: offers[index].offerId,
@@ -103,7 +100,6 @@ class _RecruiterHomeState extends State<RecruiterHome> {
         backgroundColor: Color.fromARGB(255, 255, 255, 255),
         body: SafeArea(
           child: Container(
-            height: 900,
             alignment: Alignment.topCenter,
             child: offers.isEmpty ? MyOffersBanner() : OffersList,
           ),

@@ -6,7 +6,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:user_type_screen/model/user_model.dart';
 
-import '../widget/project_app_bar.dart';
 import '../widget/project_app_bar_basic.dart';
 import '../widget/rich_text_line.dart';
 
@@ -62,158 +61,185 @@ class _RecruiterMainScreen extends State<RecruiterMainScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: projectAppBarBasic(context),
-      body: Stack(
-        alignment: Alignment.bottomCenter,
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Container(
-              margin: EdgeInsets.only(bottom: 30.0),
-              decoration: BoxDecoration(
-                  color: Color.fromARGB(255, 190, 244, 227),
-                  borderRadius: BorderRadius.circular(60)),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(top: 20.0, bottom: 20.0),
-                    child: Expanded(
-                        flex: 0,
-                        child: CircleAvatar(
-                            backgroundImage: AssetImage("images/avatar.png"))),
-                  ),
-                  SizedBox(
-                    height: 20.0,
-                  ),
-                  Expanded(
-                    flex: 0,
-                    child: Text(
-                      '${applicant?.FirstName} ${applicant?.SecondName}',
-                      style: GoogleFonts.montserrat(
-                          textStyle: TextStyle(
-                              color: Colors.black,
-                              letterSpacing: .5,
-                              fontSize: 30),
-                          fontWeight: FontWeight.w600),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 20.0,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 20.0),
-                    child: Column(
-                      children: [
-                        RichTextLine(
-                          text: "${applicant?.email}",
-                          title: 'Email :  ',
-                        ),
-                        SizedBox(
-                          height: 20.0,
-                        ),
-                        RichTextLine(
-                          text: "${applicant?.details!["expYears"].toString()}",
-                          title: 'Années d\'expérience :  ',
-                        ),
-                        SizedBox(
-                          height: 20.0,
-                        ),
-                        RichTextLine(
-                          text: "${applicant?.details!["domaine"]}",
-                          title: 'Domaine :  ',
-                        ),
-                        SizedBox(
-                          height: 20.0,
-                        ),
-                        RichTextLine(
-                          text: "${applicant?.details!["poste"]}",
-                          title: 'Poste actuel :  ',
-                        ),
-                        SizedBox(
-                          height: 20.0,
-                        ),
-                        applicant?.details!['competences'] == null
-                            ? const Center(
-                                child: CircularProgressIndicator(
-                                  backgroundColor: Colors.lightBlueAccent,
-                                ),
-                              )
-                            : RichTextLine(
-                                text: getCompetences(
-                                    applicant?.details!["competences"]),
-                                title: 'Compétences :  ',
-                              ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(bottom: 15.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+      backgroundColor: Colors.white,
+      body: applicant == null || applicants.isEmpty
+          ? const Center(child: Text('En attente de demandeurs...'))
+          : Stack(
+              alignment: Alignment.bottomCenter,
               children: [
-                TextButton(
-                  onPressed: () {
-                    if (i + 1 > applicants.length) {
-                      i = 0;
-                    } else {
-                      i++;
-                      applicant = applicants[i];
-                    }
-                  },
+                Padding(
+                  padding: const EdgeInsets.all(5.0),
                   child: Container(
-                    //margin: const EdgeInsets.only(left: 25),
-                    width: 70,
-                    height: 70,
+                    margin: EdgeInsets.only(bottom: 30.0),
                     decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(80),
-                        color: Colors.red),
-                    child: Icon(
-                      FontAwesomeIcons.xmark,
-                      size: 40,
-                      color: Colors.black,
+                        color: Color.fromARGB(255, 190, 244, 227),
+                        borderRadius: BorderRadius.circular(60)),
+                    child: Container(
+                      margin: EdgeInsets.symmetric(horizontal: 15.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding:
+                                const EdgeInsets.only(top: 20.0, bottom: 20.0),
+                            child: Expanded(
+                                flex: 0,
+                                child: CircleAvatar(
+                                    minRadius: 30.0,
+                                    maxRadius: 40.0,
+                                    backgroundImage:
+                                        NetworkImage(applicant!.img))),
+                          ),
+                          SizedBox(
+                            height: 10.0,
+                          ),
+                          Expanded(
+                            flex: 0,
+                            child: Text(
+                              '${applicant?.FirstName} ${applicant?.SecondName}',
+                              style: GoogleFonts.montserrat(
+                                  textStyle: TextStyle(
+                                      color: Colors.black,
+                                      letterSpacing: .5,
+                                      fontSize: 30),
+                                  fontWeight: FontWeight.w600),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 20.0,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 20.0),
+                            child: Column(
+                              children: [
+                                RichTextLine(
+                                  text: "${applicant?.email}",
+                                  title: 'Email :  ',
+                                ),
+                                SizedBox(
+                                  height: 20.0,
+                                ),
+                                RichTextLine(
+                                  text:
+                                      "${applicant?.details!["expYears"].toString()}",
+                                  title: 'Années d\'expérience :  ',
+                                ),
+                                SizedBox(
+                                  height: 20.0,
+                                ),
+                                RichTextLine(
+                                  text: "${applicant?.details!["domaine"]}",
+                                  title: 'Domaine :  ',
+                                ),
+                                SizedBox(
+                                  height: 20.0,
+                                ),
+                                RichTextLine(
+                                  text: "${applicant?.details!["poste"]}",
+                                  title: 'Poste actuel :  ',
+                                ),
+                                SizedBox(
+                                  height: 20.0,
+                                ),
+                                applicant?.details!['competences'] == null
+                                    ? const Center(
+                                        child: CircularProgressIndicator(
+                                          backgroundColor:
+                                              Colors.lightBlueAccent,
+                                        ),
+                                      )
+                                    : RichTextLine(
+                                        text: getCompetences(
+                                            applicant?.details!["competences"]),
+                                        title: 'Compétences :  ',
+                                      ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
-                SizedBox(
-                  width: 150,
-                ),
-                TextButton(
-                  onPressed: () {
-                    setState(() {
-                      createChat(recruiter!, applicant!);
-                      if (i + 1 > applicants.length) {
-                        i = 0;
-                      } else {
-                        i++;
-                        applicant = applicants[i];
-                      }
-                    });
-                  },
-                  child: Container(
-                    width: 70,
-                    height: 70,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(80),
-                      color: const Color(0xff35ddaa),
-                    ),
-                    child: Icon(
-                      FontAwesomeIcons.suitcase,
-                      size: 40,
-                      color: Colors.black,
-                    ),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 15.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      TextButton(
+                        onPressed: () {
+                          setState(() {
+                            if (i + 1 >= applicants.length) {
+                              i = 0;
+                              applicants.clear();
+                            } else {
+                              createChat(recruiter!, applicant!);
+                              removeApplicantFromOffer(applicant!);
+                              applicants.remove(applicant);
+                              i++;
+                              applicant = applicants[i];
+                            }
+                          });
+                        },
+                        child: Container(
+                          //margin: const EdgeInsets.only(left: 25),
+                          width: 70,
+                          height: 70,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(80),
+                              color: Colors.red),
+                          child: Icon(
+                            FontAwesomeIcons.xmark,
+                            size: 40,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        width: 150,
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          setState(() {
+                            if (i + 1 >= applicants.length) {
+                              i = 0;
+                              applicants.clear();
+                            } else {
+                              createChat(recruiter!, applicant!);
+                              removeApplicantFromOffer(applicant!);
+                              applicants.remove(applicant);
+                              i++;
+                              applicant = applicants[i];
+                            }
+                          });
+                        },
+                        child: Container(
+                          width: 70,
+                          height: 70,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(80),
+                            color: const Color(0xff35ddaa),
+                          ),
+                          child: Icon(
+                            FontAwesomeIcons.suitcase,
+                            size: 40,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
-                ),
+                )
               ],
             ),
-          )
-        ],
-      ),
     );
+  }
+
+  void removeApplicantFromOffer(UserModel applicant) {
+    FirebaseFirestore.instance.collection("offres").doc(widget.offerId).update({
+      'applicants': FieldValue.arrayRemove([applicant.uid])
+    });
   }
 
   void createChat(UserModel recruiter, UserModel applicant) {
@@ -235,8 +261,10 @@ class _RecruiterMainScreen extends State<RecruiterMainScreen> {
       'lastTextDate': Timestamp.now(),
       'user1': recruiter.email,
       'user1FullName': recruiterFullName,
+      'user1Img': recruiter.img,
       'user2': applicant.email,
-      'user2FullName': applicantFullName
+      'user2FullName': applicantFullName,
+      'user2Img': applicant.img,
     });
   }
 

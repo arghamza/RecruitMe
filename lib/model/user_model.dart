@@ -1,5 +1,7 @@
 // ignore_for_file: non_constant_identifier_names
 
+import 'package:user_type_screen/constants.dart';
+
 class UserModel {
   String? uid;
   String? email;
@@ -8,7 +10,7 @@ class UserModel {
   String? userType;
   Map<String, dynamic>? details;
   List<dynamic>? offres;
-  String? img;
+  String img;
 
   UserModel({
     this.uid = '',
@@ -18,7 +20,7 @@ class UserModel {
     this.userType = '',
     this.details,
     this.offres = const [],
-    this.img,
+    this.img = kDefaultImage,
   });
   //data from server
   factory UserModel.fromMap(map) {
@@ -30,7 +32,7 @@ class UserModel {
         userType: map['userType'],
         details: map['details'],
         offres: map['offres'],
-        img: map['img']);
+        img: map['img'] ?? kDefaultImage);
   }
   //sending data to our server
   Map<String, dynamic> toMap() {

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:user_type_screen/Demandeur/add_info_screen.dart';
 import 'package:user_type_screen/model/user_model.dart';
-import 'package:user_type_screen/widget/project_app_bar.dart';
 
 import '../widget/project_app_bar_basic.dart';
 import '../widget/rich_text_line.dart';
@@ -19,6 +18,7 @@ class _ApplicantProfileState extends State<ApplicantProfile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: projectAppBarBasic(context),
       body: Padding(
         padding: const EdgeInsets.all(10.0),
@@ -33,7 +33,7 @@ class _ApplicantProfileState extends State<ApplicantProfile> {
                       fontSize: 30, fontWeight: FontWeight.bold),
                 )),
             const SizedBox(
-              height: 15.0,
+              height: 10.0,
             ),
             Flexible(
               child: Center(
@@ -131,7 +131,7 @@ class _ApplicantProfileState extends State<ApplicantProfile> {
                                                       competence:
                                                           widget.user.details![
                                                               "competences"],
-                                                      url: widget.user.img!,
+                                                      url: widget.user.img,
                                                     )));
                                       },
                                       child: const Icon(

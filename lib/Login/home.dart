@@ -34,7 +34,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 Flexible(
                   child: Padding(
                     padding: const EdgeInsets.only(
-                        top: 50.0, right: 25.0, left: 25.0),
+                        top: 25.0, right: 25.0, left: 25.0),
                     child: Image.asset(
                       "images/logofondvert.png",
                       fit: BoxFit.contain,
