@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:user_type_screen/Demandeur/add_info_screen.dart';
@@ -7,6 +8,7 @@ import 'package:user_type_screen/Demandeur/applicant_profile.dart';
 import 'package:user_type_screen/Recruiter/recruiter_profile.dart';
 import 'package:user_type_screen/model/user_model.dart';
 
+import '../Login/login_screen.dart';
 import '../Recruiter/Info_screen.dart';
 
 AppBar projectAppBar(UserModel? user, BuildContext context) {
@@ -16,10 +18,15 @@ AppBar projectAppBar(UserModel? user, BuildContext context) {
     elevation: 0,
     actions: [
       Container(
-        child: const Flexible(
-          child: Icon(
-            FontAwesomeIcons.bell,
-            color: Color(0xff35ddaa),
+        child: Flexible(
+          child: GestureDetector(
+            onTap: () {
+              logout(context);
+            },
+            child: const Icon(
+              Icons.logout,
+              color: Color(0xff35ddaa),
+            ),
           ),
         ),
         padding: const EdgeInsets.only(right: 16.0, top: 10.0),
@@ -49,4 +56,10 @@ AppBar projectAppBar(UserModel? user, BuildContext context) {
       padding: const EdgeInsets.only(top: 20.0),
     ),
   );
+}
+
+Future<void> logout(BuildContext context) async {
+  await FirebaseAuth.instance.signOut();
+  Navigator.of(context)
+      .pushReplacement(MaterialPageRoute(builder: (context) => login()));
 }

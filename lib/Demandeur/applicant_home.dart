@@ -21,11 +21,18 @@ class _ApplicantHomeState extends State<ApplicantHome> {
   void initState() {
     super.initState();
     setOffersNumber();
-    FirebaseFirestore.instance.collection("offres").get().then((query) => {
-          setState(() {
-            offer = OffreModel.fromMap(query.docs[i].data());
-          }),
-        });
+    getOffers();
+  }
+
+  getOffers() async {
+    await FirebaseFirestore.instance
+        .collection("offres")
+        .get()
+        .then((query) => {
+              setState(() {
+                offer = OffreModel.fromMap(query.docs[i].data());
+              }),
+            });
   }
 
   Widget build(BuildContext context) {
