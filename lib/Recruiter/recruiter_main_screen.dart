@@ -7,6 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:user_type_screen/model/user_model.dart';
 
 import '../widget/project_app_bar.dart';
+import '../widget/project_app_bar_basic.dart';
 import '../widget/rich_text_line.dart';
 
 class RecruiterMainScreen extends StatefulWidget {
@@ -60,7 +61,7 @@ class _RecruiterMainScreen extends State<RecruiterMainScreen> {
 
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: projectAppBar(recruiter, context),
+      appBar: projectAppBarBasic(context),
       body: Stack(
         alignment: Alignment.bottomCenter,
         children: [

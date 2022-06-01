@@ -16,6 +16,7 @@ import 'package:user_type_screen/widget/confirmbutton.dart';
 
 import '../widget/competences.dart';
 import '../widget/custom_input_widget.dart';
+import '../widget/project_app_bar_basic.dart';
 
 class CreationOffre extends StatefulWidget {
   const CreationOffre({Key? key}) : super(key: key);
@@ -78,27 +79,12 @@ class _CreationOffreState extends State<CreationOffre> {
     //---------------------------------------------------------------------RETURN----------------------------------
     return Scaffold(
         backgroundColor: Colors.white,
-        appBar: AppBar(
-          elevation: 0,
-          leading: IconButton(
-            icon: const Icon(
-              Icons.arrow_back,
-              color: Color(0xff35ddaa),
-            ),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-          ),
-          backgroundColor: Colors.white,
-          toolbarHeight: 80,
-        ),
+        appBar: projectAppBarBasic(context),
         body: Form(
             key: _formKey,
             child: SingleChildScrollView(
               child: Column(children: [
                 SizedBox(
-                    width: 300,
-                    height: 50,
                     child: Text("Création d'offre  ",
                         textAlign: TextAlign.center,
                         style: GoogleFonts.montserrat(

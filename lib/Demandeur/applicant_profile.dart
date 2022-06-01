@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:user_type_screen/Demandeur/add_info_screen.dart';
-import 'package:user_type_screen/constants.dart';
 import 'package:user_type_screen/model/user_model.dart';
 import 'package:user_type_screen/widget/project_app_bar.dart';
 
+import '../widget/project_app_bar_basic.dart';
 import '../widget/rich_text_line.dart';
 
 class ApplicantProfile extends StatefulWidget {
@@ -21,7 +19,7 @@ class _ApplicantProfileState extends State<ApplicantProfile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: projectAppBar(widget.user, context),
+      appBar: projectAppBarBasic(context),
       body: Padding(
         padding: const EdgeInsets.all(10.0),
         child: Column(

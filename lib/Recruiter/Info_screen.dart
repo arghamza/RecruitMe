@@ -12,6 +12,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 import 'package:user_type_screen/Recruiter/recruiter_screen.dart';
 import 'package:user_type_screen/widget/project_app_bar.dart';
+import 'package:user_type_screen/widget/project_app_bar_basic.dart';
 
 import '../API/FireabaseApi.dart';
 import '../model/recruiter_model.dart';
@@ -98,135 +99,139 @@ class _Info_screenState extends State<Info_screen> {
     );
 
     return Scaffold(
+        appBar: projectAppBarBasic(context),
         backgroundColor: Colors.white,
-        appBar: projectAppBar(loggedInUser, context),
         resizeToAvoidBottomInset: false,
-        body: Container(
-          color: Colors.white,
-          height: MediaQuery.of(context).size.height - 100,
-          child: Padding(
-            padding: const EdgeInsets.all(36.0),
-            child: Form(
-              key: _formKey,
-              child: Column(
-                children: [
-                  Row(
-                    children: [
-                      CircleAvatar(
-                        backgroundImage: url == ""
-                            ? AssetImage("images/avatar.png")
-                            : Image.network(
-                                url.toString(),
-                                width: 60,
-                                height: 60,
-                              ).image,
-                        radius: 60,
-                      ),
-                      GestureDetector(
-                          onTap: selectImage,
-                          child: Padding(
-                            padding: const EdgeInsets.only(top: 90),
-                            child: Icon(
-                              Icons.add_a_photo,
-                              size: 30,
-                            ),
-                          )),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Expanded(
-                        child: Column(
+        body: SafeArea(
+          child: Container(
+            color: Colors.white,
+            height: MediaQuery.of(context).size.height - 50,
+            child: Padding(
+              padding:
+                  const EdgeInsets.only(left: 30.0, right: 30.0, top: 10.0),
+              child: Form(
+                key: _formKey,
+                child: Expanded(
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        Row(
                           children: [
-                            Text(
-                                "${loggedInUser.FirstName}" +
-                                    "  ${loggedInUser.SecondName}",
-                                textAlign: TextAlign.center,
-                                style: GoogleFonts.montserrat(
-                                  textStyle: TextStyle(
-                                      color: Colors.black,
-                                      letterSpacing: .5,
-                                      fontWeight: FontWeight.w800,
-                                      fontSize: 20),
+                            CircleAvatar(
+                              backgroundImage: url == ""
+                                  ? AssetImage("images/avatar.png")
+                                  : Image.network(
+                                      url.toString(),
+                                      width: 60,
+                                      height: 60,
+                                    ).image,
+                              radius: 60,
+                            ),
+                            GestureDetector(
+                                onTap: selectImage,
+                                child: Padding(
+                                  padding: const EdgeInsets.only(top: 90),
+                                  child: Icon(
+                                    Icons.add_a_photo,
+                                    size: 30,
+                                  ),
                                 )),
-                            Text("${loggedInUser.email}",
-                                textAlign: TextAlign.center,
-                                style: GoogleFonts.montserrat(
-                                  textStyle: TextStyle(
-                                      color: Colors.black,
-                                      letterSpacing: .5,
-                                      fontWeight: FontWeight.w300,
-                                      fontSize: 20),
-                                )),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Expanded(
+                              child: Column(
+                                children: [
+                                  Text(
+                                      "${loggedInUser.FirstName}" +
+                                          "  ${loggedInUser.SecondName}",
+                                      textAlign: TextAlign.center,
+                                      style: GoogleFonts.montserrat(
+                                        textStyle: TextStyle(
+                                            color: Colors.black,
+                                            letterSpacing: .5,
+                                            fontWeight: FontWeight.w800,
+                                            fontSize: 20),
+                                      )),
+                                  Text("${loggedInUser.email}",
+                                      textAlign: TextAlign.center,
+                                      style: GoogleFonts.montserrat(
+                                        textStyle: TextStyle(
+                                            color: Colors.black,
+                                            letterSpacing: .5,
+                                            fontWeight: FontWeight.w300,
+                                            fontSize: 20),
+                                      )),
+                                ],
+                              ),
+                            )
                           ],
                         ),
-                      )
-                    ],
-                  ),
-                  SizedBox(
-                    height: 85,
-                  ),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Entreprise:',
-                        style: GoogleFonts.montserrat(
-                          textStyle:
-                              TextStyle(color: Colors.black, letterSpacing: .5),
+                        SizedBox(
+                          height: 30,
                         ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  entrepriseField,
-                  SizedBox(
-                    height: 25,
-                  ),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Poste:',
-                        style: GoogleFonts.montserrat(
-                          textStyle:
-                              TextStyle(color: Colors.black, letterSpacing: .5),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Entreprise:',
+                              style: GoogleFonts.montserrat(
+                                textStyle: TextStyle(
+                                    color: Colors.black, letterSpacing: .5),
+                              ),
+                            ),
+                          ],
                         ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  posteField,
-                  SizedBox(
-                    height: 25,
-                  ),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'LinkedIn:',
-                        style: GoogleFonts.montserrat(
-                          textStyle:
-                              TextStyle(color: Colors.black, letterSpacing: .5),
+                        SizedBox(
+                          height: 10,
                         ),
-                      ),
-                    ],
+                        entrepriseField,
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Poste:',
+                              style: GoogleFonts.montserrat(
+                                textStyle: TextStyle(
+                                    color: Colors.black, letterSpacing: .5),
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        posteField,
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'LinkedIn:',
+                              style: GoogleFonts.montserrat(
+                                textStyle: TextStyle(
+                                    color: Colors.black, letterSpacing: .5),
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        linkedInField,
+                        SizedBox(
+                          height: 20,
+                        ),
+                        loginButton,
+                      ],
+                    ),
                   ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  linkedInField,
-                  SizedBox(
-                    height: 120,
-                  ),
-                  loginButton,
-                  SizedBox(
-                    height: 15,
-                  ),
-                ],
+                ),
               ),
             ),
           ),
