@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:user_type_screen/Demandeur/add_info_screen.dart';
+import 'package:user_type_screen/Login/login_screen.dart';
 
 import '../Recruiter/Info_screen.dart';
 
@@ -72,7 +73,12 @@ class _ChoiceScreenState extends State<ChoiceScreen> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => Info_screen()));
+                                  builder: (context) => Info_screen(
+                                        entreprise: "",
+                                        poste: "",
+                                        linkedin: "",
+                                        url: "",
+                                      )));
                         },
                         style: ElevatedButton.styleFrom(
                           primary: Color.fromRGBO(53, 221, 170, 1),
@@ -131,7 +137,15 @@ class _ChoiceScreenState extends State<ChoiceScreen> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => ApplicantInfo()));
+                                  builder: (context) => ApplicantInfo(
+                                        entreprise: "",
+                                        poste: "",
+                                        domaine: "",
+                                        expYears: "",
+                                        linkedin: "",
+                                        competence: [],
+                                        url: "",
+                                      )));
                         },
                         style: ElevatedButton.styleFrom(
                           primary: Color.fromRGBO(53, 221, 170, 1),

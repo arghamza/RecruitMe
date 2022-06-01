@@ -59,15 +59,16 @@ class _CreationOffreState extends State<CreationOffre> {
     final competencesField =
         CompetenceWidget(competencesController: competencesController);
 
-    final confirmButton = ConfirmButton(onPressed: () {
+    final confirmButton = ConfirmButton(onPressed: () async {
       postOfferToFirestore();
       User? curruser = _auth.currentUser;
       UserModel user = UserModel();
-      FirebaseFirestore.instance
+      await FirebaseFirestore.instance
           .collection("users")
           .doc(curruser!.uid)
           .get()
           .then((value) => user = UserModel.fromMap(value));
+      print("type: " + user.userType!);
       user.userType == "recruiter"
           ? Navigator.of(context)
               .push(MaterialPageRoute(builder: (context) => Recruiter()))

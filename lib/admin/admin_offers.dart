@@ -4,10 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:user_type_screen/admin/admin_screen.dart';
-import 'package:user_type_screen/constants.dart';
 import 'package:user_type_screen/model/offre_model.dart';
 import 'package:user_type_screen/widget/my_offers_banner.dart';
-import 'package:user_type_screen/widget/project_app_bar.dart';
 
 import '../widget/delete_dialog.dart';
 import '../widget/offer_details.dart';
@@ -30,43 +28,6 @@ class _AdminOffersState extends State<AdminOffers> {
 
   List<OffreModel> offers = [];
   bool _isShown = true;
-
-  void _delete(BuildContext context, String offerId) {
-    showDialog(
-        context: context,
-        builder: (BuildContext ctx) {
-          return AlertDialog(
-            title: const Text('Confirmer'),
-            content: const Text('Vous êtes sûr de vouloir effacer ce USER?'),
-            actions: [
-              // The "Yes" button
-              TextButton(
-                  onPressed: () {
-                    // Remove the box
-                    setState(() {
-                      _isShown = false;
-                    });
-                    FirebaseFirestore.instance
-                        .collection("offres")
-                        .doc(offerId)
-                        .delete();
-                    // Close the dialog
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const AdminScreen()));
-                  },
-                  child: const Text('Yes')),
-              TextButton(
-                  onPressed: () {
-                    // Close the dialog
-                    Navigator.of(context).pop();
-                  },
-                  child: const Text('No'))
-            ],
-          );
-        });
-  }
 
   @override
   Widget build(BuildContext context) {

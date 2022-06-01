@@ -1,35 +1,45 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:user_type_screen/Recruiter/recruiter_screen.dart';
+import 'package:user_type_screen/model/offre_model.dart';
 
 import '../constants.dart';
+import 'delete_dialog.dart';
 
 class OffersCard extends StatelessWidget {
   const OffersCard({
     Key? key,
-    required this.titre,
-    required this.entreprise,
-    required this.poste,
-    required this.domaine,
-    required this.details,
+    required this.offer,
   }) : super(key: key);
 
-  final String titre;
-  final String entreprise;
-  final String poste;
-  final String domaine;
-  final String details;
+  final OffreModel offer;
 
   @override
   Widget build(BuildContext context) {
+    bool _isShown = true;
     return ListTile(
       contentPadding:
           const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
       title: Container(
         height: 30,
         margin: const EdgeInsets.all(10),
-        child: Row(mainAxisAlignment: MainAxisAlignment.end, children: const [
-          Icon(Icons.edit, size: 25, color: Colors.black),
-          Icon(Icons.delete, size: 25, color: Colors.black),
+        child: Row(mainAxisAlignment: MainAxisAlignment.end, children: [
+          TextButton(
+              onPressed: () {},
+              child: const Icon(Icons.edit, size: 25, color: Colors.black)),
+          TextButton(
+              onPressed: _isShown == true
+                  ? () => {
+                        deleteWidget(
+                            context,
+                            offer.offerId!,
+                            "offres",
+                            const Recruiter(),
+                            'Vous êtes sûr de vouloir effacer cette offre?',
+                            _isShown)
+                      }
+                  : null,
+              child: const Icon(Icons.delete, size: 25, color: Colors.black)),
         ]),
       ),
       subtitle: Container(
@@ -40,7 +50,7 @@ class OffersCard extends StatelessWidget {
             Container(
               margin: const EdgeInsets.only(bottom: 30),
               child: Text(
-                titre,
+                offer.titre!,
                 style: GoogleFonts.montserrat(
                     textStyle: const TextStyle(
                         color: Colors.black, letterSpacing: .5, fontSize: 25),
@@ -54,7 +64,7 @@ class OffersCard extends StatelessWidget {
                 style: kFormsTextFont,
               ),
               TextSpan(
-                text: entreprise,
+                text: offer.entreprise,
                 style: GoogleFonts.montserrat(
                     textStyle: const TextStyle(
                         color: Colors.black, letterSpacing: .5, fontSize: 15),
@@ -71,7 +81,7 @@ class OffersCard extends StatelessWidget {
                 style: kFormsTextFont,
               ),
               TextSpan(
-                text: poste,
+                text: offer.poste,
                 style: GoogleFonts.montserrat(
                     textStyle: const TextStyle(
                         color: Colors.black, letterSpacing: .5, fontSize: 15),
@@ -88,7 +98,7 @@ class OffersCard extends StatelessWidget {
                 style: kFormsTextFont,
               ),
               TextSpan(
-                text: domaine,
+                text: offer.domaine,
                 style: GoogleFonts.montserrat(
                     textStyle: const TextStyle(
                         color: Colors.black, letterSpacing: .5, fontSize: 15),
@@ -115,7 +125,7 @@ class OffersCard extends StatelessWidget {
                   child: Padding(
                 padding: const EdgeInsets.all(20.0),
                 child: Text(
-                  details,
+                  offer.details!,
                   style: GoogleFonts.montserrat(
                       textStyle: const TextStyle(
                           color: Colors.black, letterSpacing: .5, fontSize: 10),

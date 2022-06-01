@@ -1,8 +1,5 @@
 // ignore_for_file: non_constant_identifier_names
 
-import 'package:user_type_screen/Demandeur/applicant_home.dart';
-import 'package:user_type_screen/model/recruiter_model.dart';
-
 class UserModel {
   String? uid;
   String? email;
@@ -11,15 +8,18 @@ class UserModel {
   String? userType;
   Map<String, dynamic>? details;
   List<dynamic>? offres;
+  String? img;
 
-  UserModel(
-      {this.uid = '',
-      this.email = '',
-      this.FirstName = '',
-      this.SecondName = '',
-      this.userType = '',
-      this.details,
-      this.offres = const []});
+  UserModel({
+    this.uid = '',
+    this.email = '',
+    this.FirstName = '',
+    this.SecondName = '',
+    this.userType = '',
+    this.details,
+    this.offres = const [],
+    this.img,
+  });
   //data from server
   factory UserModel.fromMap(map) {
     return UserModel(
@@ -29,7 +29,8 @@ class UserModel {
         SecondName: map['SecondName'],
         userType: map['userType'],
         details: map['details'],
-        offres: map['offres']);
+        offres: map['offres'],
+        img: map['img']);
   }
   //sending data to our server
   Map<String, dynamic> toMap() {
@@ -40,7 +41,8 @@ class UserModel {
       'SecondName': SecondName,
       'userType': userType,
       'details': details,
-      'offres': offres
+      'offres': offres,
+      'img': img
     };
   }
 }

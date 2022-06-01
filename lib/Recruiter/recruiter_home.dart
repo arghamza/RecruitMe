@@ -41,29 +41,10 @@ class _RecruiterHomeState extends State<RecruiterHome> {
     });
   }
 
-  int currentindextap = 0;
-  void onTap(int index) {
-    setState(() {
-      currentindextap = index;
-    });
-  }
-
-  List pages = [
-    RecruiterHome(),
-    ConversationsList(
-      accountType: 'recruiter',
-    ),
-    Settings()
-  ];
-
   @override
   Widget build(BuildContext context) {
     OffersCard makeListTile(OffreModel offer) => OffersCard(
-          titre: offer.titre!,
-          poste: offer.poste!,
-          domaine: offer.domaine!,
-          entreprise: offer.entreprise!,
-          details: offer.details!,
+          offer: offer,
         );
 
     Card makeCard(OffreModel offer) => Card(

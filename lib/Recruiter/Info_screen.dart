@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'package:user_type_screen/Recruiter/recruiter_screen.dart';
+import 'package:user_type_screen/widget/project_app_bar.dart';
 
 import '../API/FireabaseApi.dart';
 import '../model/recruiter_model.dart';
@@ -18,7 +19,17 @@ import '../model/user_model.dart';
 import '../widget/custom_input_widget.dart';
 
 class Info_screen extends StatefulWidget {
-  const Info_screen({Key? key}) : super(key: key);
+  const Info_screen(
+      {Key? key,
+      required this.entreprise,
+      required this.poste,
+      required this.linkedin,
+      required this.url})
+      : super(key: key);
+  final String entreprise;
+  final String poste;
+  final String linkedin;
+  final String url;
 
   @override
   State<Info_screen> createState() => _Info_screenState();
@@ -28,9 +39,9 @@ class _Info_screenState extends State<Info_screen> {
   @override
   final _formKey = GlobalKey<FormState>();
   final _auth = FirebaseAuth.instance;
-  final TextEditingController entrepriseController = TextEditingController();
-  final TextEditingController posteController = TextEditingController();
-  final TextEditingController linkedinController = TextEditingController();
+  TextEditingController entrepriseController = TextEditingController();
+  TextEditingController posteController = TextEditingController();
+  TextEditingController linkedinController = TextEditingController();
   User? user = FirebaseAuth.instance.currentUser;
   UserModel loggedInUser = UserModel();
   UploadTask? task;
@@ -39,6 +50,11 @@ class _Info_screenState extends State<Info_screen> {
   @override
   void initState() {
     super.initState();
+    entrepriseController = TextEditingController(text: widget.entreprise);
+    posteController = TextEditingController(text: widget.poste);
+    linkedinController = TextEditingController(text: widget.linkedin);
+    url = widget.url;
+
     FirebaseFirestore.instance
         .collection("users")
         .doc(user!.uid)
@@ -83,31 +99,7 @@ class _Info_screenState extends State<Info_screen> {
 
     return Scaffold(
         backgroundColor: Colors.white,
-        appBar: AppBar(
-          leading: IconButton(
-            icon: Icon(
-              Icons.arrow_back,
-              color: const Color(0xff35ddaa),
-            ),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-          ),
-          backgroundColor: Colors.white,
-          toolbarHeight: 80,
-          title: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Container(
-                child: Image.asset('images/logofondblanccropped.png',
-                    fit: BoxFit.fill),
-                margin: const EdgeInsets.only(left: 65, top: 10.0),
-                width: 500,
-              )
-            ],
-          ),
-          elevation: 0,
-        ),
+        appBar: projectAppBar(loggedInUser, context),
         resizeToAvoidBottomInset: false,
         body: Container(
           color: Colors.white,
@@ -142,27 +134,31 @@ class _Info_screenState extends State<Info_screen> {
                       SizedBox(
                         width: 10,
                       ),
-                      Column(
-                        children: [
-                          Text(
-                              "${loggedInUser.FirstName}" +
-                                  "  ${loggedInUser.SecondName}",
-                              style: GoogleFonts.montserrat(
-                                textStyle: TextStyle(
-                                    color: Colors.black,
-                                    letterSpacing: .5,
-                                    fontWeight: FontWeight.w800,
-                                    fontSize: 20),
-                              )),
-                          Text("${loggedInUser.email}",
-                              style: GoogleFonts.montserrat(
-                                textStyle: TextStyle(
-                                    color: Colors.black,
-                                    letterSpacing: .5,
-                                    fontWeight: FontWeight.w300,
-                                    fontSize: 20),
-                              )),
-                        ],
+                      Expanded(
+                        child: Column(
+                          children: [
+                            Text(
+                                "${loggedInUser.FirstName}" +
+                                    "  ${loggedInUser.SecondName}",
+                                textAlign: TextAlign.center,
+                                style: GoogleFonts.montserrat(
+                                  textStyle: TextStyle(
+                                      color: Colors.black,
+                                      letterSpacing: .5,
+                                      fontWeight: FontWeight.w800,
+                                      fontSize: 20),
+                                )),
+                            Text("${loggedInUser.email}",
+                                textAlign: TextAlign.center,
+                                style: GoogleFonts.montserrat(
+                                  textStyle: TextStyle(
+                                      color: Colors.black,
+                                      letterSpacing: .5,
+                                      fontWeight: FontWeight.w300,
+                                      fontSize: 20),
+                                )),
+                          ],
+                        ),
                       )
                     ],
                   ),

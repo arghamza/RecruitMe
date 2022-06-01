@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:user_type_screen/constants.dart';
 
 import '../model/offre_model.dart';
 

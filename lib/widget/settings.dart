@@ -6,14 +6,14 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:user_type_screen/Login/login_screen.dart';
 
-class Settings extends StatefulWidget {
-  const Settings({Key? key}) : super(key: key);
+class SettingsNavBar extends StatefulWidget {
+  const SettingsNavBar({Key? key}) : super(key: key);
 
   @override
-  State<Settings> createState() => _SettingsState();
+  State<SettingsNavBar> createState() => _SettingsNavBarState();
 }
 
-class _SettingsState extends State<Settings> {
+class _SettingsNavBarState extends State<SettingsNavBar> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(

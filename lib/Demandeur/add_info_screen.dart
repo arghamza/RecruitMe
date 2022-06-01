@@ -20,7 +20,23 @@ import '../model/user_model.dart';
 import '../widget/competences.dart';
 
 class ApplicantInfo extends StatefulWidget {
-  const ApplicantInfo({Key? key}) : super(key: key);
+  const ApplicantInfo(
+      {Key? key,
+      required this.entreprise,
+      required this.poste,
+      required this.linkedin,
+      required this.domaine,
+      required this.expYears,
+      required this.competence,
+      required this.url})
+      : super(key: key);
+  final String entreprise;
+  final String poste;
+  final String linkedin;
+  final String domaine;
+  final String expYears;
+  final List<dynamic> competence;
+  final String url;
 
   @override
   State<ApplicantInfo> createState() => _ApplicantInfoState();
@@ -29,11 +45,11 @@ class ApplicantInfo extends StatefulWidget {
 class _ApplicantInfoState extends State<ApplicantInfo> {
   @override
   final _formKey = GlobalKey<FormState>();
-  final TextEditingController entrepriseController = TextEditingController();
-  final TextEditingController posteController = TextEditingController();
-  final TextEditingController linkedController = TextEditingController();
-  final TextEditingController domaineController = TextEditingController();
-  final TextEditingController expYearController = TextEditingController();
+  TextEditingController entrepriseController = TextEditingController();
+  TextEditingController posteController = TextEditingController();
+  TextEditingController linkedController = TextEditingController();
+  TextEditingController domaineController = TextEditingController();
+  TextEditingController expYearController = TextEditingController();
   TextfieldTagsController competencesController = TextfieldTagsController();
 
   User? user = FirebaseAuth.instance.currentUser;
@@ -46,6 +62,13 @@ class _ApplicantInfoState extends State<ApplicantInfo> {
   @override
   void initState() {
     super.initState();
+    entrepriseController = TextEditingController(text: widget.entreprise);
+    posteController = TextEditingController(text: widget.poste);
+    linkedController = TextEditingController(text: widget.linkedin);
+    domaineController = TextEditingController(text: widget.domaine);
+    expYearController = TextEditingController(text: widget.expYears);
+    url = widget.url;
+
     FirebaseFirestore.instance
         .collection("users")
         .doc(user!.uid)

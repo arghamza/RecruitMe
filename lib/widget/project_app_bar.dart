@@ -1,7 +1,15 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:user_type_screen/Demandeur/add_info_screen.dart';
+import 'package:user_type_screen/Demandeur/applicant_profile.dart';
+import 'package:user_type_screen/Recruiter/recruiter_profile.dart';
+import 'package:user_type_screen/model/user_model.dart';
 
-AppBar projectAppBar() {
+import '../Recruiter/Info_screen.dart';
+
+AppBar projectAppBar(UserModel? user, BuildContext context) {
   return AppBar(
     backgroundColor: Colors.white,
     centerTitle: true,
@@ -19,10 +27,18 @@ AppBar projectAppBar() {
     ],
     leading: Container(
       padding: const EdgeInsets.only(top: 10.0),
-      child: const Flexible(
-        child: Icon(
-          Icons.person,
-          color: Color(0xff35ddaa),
+      child: Flexible(
+        child: GestureDetector(
+          onTap: () {
+            Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => user?.userType == "applicant"
+                    ? ApplicantProfile(user: user!)
+                    : RecruiterProfile(user: user!)));
+          },
+          child: const Icon(
+            Icons.person,
+            color: Color(0xff35ddaa),
+          ),
         ),
       ),
     ),

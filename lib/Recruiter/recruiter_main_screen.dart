@@ -34,33 +34,33 @@ class _RecruiterMainScreen extends State<RecruiterMainScreen> {
         .doc(user!.uid)
         .get()
         .then((value) {
-      recruiter = UserModel.fromMap(value.data());
-      setState(() {});
+      setState(() {
+        recruiter = UserModel.fromMap(value.data());
+      });
     });
-    Future.delayed(const Duration(milliseconds: 1), () {
-      firebaseFirestore
-          .collection("offres")
-          .doc(widget.offerId?.trim())
-          .get()
-          .then((value) async {
-        applicantsIds = value.data()!['applicants'];
-        for (var id in applicantsIds!) {
-          await firebaseFirestore
-              .collection("users")
-              .doc(id)
-              .get()
-              .then((v) => {applicants.add(UserModel.fromMap(v.data()))});
-        }
-        setState(() {
-          applicant = applicants[0];
-        });
+
+    firebaseFirestore
+        .collection("offres")
+        .doc(widget.offerId?.trim())
+        .get()
+        .then((value) async {
+      applicantsIds = value.data()!['applicants'];
+      for (var id in applicantsIds!) {
+        await firebaseFirestore.collection("users").doc(id).get().then((v) => {
+              setState(() {
+                applicants.add(UserModel.fromMap(v.data()));
+              })
+            });
+      }
+      setState(() {
+        applicant = applicants[0];
       });
     });
   }
 
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: projectAppBar(),
+      appBar: projectAppBar(recruiter, context),
       body: Stack(
         alignment: Alignment.bottomCenter,
         children: [
@@ -80,14 +80,7 @@ class _RecruiterMainScreen extends State<RecruiterMainScreen> {
                     child: Expanded(
                         flex: 0,
                         child: CircleAvatar(
-                          backgroundImage: applicant!.details!["img"] == ""
-                              ? AssetImage("images/avatar.png")
-                              : Image.network(
-                                  applicant!.details!["img"],
-                                  width: 60,
-                                  height: 60,
-                                ).image,
-                        )),
+                            backgroundImage: AssetImage("images/avatar.png"))),
                   ),
                   SizedBox(
                     height: 20.0,
@@ -112,35 +105,36 @@ class _RecruiterMainScreen extends State<RecruiterMainScreen> {
                     child: Column(
                       children: [
                         RichTextLine(
-                          text: applicant!.email!,
+                          text: "${applicant?.email}",
                           title: 'Email :  ',
                         ),
                         SizedBox(
                           height: 20.0,
                         ),
                         RichTextLine(
-                          text: (applicant!.details!["expYears"]).toString(),
+                          text: "${applicant?.details!["expYears"].toString()}",
                           title: 'Années d\'expérience :  ',
                         ),
                         SizedBox(
                           height: 20.0,
                         ),
                         RichTextLine(
-                          text: applicant!.details!["domaine"],
+                          text: "${applicant?.details!["domaine"]}",
                           title: 'Domaine :  ',
                         ),
                         SizedBox(
                           height: 20.0,
                         ),
                         RichTextLine(
-                          text: applicant!.details!["poste"],
+                          text: "${applicant?.details!["poste"]}",
                           title: 'Poste actuel :  ',
                         ),
                         SizedBox(
                           height: 20.0,
                         ),
                         RichTextLine(
-                          text: getCompetences(),
+                          text: getCompetences(
+                              applicant?.details!["competences"]),
                           title: 'Compétences :  ',
                         ),
                       ],
@@ -227,9 +221,9 @@ class _RecruiterMainScreen extends State<RecruiterMainScreen> {
     });
   }
 
-  String getCompetences() {
+  String getCompetences(List<dynamic>? list) {
     String cpts = "\n";
-    for (String word in applicant?.details!["competences"]) {
+    for (String word in list!) {
       cpts += word + " \n";
     }
     return cpts;

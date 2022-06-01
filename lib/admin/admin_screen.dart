@@ -21,13 +21,23 @@ class _AdminScreenState extends State<AdminScreen> {
   }
 
   List pages = [
-    AdminOffers(),
-    AdminUsers(),
+    const AdminOffers(),
+    const AdminUsers(),
   ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: projectAppBar(),
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        centerTitle: true,
+        elevation: 0,
+        title: Container(
+          child: Flexible(
+              child: Image.asset('images/logofondblanccropped.png',
+                  fit: BoxFit.fill)),
+          padding: const EdgeInsets.only(top: 20.0),
+        ),
+      ),
       body: pages[currentindextap],
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Colors.white,
