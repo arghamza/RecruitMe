@@ -1,15 +1,9 @@
-import 'dart:math';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:user_type_screen/Demandeur/add_info_screen.dart';
 import 'package:user_type_screen/Demandeur/applicant_profile.dart';
 import 'package:user_type_screen/Recruiter/recruiter_profile.dart';
 import 'package:user_type_screen/model/user_model.dart';
-
 import '../Login/login_screen.dart';
-import '../Recruiter/Info_screen.dart';
 
 AppBar projectAppBar(UserModel? user, BuildContext context) {
   return AppBar(
@@ -61,5 +55,5 @@ AppBar projectAppBar(UserModel? user, BuildContext context) {
 Future<void> logout(BuildContext context) async {
   await FirebaseAuth.instance.signOut();
   Navigator.of(context)
-      .pushReplacement(MaterialPageRoute(builder: (context) => login()));
+      .pushReplacement(MaterialPageRoute(builder: (context) => const login()));
 }

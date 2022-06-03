@@ -37,7 +37,6 @@ class _RecruiterState extends State<Recruiter> {
   FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     getuser();
   }

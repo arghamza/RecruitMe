@@ -3,8 +3,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:user_type_screen/admin/admin_offers.dart';
 import 'package:user_type_screen/admin/admin_users.dart';
 
-import '../widget/project_app_bar.dart';
-
 class AdminScreen extends StatefulWidget {
   const AdminScreen({Key? key}) : super(key: key);
 

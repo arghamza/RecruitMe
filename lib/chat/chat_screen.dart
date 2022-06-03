@@ -1,8 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:ntp/ntp.dart';
 import 'package:user_type_screen/chat/MessagesWidgets/chat_app_bar.dart';
 import 'package:user_type_screen/chat/MessagesWidgets/messages_stream.dart';

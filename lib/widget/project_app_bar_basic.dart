@@ -1,8 +1,4 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:user_type_screen/model/user_model.dart';
-
-import '../Login/login_screen.dart';
 
 AppBar projectAppBarBasic(BuildContext context) {
   return AppBar(
